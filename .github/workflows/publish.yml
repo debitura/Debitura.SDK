@@ -1,0 +1,70 @@
+name: publish
+
+# ============================================================================
+# GATED / INERT — does nothing until an owner enables it. See PUBLISHING.md.
+#
+# This workflow ONLY runs on a published GitHub Release or a manual dispatch.
+# No release has been cut and no registry credentials / trusted publishers are
+# configured, so it cannot publish today. To go live, follow PUBLISHING.md:
+#   1. Register the package names (npm @debitura scope, PyPI project).
+#   2. Configure trusted publishing (OIDC) for this repo + this workflow, OR
+#      add NPM_TOKEN / PYPI_TOKEN repo secrets (and uncomment the token lines).
+#   3. Create the `npm` and `pypi` GitHub Environments (referenced below).
+#   4. Cut a Release (tag e.g. v1.0.0) to trigger this workflow.
+# ============================================================================
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  publish-npm:
+    name: Publish @debitura/debt-collection to npm
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write # OIDC — npm provenance / trusted publishing
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+      - name: Build
+        working-directory: typescript
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+      - name: Publish (trusted publishing / provenance)
+        working-directory: typescript
+        run: npm publish --provenance --access public
+        env:
+          # Leave unset to use OIDC trusted publishing. If you use a token
+          # instead, add NPM_TOKEN as a repo secret and keep this line.
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-pypi:
+    name: Publish debitura-debt-collection to PyPI
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      contents: read
+      id-token: write # OIDC — PyPI trusted publishing
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Build sdist + wheel
+        working-directory: python
+        run: |
+          python -m pip install --upgrade build
+          python -m build
+      - name: Publish to PyPI (trusted publishing)
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: python/dist
+          # Trusted publishing (OIDC) needs no token. If you use a token
+          # instead, add PYPI_TOKEN as a repo secret and uncomment:
+          # password: ${{ secrets.PYPI_TOKEN }}

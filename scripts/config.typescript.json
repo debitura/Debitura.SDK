@@ -1,0 +1,9 @@
+{
+  "npmName": "@debitura/debt-collection",
+  "supportsES6": true,
+  "withSeparateModelsAndApi": true,
+  "apiPackage": "api",
+  "modelPackage": "models",
+  "useSingleRequestParameter": true,
+  "enumPropertyNaming": "original"
+}

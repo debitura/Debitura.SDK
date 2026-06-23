@@ -1,0 +1,14 @@
+{
+  "name": "debitura-sdk-build",
+  "private": true,
+  "description": "Build tooling for the Debitura Customer API SDKs (not published). Generates @debitura/debt-collection (npm) and debitura-debt-collection (PyPI) from spec/customer-api.json.",
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "generate:typescript": "node scripts/generate.mjs typescript",
+    "generate:python": "node scripts/generate.mjs python",
+    "refresh-spec": "curl -fsSL https://docs.debitura.com/openapi/customer-api.json -o spec/customer-api.json"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.13.4"
+  }
+}

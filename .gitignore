@@ -1,0 +1,18 @@
+# Root build tooling
+/node_modules/
+package-lock.json
+
+# Generated client dependency installs / build artifacts
+/typescript/node_modules/
+/typescript/dist/
+/typescript/package-lock.json
+/python/dist/
+/python/build/
+/python/*.egg-info/
+**/__pycache__/
+
+# openapi-generator-cli downloaded jars
+.openapi-generator-cli/
+
+# OS
+.DS_Store
