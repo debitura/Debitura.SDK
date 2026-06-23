@@ -1,0 +1,85 @@
+name: generate
+
+# Regenerate the TypeScript + Python clients from the OpenAPI spec.
+# This is the "consumer reacts to a new spec" step: it refreshes the spec from
+# the canonical public URL, regenerates both clients, and opens a PR if the
+# generated output changed.
+on:
+  workflow_dispatch:
+    inputs:
+      refresh_spec:
+        description: "Pull the latest spec from docs.debitura.com before generating"
+        type: boolean
+        default: true
+  push:
+    branches: [main]
+    paths:
+      - "spec/customer-api.json"
+      - "scripts/**"
+      - "openapitools.json"
+      - ".github/workflows/generate.yml"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # openapi-generator is a Java tool.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install generator CLI
+        run: npm install
+
+      # Canonical spec lives at the public docs URL (DEB-4851). Refresh the
+      # committed working copy from it before generating. If the URL isn't live
+      # yet, keep the committed copy.
+      - name: Refresh spec from canonical URL
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.refresh_spec || github.event_name == 'push' }}
+        run: |
+          if curl -fsSL https://docs.debitura.com/openapi/customer-api.json -o spec/customer-api.json.new; then
+            mv spec/customer-api.json.new spec/customer-api.json
+            echo "Refreshed spec from canonical URL."
+          else
+            echo "Canonical spec URL not reachable yet — using committed spec/customer-api.json."
+            rm -f spec/customer-api.json.new
+          fi
+
+      - name: Generate clients
+        run: node scripts/generate.mjs
+
+      - name: Verify TypeScript compiles
+        working-directory: typescript
+        run: |
+          npm install --no-audit --no-fund
+          npx tsc --noEmit
+
+      - name: Open PR if generated output changed
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: chore/regenerate-sdk
+          commit-message: "chore: regenerate SDK clients from OpenAPI spec"
+          title: "chore: regenerate SDK clients from OpenAPI spec"
+          body: |
+            Automated regeneration of the TypeScript + Python clients from
+            `spec/customer-api.json`.
+
+            Package version tracks the spec's `info.version`. Review the diff,
+            then merge to ship the updated clients. Publishing remains gated
+            (see PUBLISHING.md).
+          delete-branch: true

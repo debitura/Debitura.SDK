@@ -1,0 +1,7 @@
+{
+  "packageName": "debitura_debt_collection",
+  "projectName": "debitura-debt-collection",
+  "library": "urllib3",
+  "generateSourceCodeOnly": false,
+  "packageUrl": "https://www.debitura.com/integration/debt-collection-api"
+}
