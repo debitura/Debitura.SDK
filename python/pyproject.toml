@@ -9,7 +9,7 @@ readme = "README.md"
 packages = [{ include = "debitura_debt_collection" }]
 repository = "https://github.com/debitura/Debitura.SDK"
 documentation = "https://docs.debitura.com"
-keywords = ["OpenAPI", "OpenAPI-Generator", "Debitura Customer API"]
+keywords = ["debitura", "debt-collection", "debt-recovery", "api", "sdk", "openapi"]
 include = ["debitura_debt_collection/py.typed"]
 
 [tool.poetry.dependencies]

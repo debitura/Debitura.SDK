@@ -44,6 +44,10 @@ config.api_key["ApiKey"] = os.environ["DEBITURA_API_KEY"]
 import os
 from debitura_debt_collection import Configuration, ApiClient
 from debitura_debt_collection.api.cases_api import CasesApi
+from debitura_debt_collection.models import (
+    DebituraWebExternalApiContractsV1CasesRequestsPreviewCaseRequestApiViewModel as PreviewCaseRequest,
+    DebituraWebExternalApiContractsV1CasesRequestsPreviewDebtorDto as PreviewDebtor,
+)
 
 config = Configuration(host="https://api.debitura.com")
 config.api_key["ApiKey"] = os.environ["DEBITURA_API_KEY"]
@@ -51,12 +55,21 @@ config.api_key["ApiKey"] = os.environ["DEBITURA_API_KEY"]
 with ApiClient(config) as client:
     cases = CasesApi(client)
 
-    # List your existing cases
-    existing = cases.cases_get()
-    print(f"You have {len(existing) if existing else 0} case(s).")
+    # List your existing cases. cases_get() returns a paginated InvoiceListDto
+    # with `.page` (totalResults, page_size, current_page, ...) and `.cases`.
+    result = cases.cases_get()
+    count = result.page.total_results if result.page else len(result.cases or [])
+    print(f"You have {count} case(s) (page {result.page.current_page if result.page else 1}).")
 
-    # Preview pricing / eligibility before creating a case
-    preview = cases.cases_preview_post()
+    # Preview pricing / eligibility before creating a case.
+    # amount_to_recover, currency_code and debtor (type + country_alpha2) are required.
+    preview = cases.cases_preview_post(
+        PreviewCaseRequest(
+            amount_to_recover=1000,
+            currency_code="EUR",
+            debtor=PreviewDebtor(type="Company", country_alpha2="DK"),
+        )
+    )
     print("Preview:", preview)
 ```
 

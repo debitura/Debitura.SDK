@@ -50,14 +50,22 @@ const config = new Configuration({
 const cases = new CasesApi(config);
 
 async function main() {
-  // List your existing cases
-  const { data: list } = await cases.casesGet();
-  console.log(`You have ${list.length ?? 0} case(s).`);
+  // List your existing cases. `casesGet` returns a paginated InvoiceListDto:
+  //   { page: { totalResults, pageSize, currentPage, ... }, cases: [...] }
+  const { data: result } = await cases.casesGet();
+  console.log(
+    `You have ${result.page?.totalResults ?? result.cases?.length ?? 0} case(s) ` +
+      `(page ${result.page?.currentPage ?? 1}).`
+  );
 
-  // Preview pricing / eligibility before creating a case
+  // Preview pricing / eligibility before creating a case.
+  // amountToRecover, currencyCode and debtor (type + countryAlpha2) are required.
   const { data: preview } = await cases.casesPreviewPost({
-    // request body shape comes from the generated models — see ./models
-    // e.g. claim amount, currency, debtor country, debtor type, etc.
+    debituraWebExternalApiContractsV1CasesRequestsPreviewCaseRequestApiViewModel: {
+      amountToRecover: 1000,
+      currencyCode: "EUR",
+      debtor: { type: "Company", countryAlpha2: "DK" },
+    },
   });
   console.log("Preview:", preview);
 }

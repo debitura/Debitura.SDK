@@ -40,8 +40,12 @@ Add repository **Secrets** (Settings → Secrets and variables → Actions):
 - `PYPI_TOKEN` — a PyPI API token scoped to `debitura-debt-collection`.
 Then uncomment the token lines noted in `.github/workflows/publish.yml`.
 
-### 4. (If using GitHub Environments) create the environments
-The workflow references environments `npm` and `pypi`. Create them under Settings → Environments and attach the trusted publisher / required reviewers there if you want a manual approval gate before each publish.
+### 4. Create the `npm` and `pypi` GitHub Environments (REQUIRED)
+The publish jobs in `publish.yml` pin to the `npm` and `pypi` environments, so both **must** exist before the workflow can publish. Create them under Settings → Environments and configure **required reviewers** on each:
+
+- **Required reviewers are mandatory, not optional.** `publish.yml` is triggered by `workflow_dispatch` (and Release). Once the repo is public, anyone with write access could otherwise dispatch a publish — the required-reviewer gate on these environments forces an explicit human approval before either package is pushed to npm/PyPI.
+- Attach the trusted publisher (OIDC) or the fallback token secret to each environment as described in step 3.
+- Do not remove the `environment: npm` / `environment: pypi` lines from `publish.yml`; they are what bind the approval gate.
 
 ---
 

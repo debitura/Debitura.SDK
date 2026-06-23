@@ -34,17 +34,24 @@ REQUIRES = [
 setup(
     name=NAME,
     version=VERSION,
-    description="Debitura Customer API",
+    description="Official Debitura client for the Debt Collection (Customer) API.",
     author="Debitura Support",
     author_email="contact@debitura.com",
     url="https://www.debitura.com/integration/debt-collection-api",
-    keywords=["OpenAPI", "OpenAPI-Generator", "Debitura Customer API"],
+    license="MIT",
+    license_files=["LICENSE"],
+    project_urls={
+        "Homepage": "https://www.debitura.com/integration/debt-collection-api",
+        "Documentation": "https://docs.debitura.com",
+        "Source": "https://github.com/debitura/Debitura.SDK",
+    },
+    keywords=["debitura", "debt-collection", "debt-recovery", "api", "sdk", "openapi"],
     install_requires=REQUIRES,
     packages=find_packages(exclude=["test", "tests"]),
     include_package_data=True,
     long_description_content_type='text/markdown',
     long_description="""\
-    Welcome to the Debitura Customer API, your gateway to seamlessly integrating your debt collection workflow with our platform. Debitura connects customers with trusted debt collection firms specializing in pre-legal debt recovery. With this API, you can easily upload cases, track their status, and manage your debt collection process efficiently. For any support or inquiries, please reach out to us at contact@debitura.com. To setup an API key, log into your Debitura account and go here: https://app.debitura.com/CreditorApiKey  📖 Full documentation, guides, and integration walkthroughs: https://docs.debitura.com/clients  NOTE: if you&#39;re representing a platform and want to provide this feature for your customers, you need a different API. Please contact us.
+    Welcome to the Debitura Customer API, your gateway to seamlessly integrating your debt collection workflow with our platform. Debitura connects customers with trusted debt collection firms specializing in pre-legal debt recovery. With this API, you can easily upload cases, track their status, and manage your debt collection process efficiently. For any support or inquiries, please reach out to us at contact@debitura.com. To setup an API key, log into your Debitura account and go here: https://app.debitura.com/CreditorApiKey  📖 Full documentation, guides, and integration walkthroughs: https://docs.debitura.com/clients  NOTE: if you're representing a platform and want to provide this feature for your customers, you need a different API. Please contact us.
     """,  # noqa: E501
     package_data={"debitura_debt_collection": ["py.typed"]},
 )

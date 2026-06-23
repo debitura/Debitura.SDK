@@ -24,3 +24,13 @@
 
 # Curated by hand — keep our README, do not overwrite on regenerate.
 README.md
+
+# License is copied in from repo root by scripts/generate.mjs — never overwrite.
+LICENSE
+
+# CI cruft for foreign platforms / push helpers — this repo uses GitHub Actions
+# only. Prevent the generator from reintroducing these on regenerate.
+.gitlab-ci.yml
+.travis.yml
+git_push.sh
+.github/workflows/python.yml

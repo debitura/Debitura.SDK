@@ -14,7 +14,7 @@
  *   node scripts/generate.mjs python
  */
 import { execFileSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, copyFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
@@ -66,6 +66,15 @@ function generateTypeScript() {
   // The generated package.json drops our curated metadata; re-apply name,
   // version, homepage and repository so npm/SEO metadata is authoritative.
   patchPackageJson();
+  // npm always includes a top-level LICENSE in the published tarball, but only
+  // if it lives inside the package dir — copy the root MIT license in.
+  copyLicense("typescript");
+}
+
+/** Copy the root MIT LICENSE into a package dir so it ships in the artifact. */
+function copyLicense(pkgDir) {
+  copyFileSync(resolve(ROOT, "LICENSE"), resolve(ROOT, pkgDir, "LICENSE"));
+  console.log(`Copied LICENSE into ${pkgDir}/.`);
 }
 
 function patchPackageJson() {
@@ -75,6 +84,8 @@ function patchPackageJson() {
   pkg.version = PKG_VERSION;
   pkg.description =
     "Official Debitura client for the Debt Collection (Customer) API.";
+  // openapi-generator stamps "OpenAPI-Generator Contributors"; we own this.
+  pkg.author = "Debitura";
   pkg.homepage = "https://www.debitura.com/integration/debt-collection-api";
   pkg.repository = {
     type: "git",
@@ -110,6 +121,12 @@ function generatePython() {
     "--git-repo-id", "Debitura.SDK",
   ]);
   patchPyProject();
+  // setuptools is the build backend and `python -m build` reads setup.py, so
+  // the curated metadata must be stamped there too (pyproject alone is not
+  // authoritative for the shipped sdist/wheel).
+  patchSetupPy();
+  // Ship the MIT license inside the sdist (referenced via license_files).
+  copyLicense("python");
 }
 
 function patchPyProject() {
@@ -123,6 +140,11 @@ function patchPyProject() {
   toml = toml.replace(
     /^description = .*/m,
     `description = "Official Debitura client for the Debt Collection (Customer) API."`
+  );
+  // Replace generator-boilerplate keywords (strip "OpenAPI-Generator").
+  toml = toml.replace(
+    /^keywords = .*/m,
+    `keywords = ["debitura", "debt-collection", "debt-recovery", "api", "sdk", "openapi"]`
   );
   if (!/^homepage =/m.test(toml)) {
     toml = toml.replace(
@@ -145,6 +167,47 @@ function patchPyProject() {
   }
   writeFileSync(p, toml);
   console.log("Patched python/pyproject.toml name + version + metadata.");
+}
+
+function patchSetupPy() {
+  // `python -m build` uses setuptools and setup.py is authoritative for the
+  // shipped sdist/wheel — the generator emits generic boilerplate here, so we
+  // stamp the curated metadata to match pyproject.toml.
+  const p = resolve(ROOT, "python/setup.py");
+  let py = readFileSync(p, "utf8");
+
+  py = py.replace(/^VERSION = .*/m, `VERSION = "${PKG_VERSION}"`);
+  py = py.replace(
+    /description="[^"]*"/,
+    `description="Official Debitura client for the Debt Collection (Customer) API."`
+  );
+  py = py.replace(
+    /url="[^"]*"/,
+    `url="https://www.debitura.com/integration/debt-collection-api"`
+  );
+  py = py.replace(
+    /keywords=\[[^\]]*\]/,
+    `keywords=["debitura", "debt-collection", "debt-recovery", "api", "sdk", "openapi"]`
+  );
+  // Undo the HTML entity the generator emits in the long_description.
+  py = py.replace(/you&#39;re/g, "you're");
+
+  // Add license + project_urls right after the url= line (idempotent).
+  if (!/license=/.test(py)) {
+    py = py.replace(
+      /(url="https:\/\/www\.debitura\.com\/integration\/debt-collection-api",\n)/,
+      `$1    license="MIT",\n` +
+        `    license_files=["LICENSE"],\n` +
+        `    project_urls={\n` +
+        `        "Homepage": "https://www.debitura.com/integration/debt-collection-api",\n` +
+        `        "Documentation": "https://docs.debitura.com",\n` +
+        `        "Source": "https://github.com/debitura/Debitura.SDK",\n` +
+        `    },\n`
+    );
+  }
+
+  writeFileSync(p, py);
+  console.log("Patched python/setup.py metadata + license.");
 }
 
 const which = process.argv[2];

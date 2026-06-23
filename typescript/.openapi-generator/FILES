@@ -15,7 +15,6 @@ api/webhooks-api.ts
 base.ts
 common.ts
 configuration.ts
-git_push.sh
 index.ts
 models/debitura-domain-model-base-page-data.ts
 models/debitura-domain-model-collection-partner-logics-collection-partners-survey-cadence-mode.ts

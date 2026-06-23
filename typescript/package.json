@@ -2,7 +2,7 @@
   "name": "@debitura/debt-collection",
   "version": "1.0.0",
   "description": "Official Debitura client for the Debt Collection (Customer) API.",
-  "author": "OpenAPI-Generator Contributors",
+  "author": "Debitura",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/debitura/Debitura.SDK.git",

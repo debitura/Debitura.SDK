@@ -1,7 +1,4 @@
-.github/workflows/python.yml
 .gitignore
-.gitlab-ci.yml
-.travis.yml
 debitura_debt_collection/__init__.py
 debitura_debt_collection/api/__init__.py
 debitura_debt_collection/api/cases_api.py
@@ -187,7 +184,6 @@ docs/TestWebhooksApi.md
 docs/UsersApi.md
 docs/WebhookEventsApi.md
 docs/WebhooksApi.md
-git_push.sh
 pyproject.toml
 requirements.txt
 setup.cfg
