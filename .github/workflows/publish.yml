@@ -1,16 +1,19 @@
 name: publish
 
 # ============================================================================
-# GATED / INERT — does nothing until an owner enables it. See PUBLISHING.md.
+# LIVE — this workflow publishes the official Customer API SDK packages:
+#   • npm   @debitura/debt-collection   (granular automation token + provenance)
+#   • PyPI  debitura-debt-collection    (trusted publishing / OIDC, tokenless)
+# Both went live at v1.0.0 on 2026-06-23.
 #
-# This workflow ONLY runs on a published GitHub Release or a manual dispatch.
-# No release has been cut and no registry credentials / trusted publishers are
-# configured, so it cannot publish today. To go live, follow PUBLISHING.md:
-#   1. Register the package names (npm @debitura scope, PyPI project).
-#   2. Configure trusted publishing (OIDC) for this repo + this workflow, OR
-#      add NPM_TOKEN / PYPI_TOKEN repo secrets (and uncomment the token lines).
-#   3. Create the `npm` and `pypi` GitHub Environments (referenced below).
-#   4. Cut a Release (tag e.g. v1.0.0) to trigger this workflow.
+# It runs ONLY on a published GitHub Release or a manual workflow_dispatch —
+# never on push. The two jobs pin to the `npm` and `pypi` GitHub Environments,
+# each protected by a REQUIRED REVIEWER: the run pauses on that approval gate
+# until a reviewer approves, which is what stops an unapproved publish on this
+# public repo.
+#
+# To cut a release: see PUBLISHING.md, and the canonical operational runbook at
+# Debitura.Wiki engineering/ops/sdk-publish-runbook.md.
 # ============================================================================
 on:
   release:
