@@ -1,6 +1,6 @@
 # debitura_debt_collection.ContractsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://customer-api.debitura.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -25,10 +25,10 @@ from debitura_debt_collection.models.debitura_web_external_customer_api_models_c
 from debitura_debt_collection.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://customer-api.debitura.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = debitura_debt_collection.Configuration(
-    host = "http://localhost"
+    host = "https://customer-api.debitura.com"
 )
 
 # The client must configure the authentication and authorization parameters

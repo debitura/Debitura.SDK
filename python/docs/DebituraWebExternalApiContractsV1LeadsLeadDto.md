@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **max_quotes** | **int** |  | [optional] 
 **current_quotes_count** | **int** |  | [optional] 
 **outcome** | **str** |  | [optional] 
+**purpose** | **str** | Why this lead exists: PhaseChange (legal/enforcement escalation that advances the case phase) or AdditionalService (in-phase add-on). Null for legacy leads created before the field existed. | [optional] 
 **date_created** | **datetime** |  | [optional] 
 **date_qualified** | **datetime** |  | [optional] 
 **leads_done_offered** | **datetime** |  | [optional] 

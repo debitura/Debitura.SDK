@@ -36,13 +36,14 @@ class DebituraWebExternalApiContractsV1LeadsLeadDto(BaseModel):
     max_quotes: Optional[StrictInt] = Field(default=None, alias="maxQuotes")
     current_quotes_count: Optional[StrictInt] = Field(default=None, alias="currentQuotesCount")
     outcome: Optional[StrictStr] = None
+    purpose: Optional[StrictStr] = Field(default=None, description="Why this lead exists: PhaseChange (legal/enforcement escalation that advances the case phase) or AdditionalService (in-phase add-on). Null for legacy leads created before the field existed.")
     date_created: Optional[datetime] = Field(default=None, alias="dateCreated")
     date_qualified: Optional[datetime] = Field(default=None, alias="dateQualified")
     leads_done_offered: Optional[datetime] = Field(default=None, alias="leadsDoneOffered")
     date_reminder_sent: Optional[datetime] = Field(default=None, alias="dateReminderSent")
     date_reminder_two_sent: Optional[datetime] = Field(default=None, alias="dateReminderTwoSent")
     date_outcome_selected: Optional[datetime] = Field(default=None, alias="dateOutcomeSelected")
-    __properties: ClassVar[List[str]] = ["quoteRequestId", "caseId", "status", "leadFlowStatus", "quoteType", "maxQuotes", "currentQuotesCount", "outcome", "dateCreated", "dateQualified", "leadsDoneOffered", "dateReminderSent", "dateReminderTwoSent", "dateOutcomeSelected"]
+    __properties: ClassVar[List[str]] = ["quoteRequestId", "caseId", "status", "leadFlowStatus", "quoteType", "maxQuotes", "currentQuotesCount", "outcome", "purpose", "dateCreated", "dateQualified", "leadsDoneOffered", "dateReminderSent", "dateReminderTwoSent", "dateOutcomeSelected"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -103,6 +104,11 @@ class DebituraWebExternalApiContractsV1LeadsLeadDto(BaseModel):
         if self.outcome is None and "outcome" in self.model_fields_set:
             _dict['outcome'] = None
 
+        # set to None if purpose (nullable) is None
+        # and model_fields_set contains the field
+        if self.purpose is None and "purpose" in self.model_fields_set:
+            _dict['purpose'] = None
+
         # set to None if date_qualified (nullable) is None
         # and model_fields_set contains the field
         if self.date_qualified is None and "date_qualified" in self.model_fields_set:
@@ -148,6 +154,7 @@ class DebituraWebExternalApiContractsV1LeadsLeadDto(BaseModel):
             "maxQuotes": obj.get("maxQuotes"),
             "currentQuotesCount": obj.get("currentQuotesCount"),
             "outcome": obj.get("outcome"),
+            "purpose": obj.get("purpose"),
             "dateCreated": obj.get("dateCreated"),
             "dateQualified": obj.get("dateQualified"),
             "leadsDoneOffered": obj.get("leadsDoneOffered"),
