@@ -69,6 +69,12 @@ export interface DebituraWebExternalApiContractsV1LeadsLeadDto {
      */
     'outcome'?: string | null;
     /**
+     * Why this lead exists: PhaseChange (legal/enforcement escalation that advances the case phase) or AdditionalService (in-phase add-on). Null for legacy leads created before the field existed.
+     * @type {string}
+     * @memberof DebituraWebExternalApiContractsV1LeadsLeadDto
+     */
+    'purpose'?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof DebituraWebExternalApiContractsV1LeadsLeadDto

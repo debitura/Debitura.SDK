@@ -90,7 +90,7 @@ conf = debitura_debt_collection.Configuration(
                  ) -> None:
         """Constructor
         """
-        self._base_path = "http://localhost" if host is None else host
+        self._base_path = "https://customer-api.debitura.com" if host is None else host
         """Default Base url
         """
         self.server_index = 0 if server_index is None and host is None else server_index
@@ -418,8 +418,8 @@ conf = debitura_debt_collection.Configuration(
         """
         return [
             {
-                'url': "",
-                'description': "No description provided",
+                'url': "https://customer-api.debitura.com",
+                'description': "Production",
             }
         ]
 

@@ -99,6 +99,18 @@ export interface DebituraWebExternalApiContractsV1LeadsLeadQuoteDto {
      */
     'partnerWhyUsSection'?: string | null;
     /**
+     * The case phase this quote offers to work in (Pre-legal / Legal / Enforcement). Null = unspecified.
+     * @type {string}
+     * @memberof DebituraWebExternalApiContractsV1LeadsLeadQuoteDto
+     */
+    'phase'?: string | null;
+    /**
+     * Whether declining stops the case (Recommendation / Required). v1: display only. Null = unspecified.
+     * @type {string}
+     * @memberof DebituraWebExternalApiContractsV1LeadsLeadQuoteDto
+     */
+    'offerNature'?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof DebituraWebExternalApiContractsV1LeadsLeadQuoteDto

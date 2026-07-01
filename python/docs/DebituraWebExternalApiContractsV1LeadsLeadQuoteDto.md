@@ -19,6 +19,8 @@ Name | Type | Description | Notes
 **hybrid_estimate** | **float** |  | [optional] 
 **proposed_solution** | **str** |  | [optional] 
 **partner_why_us_section** | **str** |  | [optional] 
+**phase** | **str** | The case phase this quote offers to work in (Pre-legal / Legal / Enforcement). Null &#x3D; unspecified. | [optional] 
+**offer_nature** | **str** | Whether declining stops the case (Recommendation / Required). v1: display only. Null &#x3D; unspecified. | [optional] 
 **currency** | **str** |  | 
 **date_created** | **datetime** |  | [optional] 
 

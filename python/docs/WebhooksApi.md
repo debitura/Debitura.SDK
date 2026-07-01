@@ -1,6 +1,6 @@
 # debitura_debt_collection.WebhooksApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://customer-api.debitura.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -33,10 +33,10 @@ from debitura_debt_collection.models.debitura_domain_model_webhooks_dtos_webhook
 from debitura_debt_collection.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://customer-api.debitura.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = debitura_debt_collection.Configuration(
-    host = "http://localhost"
+    host = "https://customer-api.debitura.com"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -113,10 +113,10 @@ import debitura_debt_collection
 from debitura_debt_collection.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://customer-api.debitura.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = debitura_debt_collection.Configuration(
-    host = "http://localhost"
+    host = "https://customer-api.debitura.com"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -197,10 +197,10 @@ from debitura_debt_collection.models.debitura_domain_model_webhooks_dtos_webhook
 from debitura_debt_collection.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://customer-api.debitura.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = debitura_debt_collection.Configuration(
-    host = "http://localhost"
+    host = "https://customer-api.debitura.com"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -284,10 +284,10 @@ from debitura_debt_collection.models.debitura_domain_model_webhooks_dtos_webhook
 from debitura_debt_collection.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://customer-api.debitura.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = debitura_debt_collection.Configuration(
-    host = "http://localhost"
+    host = "https://customer-api.debitura.com"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -374,10 +374,10 @@ from debitura_debt_collection.models.debitura_web_external_customer_api_models_w
 from debitura_debt_collection.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://customer-api.debitura.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = debitura_debt_collection.Configuration(
-    host = "http://localhost"
+    host = "https://customer-api.debitura.com"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -463,10 +463,10 @@ from debitura_debt_collection.models.debitura_web_external_customer_api_models_w
 from debitura_debt_collection.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://customer-api.debitura.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = debitura_debt_collection.Configuration(
-    host = "http://localhost"
+    host = "https://customer-api.debitura.com"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -550,10 +550,10 @@ from debitura_debt_collection.models.debitura_web_external_customer_api_models_w
 from debitura_debt_collection.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://customer-api.debitura.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = debitura_debt_collection.Configuration(
-    host = "http://localhost"
+    host = "https://customer-api.debitura.com"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -639,10 +639,10 @@ from debitura_debt_collection.models.debitura_web_external_customer_api_models_w
 from debitura_debt_collection.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://customer-api.debitura.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = debitura_debt_collection.Configuration(
-    host = "http://localhost"
+    host = "https://customer-api.debitura.com"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -712,7 +712,7 @@ Name | Type | Description  | Notes
 
 Create a new webhook subscription.
 
-Creates a new webhook subscription for receiving real-time event notifications.  **Available Events:** - `case.created` - New collection case created - `case.updated` - Case lifecycle changed (e.g., Active → Legal) - `case.closed` - Case closed - `payment.created` - Payment registered on case - `chat.created` - Chat message created on case  **Validation Rules:** - URL must be HTTPS - events array must contain only valid event types - URL must be publicly reachable - Private IP addresses are blocked (SSRF protection)  **Returns:** - Webhook subscription details - Secret key for HMAC-SHA256 signature verification (shown only once)  **IMPORTANT**: Save the secret immediately - it cannot be retrieved later.  **Webhook Payload Structure:** Every webhook delivery will contain these headers: - X-Debitura-Signature: HMAC-SHA256 signature (format: t={timestamp},v1={signature}) - X-Debitura-Timestamp: Unix timestamp of the event - X-Debitura-Event: Event type (e.g., 'case.created')  **Signature Verification (HMAC-SHA256):** 1. Extract timestamp (t) and signature (v1) from X-Debitura-Signature header 2. Construct signed payload: {timestamp}.{json_body} 3. Compute HMAC-SHA256 using your webhook secret (Base64 decoded) 4. Compare computed signature with v1 value (use constant-time comparison) 5. Verify timestamp is within 5 minutes to prevent replay attacks  **Example Payload:** ```json {   \"id\": \"evt_abc123\",   \"event\": \"case.created\",   \"timestamp\": \"2024-01-15T10:30:00Z\",   \"data\": {     \"caseId\": \"guid-here\",     \"reference\": \"Q8OAXF3W\",     \"creditorReference\": \"INV-001\",     \"status\": \"Active\",     \"amount\": 1000.00,     \"currency\": \"EUR\",     \"debtorName\": \"Debtor Company Ltd\"   } } ```
+Creates a new webhook subscription for receiving real-time event notifications.  **Available Events:** - `case.created` - New collection case created - `case.updated` - Case lifecycle changed (e.g., Active → Legal) - `case.closed` - Case closed - `payment.created` - Payment registered on case - `payment.deleted` - Payment reversed (deleted) on case - `chat.created` - Chat message created on case  **Validation Rules:** - URL must be HTTPS - events array must contain only valid event types - URL must be publicly reachable - Private IP addresses are blocked (SSRF protection)  **Returns:** - Webhook subscription details - Secret key for HMAC-SHA256 signature verification (shown only once)  **IMPORTANT**: Save the secret immediately - it cannot be retrieved later.  **Webhook Payload Structure:** Every webhook delivery will contain these headers: - X-Debitura-Signature: HMAC-SHA256 signature (format: t={timestamp},v1={signature}) - X-Debitura-Timestamp: Unix timestamp of the event - X-Debitura-Event: Event type (e.g., 'case.created')  **Signature Verification (HMAC-SHA256):** 1. Extract timestamp (t) and signature (v1) from X-Debitura-Signature header 2. Construct signed payload: {timestamp}.{json_body} 3. Compute HMAC-SHA256 using your webhook secret (Base64 decoded) 4. Compare computed signature with v1 value (use constant-time comparison) 5. Verify timestamp is within 5 minutes to prevent replay attacks  **Example Payload:** ```json {   \"id\": \"evt_abc123\",   \"event\": \"case.created\",   \"timestamp\": \"2024-01-15T10:30:00Z\",   \"data\": {     \"caseId\": \"guid-here\",     \"reference\": \"Q8OAXF3W\",     \"creditorReference\": \"INV-001\",     \"status\": \"Active\",     \"amount\": 1000.00,     \"currency\": \"EUR\",     \"debtorName\": \"Debtor Company Ltd\"   } } ```
 
 ### Example
 
@@ -726,10 +726,10 @@ from debitura_debt_collection.models.debitura_domain_model_webhooks_dtos_webhook
 from debitura_debt_collection.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://customer-api.debitura.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = debitura_debt_collection.Configuration(
-    host = "http://localhost"
+    host = "https://customer-api.debitura.com"
 )
 
 # The client must configure the authentication and authorization parameters

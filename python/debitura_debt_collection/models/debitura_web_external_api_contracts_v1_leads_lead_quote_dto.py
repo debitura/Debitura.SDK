@@ -41,9 +41,11 @@ class DebituraWebExternalApiContractsV1LeadsLeadQuoteDto(BaseModel):
     hybrid_estimate: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="hybridEstimate")
     proposed_solution: Optional[StrictStr] = Field(default=None, alias="proposedSolution")
     partner_why_us_section: Optional[StrictStr] = Field(default=None, alias="partnerWhyUsSection")
+    phase: Optional[StrictStr] = Field(default=None, description="The case phase this quote offers to work in (Pre-legal / Legal / Enforcement). Null = unspecified.")
+    offer_nature: Optional[StrictStr] = Field(default=None, description="Whether declining stops the case (Recommendation / Required). v1: display only. Null = unspecified.", alias="offerNature")
     currency: Optional[StrictStr]
     date_created: Optional[datetime] = Field(default=None, alias="dateCreated")
-    __properties: ClassVar[List[str]] = ["quoteId", "quoteRequestId", "partnerId", "partnerName", "status", "agreementType", "hourlyRate", "hourlyEstimated", "flatFeeEstimate", "successFee", "hybridEstimate", "proposedSolution", "partnerWhyUsSection", "currency", "dateCreated"]
+    __properties: ClassVar[List[str]] = ["quoteId", "quoteRequestId", "partnerId", "partnerName", "status", "agreementType", "hourlyRate", "hourlyEstimated", "flatFeeEstimate", "successFee", "hybridEstimate", "proposedSolution", "partnerWhyUsSection", "phase", "offerNature", "currency", "dateCreated"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -134,6 +136,16 @@ class DebituraWebExternalApiContractsV1LeadsLeadQuoteDto(BaseModel):
         if self.partner_why_us_section is None and "partner_why_us_section" in self.model_fields_set:
             _dict['partnerWhyUsSection'] = None
 
+        # set to None if phase (nullable) is None
+        # and model_fields_set contains the field
+        if self.phase is None and "phase" in self.model_fields_set:
+            _dict['phase'] = None
+
+        # set to None if offer_nature (nullable) is None
+        # and model_fields_set contains the field
+        if self.offer_nature is None and "offer_nature" in self.model_fields_set:
+            _dict['offerNature'] = None
+
         # set to None if currency (nullable) is None
         # and model_fields_set contains the field
         if self.currency is None and "currency" in self.model_fields_set:
@@ -164,6 +176,8 @@ class DebituraWebExternalApiContractsV1LeadsLeadQuoteDto(BaseModel):
             "hybridEstimate": obj.get("hybridEstimate"),
             "proposedSolution": obj.get("proposedSolution"),
             "partnerWhyUsSection": obj.get("partnerWhyUsSection"),
+            "phase": obj.get("phase"),
+            "offerNature": obj.get("offerNature"),
             "currency": obj.get("currency"),
             "dateCreated": obj.get("dateCreated")
         })
