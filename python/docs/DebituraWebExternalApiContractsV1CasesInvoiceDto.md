@@ -27,6 +27,7 @@ Name | Type | Description | Notes
 **date_finished** | **datetime** |  | [optional] 
 **date_collection_started** | **datetime** |  | [optional] 
 **close_code** | **str** |  | [optional] 
+**current_engagement_phase** | **str** | The current phase of the case&#39;s engagement: \&quot;Pre-legal\&quot;, \&quot;Legal\&quot;, or \&quot;Enforcement\&quot;. A different axis from Debitura.Web.ExternalApi.Contracts.V1.Cases.InvoiceDto.Lifecycle/Debitura.Web.ExternalApi.Contracts.V1.Cases.InvoiceDto.CloseCode — an Active case can be in any of the three phases.              Null means \&quot;no active engagement\&quot; (e.g. lead / quoting / pre-contract-signing / unassigned, or a data-consistency gap) — this is a distinct third state, NOT a synonym for Pre-legal. Most cases legitimately read Pre-legal; phase only leaves Pre-legal on legal/enforcement quote flows.              Not guaranteed to be monotonic: an admin correction can move phase backwards (e.g. Legal back to Pre-legal).              Persists after case closure — reflects the case&#39;s last-known engagement phase, not the current Lifecycle. Note: this is a different field from a lead quote&#39;s own offered phase (the phase a partner&#39;s quote proposes to work the case at, if this case ever went through a quote flow) — this field is the case-level phase of its actual engagement, not a quote&#39;s terms. | [optional] 
 **claim_type** | **str** | The type of claim for this case (e.g. \&quot;Unpaid Invoice\&quot;, \&quot;Loan Repayment\&quot;, \&quot;Breach of Contract\&quot;). Null if not set. | [optional] 
 **creditor_division_id** | **str** |  | [optional] 
 **debtor** | [**DebituraWebExternalApiContractsV1CasesDebtorDto**](DebituraWebExternalApiContractsV1CasesDebtorDto.md) |  | [optional] 
@@ -41,6 +42,7 @@ Name | Type | Description | Notes
 **dispute_status** | **str** | Whether the claim is disputed by the debtor. Returns the description of Debitura.Domain.Model.Receiveables.Invoices.Enums.ClaimDisputeStatus: \&quot;Yes, the claim is disputed\&quot;, \&quot;No, the claim is not disputed\&quot;, or \&quot;Don&#39;t Know\&quot;. Null when the dispute status has not been set on the case. | [optional] 
 **validation** | [**DebituraDomainServicesCaseValidationCaseValidationLeanDto**](DebituraDomainServicesCaseValidationCaseValidationLeanDto.md) |  | [optional] 
 **assigned_user** | [**DebituraWebExternalApiContractsV1CasesAssignedUserDto**](DebituraWebExternalApiContractsV1CasesAssignedUserDto.md) |  | [optional] 
+**allocation_outstanding** | [**DebituraWebExternalApiContractsV1CasesInvoiceAllocationOutstandingDto**](DebituraWebExternalApiContractsV1CasesInvoiceAllocationOutstandingDto.md) |  | [optional] 
 
 ## Example
 

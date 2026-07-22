@@ -14,16 +14,23 @@
 
 
 
-export * from './api/cases-api';
-export * from './api/contracts-api';
-export * from './api/coverage-api';
-export * from './api/divisions-api';
-export * from './api/me-api';
-export * from './api/payments-api';
-export * from './api/tasks-api';
-export * from './api/test-cases-api';
-export * from './api/test-webhooks-api';
-export * from './api/users-api';
-export * from './api/webhook-events-api';
-export * from './api/webhooks-api';
+/**
+ * A machine-readable hint pointing at the existing API call that resolves a task, e.g. `{ \"method\": \"POST\", \"path\": \"/cases/{caseId}/chats\" }` for a chat-driven task.              Path uses the same `{param}` placeholder style as this API\'s own documented routes — substitute in the real IDs before calling.
+ * @export
+ * @interface DebituraWebExternalApiContractsV1TasksTaskActionDto
+ */
+export interface DebituraWebExternalApiContractsV1TasksTaskActionDto {
+    /**
+     * HTTP method to use, e.g. `\"POST\"`.
+     * @type {string}
+     * @memberof DebituraWebExternalApiContractsV1TasksTaskActionDto
+     */
+    'method'?: string | null;
+    /**
+     * Path template for the resolving call, e.g. `\"/cases/{caseId}/chats\"`. Relative to the API\'s base URL.
+     * @type {string}
+     * @memberof DebituraWebExternalApiContractsV1TasksTaskActionDto
+     */
+    'path'?: string | null;
+}
 

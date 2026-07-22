@@ -13,17 +13,30 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { DebituraDomainModelBasePageData } from './debitura-domain-model-base-page-data';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { DebituraWebExternalApiContractsV1TasksTaskDto } from './debitura-web-external-api-contracts-v1-tasks-task-dto';
 
-export * from './api/cases-api';
-export * from './api/contracts-api';
-export * from './api/coverage-api';
-export * from './api/divisions-api';
-export * from './api/me-api';
-export * from './api/payments-api';
-export * from './api/tasks-api';
-export * from './api/test-cases-api';
-export * from './api/test-webhooks-api';
-export * from './api/users-api';
-export * from './api/webhook-events-api';
-export * from './api/webhooks-api';
+/**
+ * Paged list of tasks, returned by `GET /tasks`.
+ * @export
+ * @interface DebituraWebExternalApiContractsV1TasksTaskListDto
+ */
+export interface DebituraWebExternalApiContractsV1TasksTaskListDto {
+    /**
+     * 
+     * @type {DebituraDomainModelBasePageData}
+     * @memberof DebituraWebExternalApiContractsV1TasksTaskListDto
+     */
+    'page': DebituraDomainModelBasePageData;
+    /**
+     * 
+     * @type {Array<DebituraWebExternalApiContractsV1TasksTaskDto>}
+     * @memberof DebituraWebExternalApiContractsV1TasksTaskListDto
+     */
+    'tasks'?: Array<DebituraWebExternalApiContractsV1TasksTaskDto> | null;
+}
 

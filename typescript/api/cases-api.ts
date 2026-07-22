@@ -59,6 +59,8 @@ import type { DebituraWebExternalApiContractsV1LeadsLeadQuoteDetailDto } from '.
 import type { DebituraWebExternalApiContractsV1LeadsLeadQuoteListDto } from '../models';
 // @ts-ignore
 import type { DebituraWebExternalApiContractsV1PaymentsPaymentDto } from '../models';
+// @ts-ignore
+import type { DebituraWebExternalApiContractsV1TasksTaskDto } from '../models';
 /**
  * CasesApi - axios parameter creator
  * @export
@@ -753,6 +755,57 @@ export const CasesApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Returns every open task (action-item) attached to this specific case. Same data as GET /tasks, scoped to one case — use this when you\'re already working a specific case and want just its outstanding tasks.  **Note:** account-level tasks that aren\'t tied to a single case (e.g. SignContract, AssignBankAccount — these block your whole account, not one case) never appear here; call GET /tasks to see those.  **Filtering:** - status (default: Open) — Open or Solved - type (repeatable, e.g. ?type=ReplyToChat) — restrict to specific task types  No pagination — a single case has few tasks.
+         * @summary List tasks for a case
+         * @param {string} id 
+         * @param {string} [status] 
+         * @param {Array<string>} [type] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        casesIdTasksGet: async (id: string, status?: string, type?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('casesIdTasksGet', 'id', id)
+            const localVarPath = `/cases/{id}/tasks`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            await setApiKeyToObject(localVarHeaderParameter, "XApiKey", configuration)
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (type) {
+                localVarQueryParameter['type'] = type;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the full event timeline for the case along with the current engagement phase.  **Response shape:** - `items` — chronological list of timeline events - `currentEngagementPhase` — current phase of the active engagement: \"Pre-legal\", \"Legal\", or \"Enforcement\". Null when no active engagement exists.
          * @summary Fetch case timeline
          * @param {string} id 
@@ -1141,6 +1194,21 @@ export const CasesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns every open task (action-item) attached to this specific case. Same data as GET /tasks, scoped to one case — use this when you\'re already working a specific case and want just its outstanding tasks.  **Note:** account-level tasks that aren\'t tied to a single case (e.g. SignContract, AssignBankAccount — these block your whole account, not one case) never appear here; call GET /tasks to see those.  **Filtering:** - status (default: Open) — Open or Solved - type (repeatable, e.g. ?type=ReplyToChat) — restrict to specific task types  No pagination — a single case has few tasks.
+         * @summary List tasks for a case
+         * @param {string} id 
+         * @param {string} [status] 
+         * @param {Array<string>} [type] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async casesIdTasksGet(id: string, status?: string, type?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DebituraWebExternalApiContractsV1TasksTaskDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.casesIdTasksGet(id, status, type, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CasesApi.casesIdTasksGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the full event timeline for the case along with the current engagement phase.  **Response shape:** - `items` — chronological list of timeline events - `currentEngagementPhase` — current phase of the active engagement: \"Pre-legal\", \"Legal\", or \"Enforcement\". Null when no active engagement exists.
          * @summary Fetch case timeline
          * @param {string} id 
@@ -1352,6 +1420,16 @@ export const CasesApiFactory = function (configuration?: Configuration, basePath
          */
         casesIdQuoteRequestsQuoteRequestIdQuotesQuoteIdGet(requestParameters: CasesApiCasesIdQuoteRequestsQuoteRequestIdQuotesQuoteIdGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<DebituraWebExternalApiContractsV1LeadsLeadQuoteDetailDto> {
             return localVarFp.casesIdQuoteRequestsQuoteRequestIdQuotesQuoteIdGet(requestParameters.id, requestParameters.quoteRequestId, requestParameters.quoteId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns every open task (action-item) attached to this specific case. Same data as GET /tasks, scoped to one case — use this when you\'re already working a specific case and want just its outstanding tasks.  **Note:** account-level tasks that aren\'t tied to a single case (e.g. SignContract, AssignBankAccount — these block your whole account, not one case) never appear here; call GET /tasks to see those.  **Filtering:** - status (default: Open) — Open or Solved - type (repeatable, e.g. ?type=ReplyToChat) — restrict to specific task types  No pagination — a single case has few tasks.
+         * @summary List tasks for a case
+         * @param {CasesApiCasesIdTasksGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        casesIdTasksGet(requestParameters: CasesApiCasesIdTasksGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<DebituraWebExternalApiContractsV1TasksTaskDto>> {
+            return localVarFp.casesIdTasksGet(requestParameters.id, requestParameters.status, requestParameters.type, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the full event timeline for the case along with the current engagement phase.  **Response shape:** - `items` — chronological list of timeline events - `currentEngagementPhase` — current phase of the active engagement: \"Pre-legal\", \"Legal\", or \"Enforcement\". Null when no active engagement exists.
@@ -1705,6 +1783,34 @@ export interface CasesApiCasesIdQuoteRequestsQuoteRequestIdQuotesQuoteIdGetReque
 }
 
 /**
+ * Request parameters for casesIdTasksGet operation in CasesApi.
+ * @export
+ * @interface CasesApiCasesIdTasksGetRequest
+ */
+export interface CasesApiCasesIdTasksGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CasesApiCasesIdTasksGet
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CasesApiCasesIdTasksGet
+     */
+    readonly status?: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CasesApiCasesIdTasksGet
+     */
+    readonly type?: Array<string>
+}
+
+/**
  * Request parameters for casesIdTimelineGet operation in CasesApi.
  * @export
  * @interface CasesApiCasesIdTimelineGetRequest
@@ -1952,6 +2058,18 @@ export class CasesApi extends BaseAPI {
      */
     public casesIdQuoteRequestsQuoteRequestIdQuotesQuoteIdGet(requestParameters: CasesApiCasesIdQuoteRequestsQuoteRequestIdQuotesQuoteIdGetRequest, options?: RawAxiosRequestConfig) {
         return CasesApiFp(this.configuration).casesIdQuoteRequestsQuoteRequestIdQuotesQuoteIdGet(requestParameters.id, requestParameters.quoteRequestId, requestParameters.quoteId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns every open task (action-item) attached to this specific case. Same data as GET /tasks, scoped to one case — use this when you\'re already working a specific case and want just its outstanding tasks.  **Note:** account-level tasks that aren\'t tied to a single case (e.g. SignContract, AssignBankAccount — these block your whole account, not one case) never appear here; call GET /tasks to see those.  **Filtering:** - status (default: Open) — Open or Solved - type (repeatable, e.g. ?type=ReplyToChat) — restrict to specific task types  No pagination — a single case has few tasks.
+     * @summary List tasks for a case
+     * @param {CasesApiCasesIdTasksGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CasesApi
+     */
+    public casesIdTasksGet(requestParameters: CasesApiCasesIdTasksGetRequest, options?: RawAxiosRequestConfig) {
+        return CasesApiFp(this.configuration).casesIdTasksGet(requestParameters.id, requestParameters.status, requestParameters.type, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
