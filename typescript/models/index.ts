@@ -22,7 +22,6 @@ export * from './debitura-web-external-api-contracts-v1-cases-debtor-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-exclusive-period-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-exclusive-period-extension-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-fire-webhook-response';
-export * from './debitura-web-external-api-contracts-v1-cases-invoice-allocation-outstanding-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-invoice-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-invoice-list-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-jurisdiction-dto';

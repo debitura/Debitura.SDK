@@ -41,7 +41,6 @@ models/debitura-web-external-api-contracts-v1-cases-debtor-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-exclusive-period-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-exclusive-period-extension-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-fire-webhook-response.ts
-models/debitura-web-external-api-contracts-v1-cases-invoice-allocation-outstanding-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-invoice-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-invoice-list-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-jurisdiction-dto.ts
