@@ -27,6 +27,7 @@ from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_case
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_collection_partner_dto import DebituraWebExternalApiContractsV1CasesCollectionPartnerDto
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_creditor_dto import DebituraWebExternalApiContractsV1CasesCreditorDto
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_debtor_dto import DebituraWebExternalApiContractsV1CasesDebtorDto
+from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_invoice_allocation_outstanding_dto import DebituraWebExternalApiContractsV1CasesInvoiceAllocationOutstandingDto
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_signing_handoff_dto import DebituraWebExternalApiContractsV1CasesSigningHandoffDto
 from typing import Optional, Set
 from typing_extensions import Self
@@ -56,6 +57,7 @@ class DebituraWebExternalApiContractsV1CasesInvoiceDto(BaseModel):
     date_finished: Optional[datetime] = Field(default=None, alias="dateFinished")
     date_collection_started: Optional[datetime] = Field(default=None, alias="dateCollectionStarted")
     close_code: Optional[StrictStr] = Field(default=None, alias="closeCode")
+    current_engagement_phase: Optional[StrictStr] = Field(default=None, description="The current phase of the case's engagement: \"Pre-legal\", \"Legal\", or \"Enforcement\". A different axis from Debitura.Web.ExternalApi.Contracts.V1.Cases.InvoiceDto.Lifecycle/Debitura.Web.ExternalApi.Contracts.V1.Cases.InvoiceDto.CloseCode — an Active case can be in any of the three phases.              Null means \"no active engagement\" (e.g. lead / quoting / pre-contract-signing / unassigned, or a data-consistency gap) — this is a distinct third state, NOT a synonym for Pre-legal. Most cases legitimately read Pre-legal; phase only leaves Pre-legal on legal/enforcement quote flows.              Not guaranteed to be monotonic: an admin correction can move phase backwards (e.g. Legal back to Pre-legal).              Persists after case closure — reflects the case's last-known engagement phase, not the current Lifecycle. Note: this is a different field from a lead quote's own offered phase (the phase a partner's quote proposes to work the case at, if this case ever went through a quote flow) — this field is the case-level phase of its actual engagement, not a quote's terms.", alias="currentEngagementPhase")
     claim_type: Optional[StrictStr] = Field(default=None, description="The type of claim for this case (e.g. \"Unpaid Invoice\", \"Loan Repayment\", \"Breach of Contract\"). Null if not set.", alias="claimType")
     creditor_division_id: Optional[StrictStr] = Field(default=None, alias="creditorDivisionId")
     debtor: Optional[DebituraWebExternalApiContractsV1CasesDebtorDto] = None
@@ -70,7 +72,8 @@ class DebituraWebExternalApiContractsV1CasesInvoiceDto(BaseModel):
     dispute_status: Optional[StrictStr] = Field(default=None, description="Whether the claim is disputed by the debtor. Returns the description of Debitura.Domain.Model.Receiveables.Invoices.Enums.ClaimDisputeStatus: \"Yes, the claim is disputed\", \"No, the claim is not disputed\", or \"Don't Know\". Null when the dispute status has not been set on the case.", alias="disputeStatus")
     validation: Optional[DebituraDomainServicesCaseValidationCaseValidationLeanDto] = None
     assigned_user: Optional[DebituraWebExternalApiContractsV1CasesAssignedUserDto] = Field(default=None, alias="assignedUser")
-    __properties: ClassVar[List[str]] = ["id", "dateCreated", "dateUpdated", "reference", "creditorReference", "creditorComments", "claimDescription", "grossAmount", "remainder", "interestFees", "reminderFees", "collectionFees", "totalAddedFees", "currency", "isTestCase", "lifecycle", "dueDate", "date", "dateFinished", "dateCollectionStarted", "closeCode", "claimType", "creditorDivisionId", "debtor", "collectionPartner", "creditor", "bankAccount", "blendedAgeUpliftPoints", "preLegalSuccessFee", "solutionUrl", "signingHandoff", "exclusivePeriodEndDate", "disputeStatus", "validation", "assignedUser"]
+    allocation_outstanding: Optional[DebituraWebExternalApiContractsV1CasesInvoiceAllocationOutstandingDto] = Field(default=None, alias="allocationOutstanding")
+    __properties: ClassVar[List[str]] = ["id", "dateCreated", "dateUpdated", "reference", "creditorReference", "creditorComments", "claimDescription", "grossAmount", "remainder", "interestFees", "reminderFees", "collectionFees", "totalAddedFees", "currency", "isTestCase", "lifecycle", "dueDate", "date", "dateFinished", "dateCollectionStarted", "closeCode", "currentEngagementPhase", "claimType", "creditorDivisionId", "debtor", "collectionPartner", "creditor", "bankAccount", "blendedAgeUpliftPoints", "preLegalSuccessFee", "solutionUrl", "signingHandoff", "exclusivePeriodEndDate", "disputeStatus", "validation", "assignedUser", "allocationOutstanding"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -132,6 +135,9 @@ class DebituraWebExternalApiContractsV1CasesInvoiceDto(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of assigned_user
         if self.assigned_user:
             _dict['assignedUser'] = self.assigned_user.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of allocation_outstanding
+        if self.allocation_outstanding:
+            _dict['allocationOutstanding'] = self.allocation_outstanding.to_dict()
         # set to None if date_updated (nullable) is None
         # and model_fields_set contains the field
         if self.date_updated is None and "date_updated" in self.model_fields_set:
@@ -181,6 +187,11 @@ class DebituraWebExternalApiContractsV1CasesInvoiceDto(BaseModel):
         # and model_fields_set contains the field
         if self.close_code is None and "close_code" in self.model_fields_set:
             _dict['closeCode'] = None
+
+        # set to None if current_engagement_phase (nullable) is None
+        # and model_fields_set contains the field
+        if self.current_engagement_phase is None and "current_engagement_phase" in self.model_fields_set:
+            _dict['currentEngagementPhase'] = None
 
         # set to None if claim_type (nullable) is None
         # and model_fields_set contains the field
@@ -250,6 +261,7 @@ class DebituraWebExternalApiContractsV1CasesInvoiceDto(BaseModel):
             "dateFinished": obj.get("dateFinished"),
             "dateCollectionStarted": obj.get("dateCollectionStarted"),
             "closeCode": obj.get("closeCode"),
+            "currentEngagementPhase": obj.get("currentEngagementPhase"),
             "claimType": obj.get("claimType"),
             "creditorDivisionId": obj.get("creditorDivisionId"),
             "debtor": DebituraWebExternalApiContractsV1CasesDebtorDto.from_dict(obj["debtor"]) if obj.get("debtor") is not None else None,
@@ -263,7 +275,8 @@ class DebituraWebExternalApiContractsV1CasesInvoiceDto(BaseModel):
             "exclusivePeriodEndDate": obj.get("exclusivePeriodEndDate"),
             "disputeStatus": obj.get("disputeStatus"),
             "validation": DebituraDomainServicesCaseValidationCaseValidationLeanDto.from_dict(obj["validation"]) if obj.get("validation") is not None else None,
-            "assignedUser": DebituraWebExternalApiContractsV1CasesAssignedUserDto.from_dict(obj["assignedUser"]) if obj.get("assignedUser") is not None else None
+            "assignedUser": DebituraWebExternalApiContractsV1CasesAssignedUserDto.from_dict(obj["assignedUser"]) if obj.get("assignedUser") is not None else None,
+            "allocationOutstanding": DebituraWebExternalApiContractsV1CasesInvoiceAllocationOutstandingDto.from_dict(obj["allocationOutstanding"]) if obj.get("allocationOutstanding") is not None else None
         })
         return _obj
 

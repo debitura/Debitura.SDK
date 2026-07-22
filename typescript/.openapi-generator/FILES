@@ -7,6 +7,7 @@ api/coverage-api.ts
 api/divisions-api.ts
 api/me-api.ts
 api/payments-api.ts
+api/tasks-api.ts
 api/test-cases-api.ts
 api/test-webhooks-api.ts
 api/users-api.ts
@@ -40,6 +41,7 @@ models/debitura-web-external-api-contracts-v1-cases-debtor-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-exclusive-period-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-exclusive-period-extension-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-fire-webhook-response.ts
+models/debitura-web-external-api-contracts-v1-cases-invoice-allocation-outstanding-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-invoice-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-invoice-list-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-jurisdiction-dto.ts
@@ -74,6 +76,9 @@ models/debitura-web-external-api-contracts-v1-leads-lead-quote-list-dto.ts
 models/debitura-web-external-api-contracts-v1-leads-lead-quote-pricing-dto.ts
 models/debitura-web-external-api-contracts-v1-payments-payment-dto.ts
 models/debitura-web-external-api-contracts-v1-payments-payment-related-invoice-dto.ts
+models/debitura-web-external-api-contracts-v1-tasks-task-action-dto.ts
+models/debitura-web-external-api-contracts-v1-tasks-task-dto.ts
+models/debitura-web-external-api-contracts-v1-tasks-task-list-dto.ts
 models/debitura-web-external-api-contracts-v1-users-collection-partner-user-dto.ts
 models/debitura-web-external-api-contracts-v1-users-user-list-dto.ts
 models/debitura-web-external-api-contracts-v1-users-user-relation-dto.ts

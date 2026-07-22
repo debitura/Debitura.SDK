@@ -22,6 +22,7 @@ export * from './debitura-web-external-api-contracts-v1-cases-debtor-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-exclusive-period-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-exclusive-period-extension-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-fire-webhook-response';
+export * from './debitura-web-external-api-contracts-v1-cases-invoice-allocation-outstanding-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-invoice-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-invoice-list-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-jurisdiction-dto';
@@ -56,6 +57,9 @@ export * from './debitura-web-external-api-contracts-v1-leads-lead-quote-list-dt
 export * from './debitura-web-external-api-contracts-v1-leads-lead-quote-pricing-dto';
 export * from './debitura-web-external-api-contracts-v1-payments-payment-dto';
 export * from './debitura-web-external-api-contracts-v1-payments-payment-related-invoice-dto';
+export * from './debitura-web-external-api-contracts-v1-tasks-task-action-dto';
+export * from './debitura-web-external-api-contracts-v1-tasks-task-dto';
+export * from './debitura-web-external-api-contracts-v1-tasks-task-list-dto';
 export * from './debitura-web-external-api-contracts-v1-users-collection-partner-user-dto';
 export * from './debitura-web-external-api-contracts-v1-users-user-list-dto';
 export * from './debitura-web-external-api-contracts-v1-users-user-relation-dto';

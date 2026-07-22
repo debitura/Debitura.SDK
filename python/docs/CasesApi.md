@@ -19,6 +19,7 @@ Method | HTTP request | Description
 [**cases_id_quote_requests_quote_request_id_get**](CasesApi.md#cases_id_quote_requests_quote_request_id_get) | **GET** /cases/{id}/quote-requests/{quoteRequestId} | Get quote request details
 [**cases_id_quote_requests_quote_request_id_quotes_get**](CasesApi.md#cases_id_quote_requests_quote_request_id_quotes_get) | **GET** /cases/{id}/quote-requests/{quoteRequestId}/quotes | List quotes for a quote request
 [**cases_id_quote_requests_quote_request_id_quotes_quote_id_get**](CasesApi.md#cases_id_quote_requests_quote_request_id_quotes_quote_id_get) | **GET** /cases/{id}/quote-requests/{quoteRequestId}/quotes/{quoteId} | Get quote details
+[**cases_id_tasks_get**](CasesApi.md#cases_id_tasks_get) | **GET** /cases/{id}/tasks | List tasks for a case
 [**cases_id_timeline_get**](CasesApi.md#cases_id_timeline_get) | **GET** /cases/{id}/timeline | Fetch case timeline
 [**cases_id_validation_get**](CasesApi.md#cases_id_validation_get) | **GET** /cases/{id}/validation | Get full validation detail for a case
 [**cases_post**](CasesApi.md#cases_post) | **POST** /cases | Create collection case
@@ -1361,6 +1362,97 @@ Name | Type | Description  | Notes
 **400** | Invalid ID |  -  |
 **404** | Quote, quote request, or case not found |  -  |
 **500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **cases_id_tasks_get**
+> List[DebituraWebExternalApiContractsV1TasksTaskDto] cases_id_tasks_get(id, status=status, type=type)
+
+List tasks for a case
+
+Returns every open task (action-item) attached to this specific case. Same data as GET /tasks, scoped to one case — use this when you're already working a specific case and want just its outstanding tasks.  **Note:** account-level tasks that aren't tied to a single case (e.g. SignContract, AssignBankAccount — these block your whole account, not one case) never appear here; call GET /tasks to see those.  **Filtering:** - status (default: Open) — Open or Solved - type (repeatable, e.g. ?type=ReplyToChat) — restrict to specific task types  No pagination — a single case has few tasks.
+
+### Example
+
+* Api Key Authentication (ApiKey):
+* Bearer (JWT) Authentication (Bearer):
+
+```python
+import debitura_debt_collection
+from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_tasks_task_dto import DebituraWebExternalApiContractsV1TasksTaskDto
+from debitura_debt_collection.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://customer-api.debitura.com
+# See configuration.py for a list of all supported configuration parameters.
+configuration = debitura_debt_collection.Configuration(
+    host = "https://customer-api.debitura.com"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKey
+configuration.api_key['ApiKey'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKey'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): Bearer
+configuration = debitura_debt_collection.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with debitura_debt_collection.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = debitura_debt_collection.CasesApi(api_client)
+    id = 'id_example' # str | 
+    status = 'Open' # str |  (optional) (default to 'Open')
+    type = ['type_example'] # List[str] |  (optional)
+
+    try:
+        # List tasks for a case
+        api_response = api_instance.cases_id_tasks_get(id, status=status, type=type)
+        print("The response of CasesApi->cases_id_tasks_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling CasesApi->cases_id_tasks_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **str**|  | 
+ **status** | **str**|  | [optional] [default to &#39;Open&#39;]
+ **type** | [**List[str]**](str.md)|  | [optional] 
+
+### Return type
+
+[**List[DebituraWebExternalApiContractsV1TasksTaskDto]**](DebituraWebExternalApiContractsV1TasksTaskDto.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey), [Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Tasks returned |  -  |
+**400** | ID missing, or invalid status/type filter |  -  |
+**404** | Case not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
