@@ -200,9 +200,4 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
-test/test_debitura_web_external_api_contracts_v1_cases_invoice_allocation_outstanding_dto.py
-test/test_debitura_web_external_api_contracts_v1_tasks_task_action_dto.py
-test/test_debitura_web_external_api_contracts_v1_tasks_task_dto.py
-test/test_debitura_web_external_api_contracts_v1_tasks_task_list_dto.py
-test/test_tasks_api.py
 tox.ini
