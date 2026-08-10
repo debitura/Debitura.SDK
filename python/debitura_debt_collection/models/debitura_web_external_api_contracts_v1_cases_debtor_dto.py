@@ -28,7 +28,7 @@ class DebituraWebExternalApiContractsV1CasesDebtorDto(BaseModel):
     """
     V1 Debtor DTO for external partner APIs. The debtor is the party that owes the debt.
     """ # noqa: E501
-    type: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Debtor type. Valid values: \"Company\" or \"Person\"")
+    type: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Debtor type. Valid values: \"Company\" or \"Private\" (case-insensitive)")
     name: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Debtor name (company name or person's full name)")
     contact_person: Optional[StrictStr] = Field(default=None, description="Contact person at the company (required for companies, not used for persons)", alias="contactPerson")
     company_registration_number: Optional[StrictStr] = Field(default=None, description="Company registration number (VAT number, CVR, org number, etc.)", alias="companyRegistrationNumber")
