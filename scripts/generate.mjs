@@ -103,6 +103,14 @@ function patchPackageJson() {
     "openapi",
   ];
   pkg.publishConfig = { access: "public" };
+  // axios 1.19.0 changed the return type of `request()` to AxiosResponseResult
+  // and exposed a `unique symbol` in its public types. The typescript-axios
+  // template predates that: `createRequestFunction` in common.ts has no return
+  // annotation, so with `declaration: true` tsc cannot name the inferred type
+  // and fails with TS2527 — breaking `npm run build`, and with it the `prepare`
+  // script, the generate workflow, and the npm half of publish.yml.
+  // Cap the range until the generator template supports axios >= 1.19.
+  pkg.dependencies = { ...pkg.dependencies, axios: ">=1.6.1 <1.19.0" };
   writeFileSync(p, JSON.stringify(pkg, null, 2) + "\n");
   console.log("Patched typescript/package.json metadata.");
 }
