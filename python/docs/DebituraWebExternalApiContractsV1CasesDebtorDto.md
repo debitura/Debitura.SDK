@@ -6,7 +6,7 @@ V1 Debtor DTO for external partner APIs. The debtor is the party that owes the d
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | **str** | Debtor type. Valid values: \&quot;Company\&quot; or \&quot;Person\&quot; | 
+**type** | **str** | Debtor type. Valid values: \&quot;Company\&quot; or \&quot;Private\&quot; (case-insensitive) | 
 **name** | **str** | Debtor name (company name or person&#39;s full name) | 
 **contact_person** | **str** | Contact person at the company (required for companies, not used for persons) | [optional] 
 **company_registration_number** | **str** | Company registration number (VAT number, CVR, org number, etc.) | [optional] 

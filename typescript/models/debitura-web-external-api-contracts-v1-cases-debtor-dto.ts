@@ -21,7 +21,7 @@
  */
 export interface DebituraWebExternalApiContractsV1CasesDebtorDto {
     /**
-     * Debtor type. Valid values: \"Company\" or \"Person\"
+     * Debtor type. Valid values: \"Company\" or \"Private\" (case-insensitive)
      * @type {string}
      * @memberof DebituraWebExternalApiContractsV1CasesDebtorDto
      */
