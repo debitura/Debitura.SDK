@@ -23,6 +23,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, Stri
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_debtor_dto import DebituraWebExternalApiContractsV1CasesDebtorDto
+from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_requests_claim_line_dto import DebituraWebExternalApiContractsV1CasesRequestsClaimLineDto
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -38,10 +39,11 @@ class DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestA
     creditor_reference: Optional[Annotated[str, Field(strict=True, max_length=50)]] = Field(default=None, alias="creditorReference")
     debtor: Optional[DebituraWebExternalApiContractsV1CasesDebtorDto] = None
     creditor_division_id: Optional[StrictStr] = Field(default=None, alias="creditorDivisionId")
-    amount_to_recover: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The TOTAL amount to recover for this case. This represents the full principal amount across all invoices (if multiple invoices are bundled).              For multi-invoice cases with different ages, you can optionally provide age breakdown fields (AmountToRecoverOver12Months and AmountToRecoverOver24Months) to enable blended age-based pricing.              If age breakdown fields are omitted, age uplift will be calculated from the invoice due date (single-invoice pricing).", alias="amountToRecover")
+    amount_to_recover: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The TOTAL amount to recover for this case. This represents the full principal amount across all invoices (if multiple invoices are bundled).              For multi-invoice cases with different ages, you can optionally provide age breakdown fields (AmountToRecoverOver12Months and AmountToRecoverOver24Months) to enable blended age-based pricing.              If age breakdown fields are omitted, age uplift will be calculated from the invoice due date (single-invoice pricing).              Required unless you send ClaimLines, in which case this must be omitted or 0 — the server derives the total by summing the outstanding balance of every claim line. Sending both a non-zero AmountToRecover and ClaimLines is rejected, because the two would disagree.", alias="amountToRecover")
     amount_to_recover_over6_months: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="OPTIONAL - MULTI-INVOICE AGE BUCKET PRICING (PRICING ZONE 180-DAY THRESHOLD)              The portion of AmountToRecover that is more than 6 months (180 days) overdue. This includes amounts that are 12+ and 24+ months overdue.              This field is optional and can only be provided alongside AmountToRecoverOver12Months and AmountToRecoverOver24Months. It enables precise pricing tier selection based on the 180-day threshold. When omitted, the system falls back to deriving the threshold from AmountToRecoverOver12Months.              Validation rules: - Must be ≤ AmountToRecover - Must be ≥ AmountToRecoverOver12Months", alias="amountToRecoverOver6Months")
     amount_to_recover_over12_months: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="OPTIONAL - MULTI-INVOICE AGE BUCKET PRICING              The portion of AmountToRecover that is more than 12 months overdue. This includes amounts that are 24+ months overdue.              If provided, AmountToRecoverOver24Months must also be provided. Both fields must be provided together or both omitted.              Used to calculate blended age uplift for multi-invoice cases: - Amount under 12 months = AmountToRecover - AmountToRecoverOver12Months - Amount 12-24 months = AmountToRecoverOver12Months - AmountToRecoverOver24Months - Amount over 24 months = AmountToRecoverOver24Months              Blended uplift formula: ((A12-A24)×10 + A24×20) / AmountToRecover where A12 = AmountToRecoverOver12Months, A24 = AmountToRecoverOver24Months              Validation rules: - Must be ≤ AmountToRecover - Must be ≥ AmountToRecoverOver24Months", alias="amountToRecoverOver12Months")
     amount_to_recover_over24_months: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="OPTIONAL - MULTI-INVOICE AGE BUCKET PRICING              The portion of AmountToRecover that is more than 24 months overdue.              If provided, AmountToRecoverOver12Months must also be provided. Both fields must be provided together or both omitted.              Used to calculate blended age uplift for multi-invoice cases. See AmountToRecoverOver12Months for full details on the calculation.              Validation rules: - Must be ≤ AmountToRecoverOver12Months - Must be ≤ AmountToRecover", alias="amountToRecoverOver24Months")
+    claim_lines: Optional[List[DebituraWebExternalApiContractsV1CasesRequestsClaimLineDto]] = Field(default=None, description="OPTIONAL - the unpaid invoices making up this claim, one line per invoice, each carrying its own outstanding balance and payment deadline.              When supplied, the server derives AmountToRecover and all three cumulative age buckets from these lines, so send them instead of — never alongside — AmountToRecover and the AmountToRecoverOver6/12/24Months fields. Supplying both is rejected with a 400.              Use this whenever the debtor has already part-paid the claim: the buckets are then computed on the same outstanding balances the total is computed on, so the age profile stays honest. Maximum 1000 lines. When DueDate is omitted on the case, it is derived as the oldest line due date; an explicit DueDate is honoured.              Claim lines are a pricing input only — they are not stored and are never shown to the collecting partner.", alias="claimLines")
     skip_debitura_verification: Optional[StrictBool] = Field(default=None, description="This skips the 'Pending verification' for Debitura and puts case straight to partner", alias="skipDebituraVerification")
     skip_creation_emails: Optional[StrictBool] = Field(default=None, description="Deprecated — this field is accepted for backwards compatibility but is ignored server-side. Creation emails are always suppressed; the hourly CasesStarted digest is the single notification channel for all entry points.", alias="skipCreationEmails")
     allow_pending_contracts: Optional[StrictBool] = Field(default=None, description="When true, cases with unsigned contracts (SDCA/POA) are accepted in 'PendingContractSigning' status instead of being rejected with 422. The case transitions automatically once contracts are signed. Default: false (unsigned contracts return 422).", alias="allowPendingContracts")
@@ -50,7 +52,7 @@ class DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestA
     collection_partner_id: Optional[StrictStr] = Field(default=None, description="Optional: Specify a collection partner ID to handle this case. When provided, this partner will be used regardless of lead agent matching rules. The partner must be active and have coverage for the debtor's jurisdiction.", alias="collectionPartnerId")
     assigned_user_email: Optional[Annotated[str, Field(strict=True, max_length=320)]] = Field(default=None, description="Optional: Email address of the creditor team member to assign as the case owner. When provided, email notifications for this case will be sent only to this user instead of all team members. Must correspond to an active member of your team.", alias="assignedUserEmail")
     return_url: Optional[Annotated[str, Field(strict=True, max_length=2048)]] = Field(default=None, description="Optional: URL the creditor user should land on after completing any pending signing chain (SDCA upgrade / PoA / JPA / KYC) on the Debitura Creditors app. Embedded, URL-encoded, into `BusinessErrorResponseApiDTO.SigningHandoff.CombinedSigningUrl` (on 422 with pending signings) and `InvoiceDto.SigningHandoff.CombinedSigningUrl` (on 200 when `AllowPendingContracts=true` with signings remaining).              Must be an absolute http(s) URL. Values that fail validation (relative URLs, non-http schemes, header-injection characters) are silently dropped — the combined URL is still emitted but without the returnUrl query parameter, and the Creditors app falls back to its own safe in-app default landing.              Additive. Existing integrations that omit this field see the same behaviour as before.", alias="returnUrl")
-    __properties: ClassVar[List[str]] = ["currencyCode", "date", "dueDate", "comments", "claimDescription", "creditorReference", "debtor", "creditorDivisionId", "amountToRecover", "amountToRecoverOver6Months", "amountToRecoverOver12Months", "amountToRecoverOver24Months", "skipDebituraVerification", "skipCreationEmails", "allowPendingContracts", "isTest", "tag", "collectionPartnerId", "assignedUserEmail", "returnUrl"]
+    __properties: ClassVar[List[str]] = ["currencyCode", "date", "dueDate", "comments", "claimDescription", "creditorReference", "debtor", "creditorDivisionId", "amountToRecover", "amountToRecoverOver6Months", "amountToRecoverOver12Months", "amountToRecoverOver24Months", "claimLines", "skipDebituraVerification", "skipCreationEmails", "allowPendingContracts", "isTest", "tag", "collectionPartnerId", "assignedUserEmail", "returnUrl"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -94,6 +96,13 @@ class DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestA
         # override the default output from pydantic by calling `to_dict()` of debtor
         if self.debtor:
             _dict['debtor'] = self.debtor.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in claim_lines (list)
+        _items = []
+        if self.claim_lines:
+            for _item in self.claim_lines:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['claimLines'] = _items
         # set to None if currency_code (nullable) is None
         # and model_fields_set contains the field
         if self.currency_code is None and "currency_code" in self.model_fields_set:
@@ -139,6 +148,11 @@ class DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestA
         if self.amount_to_recover_over24_months is None and "amount_to_recover_over24_months" in self.model_fields_set:
             _dict['amountToRecoverOver24Months'] = None
 
+        # set to None if claim_lines (nullable) is None
+        # and model_fields_set contains the field
+        if self.claim_lines is None and "claim_lines" in self.model_fields_set:
+            _dict['claimLines'] = None
+
         # set to None if tag (nullable) is None
         # and model_fields_set contains the field
         if self.tag is None and "tag" in self.model_fields_set:
@@ -183,6 +197,7 @@ class DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestA
             "amountToRecoverOver6Months": obj.get("amountToRecoverOver6Months"),
             "amountToRecoverOver12Months": obj.get("amountToRecoverOver12Months"),
             "amountToRecoverOver24Months": obj.get("amountToRecoverOver24Months"),
+            "claimLines": [DebituraWebExternalApiContractsV1CasesRequestsClaimLineDto.from_dict(_item) for _item in obj["claimLines"]] if obj.get("claimLines") is not None else None,
             "skipDebituraVerification": obj.get("skipDebituraVerification"),
             "skipCreationEmails": obj.get("skipCreationEmails"),
             "allowPendingContracts": obj.get("allowPendingContracts"),

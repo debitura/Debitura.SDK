@@ -16,6 +16,9 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import type { DebituraWebExternalApiContractsV1CasesDebtorDto } from './debitura-web-external-api-contracts-v1-cases-debtor-dto';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { DebituraWebExternalApiContractsV1CasesRequestsClaimLineDto } from './debitura-web-external-api-contracts-v1-cases-requests-claim-line-dto';
 
 /**
  * 
@@ -72,7 +75,7 @@ export interface DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionC
      */
     'creditorDivisionId'?: string | null;
     /**
-     * The TOTAL amount to recover for this case. This represents the full principal amount across all invoices (if multiple invoices are bundled).              For multi-invoice cases with different ages, you can optionally provide age breakdown fields (AmountToRecoverOver12Months and AmountToRecoverOver24Months) to enable blended age-based pricing.              If age breakdown fields are omitted, age uplift will be calculated from the invoice due date (single-invoice pricing).
+     * The TOTAL amount to recover for this case. This represents the full principal amount across all invoices (if multiple invoices are bundled).              For multi-invoice cases with different ages, you can optionally provide age breakdown fields (AmountToRecoverOver12Months and AmountToRecoverOver24Months) to enable blended age-based pricing.              If age breakdown fields are omitted, age uplift will be calculated from the invoice due date (single-invoice pricing).              Required unless you send ClaimLines, in which case this must be omitted or 0 — the server derives the total by summing the outstanding balance of every claim line. Sending both a non-zero AmountToRecover and ClaimLines is rejected, because the two would disagree.
      * @type {number}
      * @memberof DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestApiViewModel
      */
@@ -95,6 +98,12 @@ export interface DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionC
      * @memberof DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestApiViewModel
      */
     'amountToRecoverOver24Months'?: number | null;
+    /**
+     * OPTIONAL - the unpaid invoices making up this claim, one line per invoice, each carrying its own outstanding balance and payment deadline.              When supplied, the server derives AmountToRecover and all three cumulative age buckets from these lines, so send them instead of — never alongside — AmountToRecover and the AmountToRecoverOver6/12/24Months fields. Supplying both is rejected with a 400.              Use this whenever the debtor has already part-paid the claim: the buckets are then computed on the same outstanding balances the total is computed on, so the age profile stays honest. Maximum 1000 lines. When DueDate is omitted on the case, it is derived as the oldest line due date; an explicit DueDate is honoured.              Claim lines are a pricing input only — they are not stored and are never shown to the collecting partner.
+     * @type {Array<DebituraWebExternalApiContractsV1CasesRequestsClaimLineDto>}
+     * @memberof DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestApiViewModel
+     */
+    'claimLines'?: Array<DebituraWebExternalApiContractsV1CasesRequestsClaimLineDto> | null;
     /**
      * This skips the \'Pending verification\' for Debitura and puts case straight to partner
      * @type {boolean}
