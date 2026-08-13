@@ -31,6 +31,7 @@ export * from './debitura-web-external-api-contracts-v1-cases-preview-case-respo
 export * from './debitura-web-external-api-contracts-v1-cases-preview-result-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-pricing-preview-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-requests-advance-test-case-request';
+export * from './debitura-web-external-api-contracts-v1-cases-requests-claim-line-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-requests-create-collection-case-request-api-view-model';
 export * from './debitura-web-external-api-contracts-v1-cases-requests-fire-webhook-request';
 export * from './debitura-web-external-api-contracts-v1-cases-requests-preview-case-request-api-view-model';

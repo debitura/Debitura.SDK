@@ -50,6 +50,7 @@ models/debitura-web-external-api-contracts-v1-cases-preview-case-response-api-vi
 models/debitura-web-external-api-contracts-v1-cases-preview-result-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-pricing-preview-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-requests-advance-test-case-request.ts
+models/debitura-web-external-api-contracts-v1-cases-requests-claim-line-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-requests-create-collection-case-request-api-view-model.ts
 models/debitura-web-external-api-contracts-v1-cases-requests-fire-webhook-request.ts
 models/debitura-web-external-api-contracts-v1-cases-requests-preview-case-request-api-view-model.ts
