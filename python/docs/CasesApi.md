@@ -1370,7 +1370,7 @@ Name | Type | Description  | Notes
 
 List tasks for a case
 
-Returns every open task (action-item) attached to this specific case. Same data as GET /tasks, scoped to one case — use this when you're already working a specific case and want just its outstanding tasks.  **Note:** account-level tasks that aren't tied to a single case (e.g. SignContract, AssignBankAccount — these block your whole account, not one case) never appear here; call GET /tasks to see those.  **Filtering:** - status (default: Open) — Open or Solved - type (repeatable, e.g. ?type=ReplyToChat) — restrict to specific task types  No pagination — a single case has few tasks.
+Returns every open task (action-item) attached to this specific case. Same data as GET /tasks, scoped to one case — use this when you're already working a specific case and want just its outstanding tasks.  **Note:** account-level tasks that aren't tied to a single case (e.g. SignContract, AssignBankAccount — these block your whole account, not one case) never appear here; call GET /tasks to see those. The same goes for lead-scoped tasks (e.g. SelectQuoteWinner), which are attached to a lead rather than a case.  **Note:** the quote-review tasks (IncumbentLegalQuotePending, ReviewQuotes) DO appear here — they are attached to the case — but they are decided on the lead behind it, so they normally carry a `leadId` and their solutionUrl points at that lead rather than this case. On the rare row with no lead recorded, `leadId` is null and solutionUrl falls back to this case's page.  **Filtering:** - status (default: Open) — Open or Solved - type (repeatable, e.g. ?type=ReplyToChat) — restrict to specific task types  No pagination — a single case has few tasks.
 
 ### Example
 

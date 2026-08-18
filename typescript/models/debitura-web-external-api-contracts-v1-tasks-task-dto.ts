@@ -72,7 +72,7 @@ export interface DebituraWebExternalApiContractsV1TasksTaskDto {
      */
     'caseReference'?: string | null;
     /**
-     * The lead this task belongs to (e.g. SelectQuoteWinner), if applicable.
+     * The lead this task belongs to, if any. Populated for lead-scoped tasks, and for the quote-review tasks (`IncumbentLegalQuotePending`, `ReviewQuotes`) — which are attached to a case but decided on the lead, so those carry both `caseId` and `leadId`, and their `solutionUrl` points at the lead. Null for every other task type. On the rare quote-review row with no lead recorded, `leadId` is null and `solutionUrl` falls back to the case page — the two never disagree.
      * @type {string}
      * @memberof DebituraWebExternalApiContractsV1TasksTaskDto
      */
