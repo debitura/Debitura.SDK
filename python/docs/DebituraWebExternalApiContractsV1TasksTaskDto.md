@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **status** | **str** | Either &#x60;\&quot;Open\&quot;&#x60; or &#x60;\&quot;Solved\&quot;&#x60;. | [optional] 
 **case_id** | **str** | The case (collection case / invoice) this task belongs to, when applicable. Null for account-level tasks not tied to a single case (e.g. SignContract, AssignBankAccount). | [optional] 
 **case_reference** | **str** | Your reference for Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.CaseId, if any. | [optional] 
-**lead_id** | **str** | The lead this task belongs to (e.g. SelectQuoteWinner), if applicable. | [optional] 
+**lead_id** | **str** | The lead this task belongs to, if any. Populated for lead-scoped tasks, and for the quote-review tasks (&#x60;IncumbentLegalQuotePending&#x60;, &#x60;ReviewQuotes&#x60;) — which are attached to a case but decided on the lead, so those carry both &#x60;caseId&#x60; and &#x60;leadId&#x60;, and their &#x60;solutionUrl&#x60; points at the lead. Null for every other task type. On the rare quote-review row with no lead recorded, &#x60;leadId&#x60; is null and &#x60;solutionUrl&#x60; falls back to the case page — the two never disagree. | [optional] 
 **deadline** | **datetime** | When this task is due, if a deadline is set. | [optional] 
 **date_created** | **datetime** | When the task was created. | [optional] 
 **date_solved** | **datetime** | When the task was resolved, if it has been. | [optional] 

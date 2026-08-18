@@ -37,7 +37,7 @@ class DebituraWebExternalApiContractsV1TasksTaskDto(BaseModel):
     status: Optional[StrictStr] = Field(default=None, description="Either `\"Open\"` or `\"Solved\"`.")
     case_id: Optional[StrictStr] = Field(default=None, description="The case (collection case / invoice) this task belongs to, when applicable. Null for account-level tasks not tied to a single case (e.g. SignContract, AssignBankAccount).", alias="caseId")
     case_reference: Optional[StrictStr] = Field(default=None, description="Your reference for Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.CaseId, if any.", alias="caseReference")
-    lead_id: Optional[StrictStr] = Field(default=None, description="The lead this task belongs to (e.g. SelectQuoteWinner), if applicable.", alias="leadId")
+    lead_id: Optional[StrictStr] = Field(default=None, description="The lead this task belongs to, if any. Populated for lead-scoped tasks, and for the quote-review tasks (`IncumbentLegalQuotePending`, `ReviewQuotes`) — which are attached to a case but decided on the lead, so those carry both `caseId` and `leadId`, and their `solutionUrl` points at the lead. Null for every other task type. On the rare quote-review row with no lead recorded, `leadId` is null and `solutionUrl` falls back to the case page — the two never disagree.", alias="leadId")
     deadline: Optional[datetime] = Field(default=None, description="When this task is due, if a deadline is set.")
     date_created: Optional[datetime] = Field(default=None, description="When the task was created.", alias="dateCreated")
     date_solved: Optional[datetime] = Field(default=None, description="When the task was resolved, if it has been.", alias="dateSolved")

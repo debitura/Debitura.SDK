@@ -202,5 +202,4 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
-test/test_debitura_web_external_api_contracts_v1_cases_requests_claim_line_dto.py
 tox.ini
