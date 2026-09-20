@@ -13,30 +13,24 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { DebituraWebExternalApiContractsV1PageData } from './debitura-web-external-api-contracts-v1-page-data';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { DebituraWebExternalApiContractsV1UsersCollectionPartnerUserDto } from './debitura-web-external-api-contracts-v1-users-collection-partner-user-dto';
 
 /**
- * 
+ * A case reference scoped to the authenticated timeline viewer.
  * @export
- * @interface DebituraWebExternalApiContractsV1UsersUserListDto
+ * @interface DebituraWebExternalApiContractsV1CasesTimelineRelatedCaseDto
  */
-export interface DebituraWebExternalApiContractsV1UsersUserListDto {
+export interface DebituraWebExternalApiContractsV1CasesTimelineRelatedCaseDto {
     /**
      * 
-     * @type {DebituraWebExternalApiContractsV1PageData}
-     * @memberof DebituraWebExternalApiContractsV1UsersUserListDto
+     * @type {string}
+     * @memberof DebituraWebExternalApiContractsV1CasesTimelineRelatedCaseDto
      */
-    'page': DebituraWebExternalApiContractsV1PageData;
+    'id'?: string;
     /**
      * 
-     * @type {Array<DebituraWebExternalApiContractsV1UsersCollectionPartnerUserDto>}
-     * @memberof DebituraWebExternalApiContractsV1UsersUserListDto
+     * @type {string}
+     * @memberof DebituraWebExternalApiContractsV1CasesTimelineRelatedCaseDto
      */
-    'users'?: Array<DebituraWebExternalApiContractsV1UsersCollectionPartnerUserDto> | null;
+    'reference': string | null;
 }
 

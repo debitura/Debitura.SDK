@@ -20,8 +20,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
-from debitura_debt_collection.models.debitura_domain_model_base_page_data import DebituraDomainModelBasePageData
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_divisions_division_dto import DebituraWebExternalApiContractsV1DivisionsDivisionDto
+from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_page_data import DebituraWebExternalApiContractsV1PageData
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,7 +29,7 @@ class DebituraWebExternalApiContractsV1DivisionsDivisionListDto(BaseModel):
     """
     DebituraWebExternalApiContractsV1DivisionsDivisionListDto
     """ # noqa: E501
-    page: DebituraDomainModelBasePageData
+    page: DebituraWebExternalApiContractsV1PageData
     divisions: Optional[List[DebituraWebExternalApiContractsV1DivisionsDivisionDto]] = None
     __properties: ClassVar[List[str]] = ["page", "divisions"]
 
@@ -99,7 +99,7 @@ class DebituraWebExternalApiContractsV1DivisionsDivisionListDto(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "page": DebituraDomainModelBasePageData.from_dict(obj["page"]) if obj.get("page") is not None else None,
+            "page": DebituraWebExternalApiContractsV1PageData.from_dict(obj["page"]) if obj.get("page") is not None else None,
             "divisions": [DebituraWebExternalApiContractsV1DivisionsDivisionDto.from_dict(_item) for _item in obj["divisions"]] if obj.get("divisions") is not None else None
         })
         return _obj

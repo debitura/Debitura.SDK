@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **id** | **str** |  | [optional] 
 **date_created** | **datetime** |  | [optional] 
 **date_updated** | **datetime** |  | [optional] 
-**role** | [**DebituraDomainModelCommunicationCenterChatsChatRole**](DebituraDomainModelCommunicationCenterChatsChatRole.md) |  | [optional] 
+**role** | [**DebituraWebExternalApiContractsV1ChatsChatRoleDto**](DebituraWebExternalApiContractsV1ChatsChatRoleDto.md) |  | [optional] 
 **role_label** | **str** | Human-readable label for the role (e.g., \&quot;Partner\&quot;, \&quot;Creditor\&quot;, \&quot;Managed by partner\&quot;). Companion to Debitura.Web.ExternalApi.Contracts.V1.Chats.ChatDto.Role — always present when Role is set. | [optional] 
 **message** | **str** |  | [optional] 
 **is_seen** | **bool** |  | [optional] 

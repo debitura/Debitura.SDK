@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**page** | [**DebituraDomainModelBasePageData**](DebituraDomainModelBasePageData.md) |  | 
+**page** | [**DebituraWebExternalApiContractsV1PageData**](DebituraWebExternalApiContractsV1PageData.md) |  | 
 **cases** | [**List[DebituraWebExternalApiContractsV1CasesInvoiceDto]**](DebituraWebExternalApiContractsV1CasesInvoiceDto.md) |  | [optional] 
 
 ## Example

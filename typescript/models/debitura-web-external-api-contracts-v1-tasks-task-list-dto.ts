@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { DebituraDomainModelBasePageData } from './debitura-domain-model-base-page-data';
+import type { DebituraWebExternalApiContractsV1PageData } from './debitura-web-external-api-contracts-v1-page-data';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { DebituraWebExternalApiContractsV1TasksTaskDto } from './debitura-web-external-api-contracts-v1-tasks-task-dto';
@@ -28,10 +28,10 @@ import type { DebituraWebExternalApiContractsV1TasksTaskDto } from './debitura-w
 export interface DebituraWebExternalApiContractsV1TasksTaskListDto {
     /**
      * 
-     * @type {DebituraDomainModelBasePageData}
+     * @type {DebituraWebExternalApiContractsV1PageData}
      * @memberof DebituraWebExternalApiContractsV1TasksTaskListDto
      */
-    'page': DebituraDomainModelBasePageData;
+    'page': DebituraWebExternalApiContractsV1PageData;
     /**
      * 
      * @type {Array<DebituraWebExternalApiContractsV1TasksTaskDto>}

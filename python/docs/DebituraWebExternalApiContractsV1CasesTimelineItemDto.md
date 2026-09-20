@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **type** | **str** |  | 
 **title** | **str** |  | 
 **description** | **str** |  | 
+**related_cases** | [**List[DebituraWebExternalApiContractsV1CasesTimelineRelatedCaseDto]**](DebituraWebExternalApiContractsV1CasesTimelineRelatedCaseDto.md) | Related cases that the authenticated timeline viewer may open. Merge timeline entries use these safe references instead of exposing persisted case identifiers in text. | [optional] 
 **actor** | [**DebituraWebExternalApiContractsV1CasesTimelineActorDto**](DebituraWebExternalApiContractsV1CasesTimelineActorDto.md) |  | [optional] 
 
 ## Example

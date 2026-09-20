@@ -40,7 +40,7 @@ Name | Type | Description | Notes
 **signing_handoff** | [**DebituraWebExternalApiContractsV1CasesSigningHandoffDto**](DebituraWebExternalApiContractsV1CasesSigningHandoffDto.md) |  | [optional] 
 **exclusive_period_end_date** | **datetime** | The date the exclusive collection period ends (or ended). Null if no collection period has been created for this case (e.g. custom-terms cases). Use GET /cases/{id}/exclusive-period for the full chain including extensions. | [optional] 
 **dispute_status** | **str** | Whether the claim is disputed by the debtor. Returns the description of Debitura.Domain.Model.Receiveables.Invoices.Enums.ClaimDisputeStatus: \&quot;Yes, the claim is disputed\&quot;, \&quot;No, the claim is not disputed\&quot;, or \&quot;Don&#39;t Know\&quot;. Null when the dispute status has not been set on the case. | [optional] 
-**validation** | [**DebituraDomainServicesCaseValidationCaseValidationLeanDto**](DebituraDomainServicesCaseValidationCaseValidationLeanDto.md) |  | [optional] 
+**validation** | [**DebituraWebExternalApiContractsV1CasesCaseValidationLeanDto**](DebituraWebExternalApiContractsV1CasesCaseValidationLeanDto.md) |  | [optional] 
 **assigned_user** | [**DebituraWebExternalApiContractsV1CasesAssignedUserDto**](DebituraWebExternalApiContractsV1CasesAssignedUserDto.md) |  | [optional] 
 **allocation_outstanding** | [**DebituraWebExternalApiContractsV1CasesInvoiceAllocationOutstandingDto**](DebituraWebExternalApiContractsV1CasesInvoiceAllocationOutstandingDto.md) |  | [optional] 
 

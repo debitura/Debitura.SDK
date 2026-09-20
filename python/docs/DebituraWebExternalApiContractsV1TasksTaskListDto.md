@@ -6,7 +6,7 @@ Paged list of tasks, returned by `GET /tasks`.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**page** | [**DebituraDomainModelBasePageData**](DebituraDomainModelBasePageData.md) |  | 
+**page** | [**DebituraWebExternalApiContractsV1PageData**](DebituraWebExternalApiContractsV1PageData.md) |  | 
 **tasks** | [**List[DebituraWebExternalApiContractsV1TasksTaskDto]**](DebituraWebExternalApiContractsV1TasksTaskDto.md) |  | [optional] 
 
 ## Example

@@ -301,7 +301,7 @@ export const DivisionsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Creates a new division for the authenticated creditor.  Divisions allow creditors to organize cases under different business units, branches, or departments.  **Required Fields:** - companyName - Name of the division - city - City where the division is located - countryCode - ISO 3166-1 alpha-2 country code (e.g. \'US\', \'DE\', \'DK\')  **Optional Fields:** - registrationNumber - Company registration number (CVR, VAT, etc.) - address, zipCode, state - Full address details - officeEmail, officePhone - Contact information
          * @summary Create a new division.
-         * @param {string} [idempotencyKey] Optional idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with &#x60;Type: \&quot;IdempotencyConflict\&quot;&#x60;. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.
+         * @param {string} [idempotencyKey] Optional non-empty, non-whitespace idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with &#x60;businessErrors[0].type: \&quot;IdempotencyConflict\&quot;&#x60;. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.
          * @param {DebituraWebExternalApiContractsV1DivisionsCreateDivisionRequestDto} [debituraWebExternalApiContractsV1DivisionsCreateDivisionRequestDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -438,7 +438,7 @@ export const DivisionsApiFp = function(configuration?: Configuration) {
         /**
          * Creates a new division for the authenticated creditor.  Divisions allow creditors to organize cases under different business units, branches, or departments.  **Required Fields:** - companyName - Name of the division - city - City where the division is located - countryCode - ISO 3166-1 alpha-2 country code (e.g. \'US\', \'DE\', \'DK\')  **Optional Fields:** - registrationNumber - Company registration number (CVR, VAT, etc.) - address, zipCode, state - Full address details - officeEmail, officePhone - Contact information
          * @summary Create a new division.
-         * @param {string} [idempotencyKey] Optional idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with &#x60;Type: \&quot;IdempotencyConflict\&quot;&#x60;. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.
+         * @param {string} [idempotencyKey] Optional non-empty, non-whitespace idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with &#x60;businessErrors[0].type: \&quot;IdempotencyConflict\&quot;&#x60;. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.
          * @param {DebituraWebExternalApiContractsV1DivisionsCreateDivisionRequestDto} [debituraWebExternalApiContractsV1DivisionsCreateDivisionRequestDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -644,7 +644,7 @@ export interface DivisionsApiDivisionsIdarchivePostRequest {
  */
 export interface DivisionsApiDivisionsPostRequest {
     /**
-     * Optional idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with &#x60;Type: \&quot;IdempotencyConflict\&quot;&#x60;. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.
+     * Optional non-empty, non-whitespace idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with &#x60;businessErrors[0].type: \&quot;IdempotencyConflict\&quot;&#x60;. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.
      * @type {string}
      * @memberof DivisionsApiDivisionsPost
      */

@@ -22,6 +22,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_timeline_actor_dto import DebituraWebExternalApiContractsV1CasesTimelineActorDto
+from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_timeline_related_case_dto import DebituraWebExternalApiContractsV1CasesTimelineRelatedCaseDto
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,8 +34,9 @@ class DebituraWebExternalApiContractsV1CasesTimelineItemDto(BaseModel):
     type: Optional[StrictStr]
     title: Optional[StrictStr]
     description: Optional[StrictStr]
+    related_cases: Optional[List[DebituraWebExternalApiContractsV1CasesTimelineRelatedCaseDto]] = Field(default=None, description="Related cases that the authenticated timeline viewer may open. Merge timeline entries use these safe references instead of exposing persisted case identifiers in text.", alias="relatedCases")
     actor: Optional[DebituraWebExternalApiContractsV1CasesTimelineActorDto] = None
-    __properties: ClassVar[List[str]] = ["date", "type", "title", "description", "actor"]
+    __properties: ClassVar[List[str]] = ["date", "type", "title", "description", "relatedCases", "actor"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -75,6 +77,13 @@ class DebituraWebExternalApiContractsV1CasesTimelineItemDto(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in related_cases (list)
+        _items = []
+        if self.related_cases:
+            for _item in self.related_cases:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['relatedCases'] = _items
         # override the default output from pydantic by calling `to_dict()` of actor
         if self.actor:
             _dict['actor'] = self.actor.to_dict()
@@ -93,6 +102,11 @@ class DebituraWebExternalApiContractsV1CasesTimelineItemDto(BaseModel):
         if self.description is None and "description" in self.model_fields_set:
             _dict['description'] = None
 
+        # set to None if related_cases (nullable) is None
+        # and model_fields_set contains the field
+        if self.related_cases is None and "related_cases" in self.model_fields_set:
+            _dict['relatedCases'] = None
+
         return _dict
 
     @classmethod
@@ -109,6 +123,7 @@ class DebituraWebExternalApiContractsV1CasesTimelineItemDto(BaseModel):
             "type": obj.get("type"),
             "title": obj.get("title"),
             "description": obj.get("description"),
+            "relatedCases": [DebituraWebExternalApiContractsV1CasesTimelineRelatedCaseDto.from_dict(_item) for _item in obj["relatedCases"]] if obj.get("relatedCases") is not None else None,
             "actor": DebituraWebExternalApiContractsV1CasesTimelineActorDto.from_dict(obj["actor"]) if obj.get("actor") is not None else None
         })
         return _obj

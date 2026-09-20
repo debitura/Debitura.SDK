@@ -13,30 +13,42 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { DebituraWebExternalApiContractsV1PageData } from './debitura-web-external-api-contracts-v1-page-data';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { DebituraWebExternalApiContractsV1UsersCollectionPartnerUserDto } from './debitura-web-external-api-contracts-v1-users-collection-partner-user-dto';
 
 /**
- * 
+ * Stable v1 pagination metadata shared by public list responses.
  * @export
- * @interface DebituraWebExternalApiContractsV1UsersUserListDto
+ * @interface DebituraWebExternalApiContractsV1PageData
  */
-export interface DebituraWebExternalApiContractsV1UsersUserListDto {
+export interface DebituraWebExternalApiContractsV1PageData {
     /**
      * 
-     * @type {DebituraWebExternalApiContractsV1PageData}
-     * @memberof DebituraWebExternalApiContractsV1UsersUserListDto
+     * @type {number}
+     * @memberof DebituraWebExternalApiContractsV1PageData
      */
-    'page': DebituraWebExternalApiContractsV1PageData;
+    'totalResults'?: number;
     /**
      * 
-     * @type {Array<DebituraWebExternalApiContractsV1UsersCollectionPartnerUserDto>}
-     * @memberof DebituraWebExternalApiContractsV1UsersUserListDto
+     * @type {number}
+     * @memberof DebituraWebExternalApiContractsV1PageData
      */
-    'users'?: Array<DebituraWebExternalApiContractsV1UsersCollectionPartnerUserDto> | null;
+    'pageSize'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DebituraWebExternalApiContractsV1PageData
+     */
+    'currentPage'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DebituraWebExternalApiContractsV1PageData
+     */
+    'responseCount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DebituraWebExternalApiContractsV1PageData
+     */
+    'totalPages'?: number;
 }
 

@@ -18,20 +18,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_invoice_dto import DebituraWebExternalApiContractsV1CasesInvoiceDto
-from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_page_data import DebituraWebExternalApiContractsV1PageData
 from typing import Optional, Set
 from typing_extensions import Self
 
-class DebituraWebExternalApiContractsV1CasesInvoiceListDto(BaseModel):
+class DebituraWebExternalApiContractsV1CasesTimelineRelatedCaseDto(BaseModel):
     """
-    DebituraWebExternalApiContractsV1CasesInvoiceListDto
+    A case reference scoped to the authenticated timeline viewer.
     """ # noqa: E501
-    page: DebituraWebExternalApiContractsV1PageData
-    cases: Optional[List[DebituraWebExternalApiContractsV1CasesInvoiceDto]] = None
-    __properties: ClassVar[List[str]] = ["page", "cases"]
+    id: Optional[StrictStr] = None
+    reference: Optional[StrictStr]
+    __properties: ClassVar[List[str]] = ["id", "reference"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -51,7 +49,7 @@ class DebituraWebExternalApiContractsV1CasesInvoiceListDto(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of DebituraWebExternalApiContractsV1CasesInvoiceListDto from a JSON string"""
+        """Create an instance of DebituraWebExternalApiContractsV1CasesTimelineRelatedCaseDto from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,26 +70,16 @@ class DebituraWebExternalApiContractsV1CasesInvoiceListDto(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of page
-        if self.page:
-            _dict['page'] = self.page.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in cases (list)
-        _items = []
-        if self.cases:
-            for _item in self.cases:
-                if _item:
-                    _items.append(_item.to_dict())
-            _dict['cases'] = _items
-        # set to None if cases (nullable) is None
+        # set to None if reference (nullable) is None
         # and model_fields_set contains the field
-        if self.cases is None and "cases" in self.model_fields_set:
-            _dict['cases'] = None
+        if self.reference is None and "reference" in self.model_fields_set:
+            _dict['reference'] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of DebituraWebExternalApiContractsV1CasesInvoiceListDto from a dict"""
+        """Create an instance of DebituraWebExternalApiContractsV1CasesTimelineRelatedCaseDto from a dict"""
         if obj is None:
             return None
 
@@ -99,8 +87,8 @@ class DebituraWebExternalApiContractsV1CasesInvoiceListDto(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "page": DebituraWebExternalApiContractsV1PageData.from_dict(obj["page"]) if obj.get("page") is not None else None,
-            "cases": [DebituraWebExternalApiContractsV1CasesInvoiceDto.from_dict(_item) for _item in obj["cases"]] if obj.get("cases") is not None else None
+            "id": obj.get("id"),
+            "reference": obj.get("reference")
         })
         return _obj
 

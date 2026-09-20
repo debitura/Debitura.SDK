@@ -13,30 +13,19 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { DebituraWebExternalApiContractsV1PageData } from './debitura-web-external-api-contracts-v1-page-data';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { DebituraWebExternalApiContractsV1UsersCollectionPartnerUserDto } from './debitura-web-external-api-contracts-v1-users-collection-partner-user-dto';
 
 /**
- * 
+ * Stable v1 survey-generation cadence values. Serialized as their numeric values.
  * @export
- * @interface DebituraWebExternalApiContractsV1UsersUserListDto
+ * @enum {string}
  */
-export interface DebituraWebExternalApiContractsV1UsersUserListDto {
-    /**
-     * 
-     * @type {DebituraWebExternalApiContractsV1PageData}
-     * @memberof DebituraWebExternalApiContractsV1UsersUserListDto
-     */
-    'page': DebituraWebExternalApiContractsV1PageData;
-    /**
-     * 
-     * @type {Array<DebituraWebExternalApiContractsV1UsersCollectionPartnerUserDto>}
-     * @memberof DebituraWebExternalApiContractsV1UsersUserListDto
-     */
-    'users'?: Array<DebituraWebExternalApiContractsV1UsersCollectionPartnerUserDto> | null;
-}
+
+export const DebituraWebExternalApiContractsV1CasesSurveyCadenceModeDto = {
+    NUMBER_0: 0,
+    NUMBER_1: 1
+} as const;
+
+export type DebituraWebExternalApiContractsV1CasesSurveyCadenceModeDto = typeof DebituraWebExternalApiContractsV1CasesSurveyCadenceModeDto[keyof typeof DebituraWebExternalApiContractsV1CasesSurveyCadenceModeDto];
+
+
 

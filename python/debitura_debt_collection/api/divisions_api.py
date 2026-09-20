@@ -1706,7 +1706,7 @@ class DivisionsApi:
     @validate_call
     def divisions_post(
         self,
-        idempotency_key: Annotated[Optional[Annotated[str, Field(strict=True, max_length=255)]], Field(description="Optional idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with `Type: \"IdempotencyConflict\"`. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.")] = None,
+        idempotency_key: Annotated[Optional[Annotated[str, Field(min_length=1, strict=True, max_length=255)]], Field(description="Optional non-empty, non-whitespace idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with `businessErrors[0].type: \"IdempotencyConflict\"`. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.")] = None,
         debitura_web_external_api_contracts_v1_divisions_create_division_request_dto: Optional[DebituraWebExternalApiContractsV1DivisionsCreateDivisionRequestDto] = None,
         _request_timeout: Union[
             None,
@@ -1725,7 +1725,7 @@ class DivisionsApi:
 
         Creates a new division for the authenticated creditor.  Divisions allow creditors to organize cases under different business units, branches, or departments.  **Required Fields:** - companyName - Name of the division - city - City where the division is located - countryCode - ISO 3166-1 alpha-2 country code (e.g. 'US', 'DE', 'DK')  **Optional Fields:** - registrationNumber - Company registration number (CVR, VAT, etc.) - address, zipCode, state - Full address details - officeEmail, officePhone - Contact information
 
-        :param idempotency_key: Optional idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with `Type: \"IdempotencyConflict\"`. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.
+        :param idempotency_key: Optional non-empty, non-whitespace idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with `businessErrors[0].type: \"IdempotencyConflict\"`. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.
         :type idempotency_key: str
         :param debitura_web_external_api_contracts_v1_divisions_create_division_request_dto:
         :type debitura_web_external_api_contracts_v1_divisions_create_division_request_dto: DebituraWebExternalApiContractsV1DivisionsCreateDivisionRequestDto
@@ -1779,7 +1779,7 @@ class DivisionsApi:
     @validate_call
     def divisions_post_with_http_info(
         self,
-        idempotency_key: Annotated[Optional[Annotated[str, Field(strict=True, max_length=255)]], Field(description="Optional idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with `Type: \"IdempotencyConflict\"`. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.")] = None,
+        idempotency_key: Annotated[Optional[Annotated[str, Field(min_length=1, strict=True, max_length=255)]], Field(description="Optional non-empty, non-whitespace idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with `businessErrors[0].type: \"IdempotencyConflict\"`. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.")] = None,
         debitura_web_external_api_contracts_v1_divisions_create_division_request_dto: Optional[DebituraWebExternalApiContractsV1DivisionsCreateDivisionRequestDto] = None,
         _request_timeout: Union[
             None,
@@ -1798,7 +1798,7 @@ class DivisionsApi:
 
         Creates a new division for the authenticated creditor.  Divisions allow creditors to organize cases under different business units, branches, or departments.  **Required Fields:** - companyName - Name of the division - city - City where the division is located - countryCode - ISO 3166-1 alpha-2 country code (e.g. 'US', 'DE', 'DK')  **Optional Fields:** - registrationNumber - Company registration number (CVR, VAT, etc.) - address, zipCode, state - Full address details - officeEmail, officePhone - Contact information
 
-        :param idempotency_key: Optional idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with `Type: \"IdempotencyConflict\"`. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.
+        :param idempotency_key: Optional non-empty, non-whitespace idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with `businessErrors[0].type: \"IdempotencyConflict\"`. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.
         :type idempotency_key: str
         :param debitura_web_external_api_contracts_v1_divisions_create_division_request_dto:
         :type debitura_web_external_api_contracts_v1_divisions_create_division_request_dto: DebituraWebExternalApiContractsV1DivisionsCreateDivisionRequestDto
@@ -1852,7 +1852,7 @@ class DivisionsApi:
     @validate_call
     def divisions_post_without_preload_content(
         self,
-        idempotency_key: Annotated[Optional[Annotated[str, Field(strict=True, max_length=255)]], Field(description="Optional idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with `Type: \"IdempotencyConflict\"`. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.")] = None,
+        idempotency_key: Annotated[Optional[Annotated[str, Field(min_length=1, strict=True, max_length=255)]], Field(description="Optional non-empty, non-whitespace idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with `businessErrors[0].type: \"IdempotencyConflict\"`. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.")] = None,
         debitura_web_external_api_contracts_v1_divisions_create_division_request_dto: Optional[DebituraWebExternalApiContractsV1DivisionsCreateDivisionRequestDto] = None,
         _request_timeout: Union[
             None,
@@ -1871,7 +1871,7 @@ class DivisionsApi:
 
         Creates a new division for the authenticated creditor.  Divisions allow creditors to organize cases under different business units, branches, or departments.  **Required Fields:** - companyName - Name of the division - city - City where the division is located - countryCode - ISO 3166-1 alpha-2 country code (e.g. 'US', 'DE', 'DK')  **Optional Fields:** - registrationNumber - Company registration number (CVR, VAT, etc.) - address, zipCode, state - Full address details - officeEmail, officePhone - Contact information
 
-        :param idempotency_key: Optional idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with `Type: \"IdempotencyConflict\"`. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.
+        :param idempotency_key: Optional non-empty, non-whitespace idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with `businessErrors[0].type: \"IdempotencyConflict\"`. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key.
         :type idempotency_key: str
         :param debitura_web_external_api_contracts_v1_divisions_create_division_request_dto:
         :type debitura_web_external_api_contracts_v1_divisions_create_division_request_dto: DebituraWebExternalApiContractsV1DivisionsCreateDivisionRequestDto

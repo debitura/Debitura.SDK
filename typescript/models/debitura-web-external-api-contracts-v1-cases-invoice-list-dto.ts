@@ -15,10 +15,10 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { DebituraDomainModelBasePageData } from './debitura-domain-model-base-page-data';
+import type { DebituraWebExternalApiContractsV1CasesInvoiceDto } from './debitura-web-external-api-contracts-v1-cases-invoice-dto';
 // May contain unused imports in some cases
 // @ts-ignore
-import type { DebituraWebExternalApiContractsV1CasesInvoiceDto } from './debitura-web-external-api-contracts-v1-cases-invoice-dto';
+import type { DebituraWebExternalApiContractsV1PageData } from './debitura-web-external-api-contracts-v1-page-data';
 
 /**
  * 
@@ -28,10 +28,10 @@ import type { DebituraWebExternalApiContractsV1CasesInvoiceDto } from './debitur
 export interface DebituraWebExternalApiContractsV1CasesInvoiceListDto {
     /**
      * 
-     * @type {DebituraDomainModelBasePageData}
+     * @type {DebituraWebExternalApiContractsV1PageData}
      * @memberof DebituraWebExternalApiContractsV1CasesInvoiceListDto
      */
-    'page': DebituraDomainModelBasePageData;
+    'page': DebituraWebExternalApiContractsV1PageData;
     /**
      * 
      * @type {Array<DebituraWebExternalApiContractsV1CasesInvoiceDto>}

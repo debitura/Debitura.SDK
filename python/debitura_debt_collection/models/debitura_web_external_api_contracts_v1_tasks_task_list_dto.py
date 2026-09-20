@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
-from debitura_debt_collection.models.debitura_domain_model_base_page_data import DebituraDomainModelBasePageData
+from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_page_data import DebituraWebExternalApiContractsV1PageData
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_tasks_task_dto import DebituraWebExternalApiContractsV1TasksTaskDto
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,7 +29,7 @@ class DebituraWebExternalApiContractsV1TasksTaskListDto(BaseModel):
     """
     Paged list of tasks, returned by `GET /tasks`.
     """ # noqa: E501
-    page: DebituraDomainModelBasePageData
+    page: DebituraWebExternalApiContractsV1PageData
     tasks: Optional[List[DebituraWebExternalApiContractsV1TasksTaskDto]] = None
     __properties: ClassVar[List[str]] = ["page", "tasks"]
 
@@ -99,7 +99,7 @@ class DebituraWebExternalApiContractsV1TasksTaskListDto(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "page": DebituraDomainModelBasePageData.from_dict(obj["page"]) if obj.get("page") is not None else None,
+            "page": DebituraWebExternalApiContractsV1PageData.from_dict(obj["page"]) if obj.get("page") is not None else None,
             "tasks": [DebituraWebExternalApiContractsV1TasksTaskDto.from_dict(_item) for _item in obj["tasks"]] if obj.get("tasks") is not None else None
         })
         return _obj

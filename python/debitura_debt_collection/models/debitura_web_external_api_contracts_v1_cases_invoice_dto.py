@@ -21,9 +21,9 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from debitura_debt_collection.models.debitura_domain_services_case_validation_case_validation_lean_dto import DebituraDomainServicesCaseValidationCaseValidationLeanDto
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_assigned_user_dto import DebituraWebExternalApiContractsV1CasesAssignedUserDto
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_bank_account_dto import DebituraWebExternalApiContractsV1CasesBankAccountDto
+from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_case_validation_lean_dto import DebituraWebExternalApiContractsV1CasesCaseValidationLeanDto
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_collection_partner_dto import DebituraWebExternalApiContractsV1CasesCollectionPartnerDto
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_creditor_dto import DebituraWebExternalApiContractsV1CasesCreditorDto
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_debtor_dto import DebituraWebExternalApiContractsV1CasesDebtorDto
@@ -70,7 +70,7 @@ class DebituraWebExternalApiContractsV1CasesInvoiceDto(BaseModel):
     signing_handoff: Optional[DebituraWebExternalApiContractsV1CasesSigningHandoffDto] = Field(default=None, alias="signingHandoff")
     exclusive_period_end_date: Optional[datetime] = Field(default=None, description="The date the exclusive collection period ends (or ended). Null if no collection period has been created for this case (e.g. custom-terms cases). Use GET /cases/{id}/exclusive-period for the full chain including extensions.", alias="exclusivePeriodEndDate")
     dispute_status: Optional[StrictStr] = Field(default=None, description="Whether the claim is disputed by the debtor. Returns the description of Debitura.Domain.Model.Receiveables.Invoices.Enums.ClaimDisputeStatus: \"Yes, the claim is disputed\", \"No, the claim is not disputed\", or \"Don't Know\". Null when the dispute status has not been set on the case.", alias="disputeStatus")
-    validation: Optional[DebituraDomainServicesCaseValidationCaseValidationLeanDto] = None
+    validation: Optional[DebituraWebExternalApiContractsV1CasesCaseValidationLeanDto] = None
     assigned_user: Optional[DebituraWebExternalApiContractsV1CasesAssignedUserDto] = Field(default=None, alias="assignedUser")
     allocation_outstanding: Optional[DebituraWebExternalApiContractsV1CasesInvoiceAllocationOutstandingDto] = Field(default=None, alias="allocationOutstanding")
     __properties: ClassVar[List[str]] = ["id", "dateCreated", "dateUpdated", "reference", "creditorReference", "creditorComments", "claimDescription", "grossAmount", "remainder", "interestFees", "reminderFees", "collectionFees", "totalAddedFees", "currency", "isTestCase", "lifecycle", "dueDate", "date", "dateFinished", "dateCollectionStarted", "closeCode", "currentEngagementPhase", "claimType", "creditorDivisionId", "debtor", "collectionPartner", "creditor", "bankAccount", "blendedAgeUpliftPoints", "preLegalSuccessFee", "solutionUrl", "signingHandoff", "exclusivePeriodEndDate", "disputeStatus", "validation", "assignedUser", "allocationOutstanding"]
@@ -274,7 +274,7 @@ class DebituraWebExternalApiContractsV1CasesInvoiceDto(BaseModel):
             "signingHandoff": DebituraWebExternalApiContractsV1CasesSigningHandoffDto.from_dict(obj["signingHandoff"]) if obj.get("signingHandoff") is not None else None,
             "exclusivePeriodEndDate": obj.get("exclusivePeriodEndDate"),
             "disputeStatus": obj.get("disputeStatus"),
-            "validation": DebituraDomainServicesCaseValidationCaseValidationLeanDto.from_dict(obj["validation"]) if obj.get("validation") is not None else None,
+            "validation": DebituraWebExternalApiContractsV1CasesCaseValidationLeanDto.from_dict(obj["validation"]) if obj.get("validation") is not None else None,
             "assignedUser": DebituraWebExternalApiContractsV1CasesAssignedUserDto.from_dict(obj["assignedUser"]) if obj.get("assignedUser") is not None else None,
             "allocationOutstanding": DebituraWebExternalApiContractsV1CasesInvoiceAllocationOutstandingDto.from_dict(obj["allocationOutstanding"]) if obj.get("allocationOutstanding") is not None else None
         })

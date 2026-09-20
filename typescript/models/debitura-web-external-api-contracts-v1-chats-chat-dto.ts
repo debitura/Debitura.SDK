@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { DebituraDomainModelCommunicationCenterChatsChatRole } from './debitura-domain-model-communication-center-chats-chat-role';
+import type { DebituraWebExternalApiContractsV1ChatsChatRoleDto } from './debitura-web-external-api-contracts-v1-chats-chat-role-dto';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { DebituraWebExternalApiContractsV1UsersUserRelationDto } from './debitura-web-external-api-contracts-v1-users-user-relation-dto';
@@ -46,10 +46,10 @@ export interface DebituraWebExternalApiContractsV1ChatsChatDto {
     'dateUpdated'?: string | null;
     /**
      * 
-     * @type {DebituraDomainModelCommunicationCenterChatsChatRole}
+     * @type {DebituraWebExternalApiContractsV1ChatsChatRoleDto}
      * @memberof DebituraWebExternalApiContractsV1ChatsChatDto
      */
-    'role'?: DebituraDomainModelCommunicationCenterChatsChatRole;
+    'role'?: DebituraWebExternalApiContractsV1ChatsChatRoleDto;
     /**
      * Human-readable label for the role (e.g., \"Partner\", \"Creditor\", \"Managed by partner\"). Companion to Debitura.Web.ExternalApi.Contracts.V1.Chats.ChatDto.Role — always present when Role is set.
      * @type {string}
