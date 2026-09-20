@@ -15,10 +15,10 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { DebituraDomainModelBasePageData } from './debitura-domain-model-base-page-data';
+import type { DebituraWebExternalApiContractsV1DivisionsDivisionDto } from './debitura-web-external-api-contracts-v1-divisions-division-dto';
 // May contain unused imports in some cases
 // @ts-ignore
-import type { DebituraWebExternalApiContractsV1DivisionsDivisionDto } from './debitura-web-external-api-contracts-v1-divisions-division-dto';
+import type { DebituraWebExternalApiContractsV1PageData } from './debitura-web-external-api-contracts-v1-page-data';
 
 /**
  * 
@@ -28,10 +28,10 @@ import type { DebituraWebExternalApiContractsV1DivisionsDivisionDto } from './de
 export interface DebituraWebExternalApiContractsV1DivisionsDivisionListDto {
     /**
      * 
-     * @type {DebituraDomainModelBasePageData}
+     * @type {DebituraWebExternalApiContractsV1PageData}
      * @memberof DebituraWebExternalApiContractsV1DivisionsDivisionListDto
      */
-    'page': DebituraDomainModelBasePageData;
+    'page': DebituraWebExternalApiContractsV1PageData;
     /**
      * 
      * @type {Array<DebituraWebExternalApiContractsV1DivisionsDivisionDto>}

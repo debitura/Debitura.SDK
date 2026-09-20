@@ -1675,7 +1675,7 @@ configuration = debitura_debt_collection.Configuration(
 with debitura_debt_collection.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = debitura_debt_collection.CasesApi(api_client)
-    idempotency_key = 'idempotency_key_example' # str | Optional idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with `Type: \"IdempotencyConflict\"`. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key. (optional)
+    idempotency_key = 'idempotency_key_example' # str | Optional non-empty, non-whitespace idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with `businessErrors[0].type: \"IdempotencyConflict\"`. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key. (optional)
     debitura_web_external_api_contracts_v1_cases_requests_create_collection_case_request_api_view_model = debitura_debt_collection.DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestApiViewModel() # DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestApiViewModel |  (optional)
 
     try:
@@ -1694,7 +1694,7 @@ with debitura_debt_collection.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **idempotency_key** | **str**| Optional idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with &#x60;Type: \&quot;IdempotencyConflict\&quot;&#x60;. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key. | [optional] 
+ **idempotency_key** | **str**| Optional non-empty, non-whitespace idempotency key (max 255 characters) for safely retrying this request. If a previous request used the same key with an identical body, the original terminal response is replayed verbatim. Reusing the key with a different body returns 422 with &#x60;businessErrors[0].type: \&quot;IdempotencyConflict\&quot;&#x60;. Field-level 400 validation errors are not stored, so you may fix the request and retry with the same key. | [optional] 
  **debitura_web_external_api_contracts_v1_cases_requests_create_collection_case_request_api_view_model** | [**DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestApiViewModel**](DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestApiViewModel.md)|  | [optional] 
 
 ### Return type

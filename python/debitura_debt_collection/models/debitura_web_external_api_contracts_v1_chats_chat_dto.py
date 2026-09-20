@@ -21,7 +21,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from debitura_debt_collection.models.debitura_domain_model_communication_center_chats_chat_role import DebituraDomainModelCommunicationCenterChatsChatRole
+from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_chats_chat_role_dto import DebituraWebExternalApiContractsV1ChatsChatRoleDto
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_users_user_relation_dto import DebituraWebExternalApiContractsV1UsersUserRelationDto
 from typing import Optional, Set
 from typing_extensions import Self
@@ -33,7 +33,7 @@ class DebituraWebExternalApiContractsV1ChatsChatDto(BaseModel):
     id: Optional[StrictStr] = None
     date_created: Optional[datetime] = Field(default=None, alias="dateCreated")
     date_updated: Optional[datetime] = Field(default=None, alias="dateUpdated")
-    role: Optional[DebituraDomainModelCommunicationCenterChatsChatRole] = None
+    role: Optional[DebituraWebExternalApiContractsV1ChatsChatRoleDto] = None
     role_label: Optional[StrictStr] = Field(default=None, description="Human-readable label for the role (e.g., \"Partner\", \"Creditor\", \"Managed by partner\"). Companion to Debitura.Web.ExternalApi.Contracts.V1.Chats.ChatDto.Role — always present when Role is set.", alias="roleLabel")
     message: Optional[StrictStr] = None
     is_seen: Optional[StrictBool] = Field(default=None, alias="isSeen")

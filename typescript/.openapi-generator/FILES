@@ -18,13 +18,10 @@ common.ts
 configuration.ts
 index.ts
 models/debitura-domain-model-base-page-data.ts
-models/debitura-domain-model-collection-partner-logics-collection-partners-survey-cadence-mode.ts
-models/debitura-domain-model-communication-center-chats-chat-role.ts
 models/debitura-domain-model-webhooks-dtos-create-webhook-request.ts
 models/debitura-domain-model-webhooks-dtos-update-webhook-request.ts
 models/debitura-domain-model-webhooks-dtos-webhook-dto.ts
 models/debitura-domain-services-case-validation-case-validation-item-dto.ts
-models/debitura-domain-services-case-validation-case-validation-lean-dto.ts
 models/debitura-domain-services-case-validation-case-validation-status-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-advance-test-case-response.ts
 models/debitura-web-external-api-contracts-v1-cases-assigned-user-dto.ts
@@ -33,6 +30,7 @@ models/debitura-web-external-api-contracts-v1-cases-business-error-api-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-business-error-response-api-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-case-contract-status-api-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-case-timeline-response.ts
+models/debitura-web-external-api-contracts-v1-cases-case-validation-lean-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-collection-partner-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-contract-item-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-creditor-division-dto.ts
@@ -57,9 +55,12 @@ models/debitura-web-external-api-contracts-v1-cases-requests-preview-case-reques
 models/debitura-web-external-api-contracts-v1-cases-requests-preview-debtor-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-required-action-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-signing-handoff-dto.ts
+models/debitura-web-external-api-contracts-v1-cases-survey-cadence-mode-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-timeline-actor-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-timeline-item-dto.ts
+models/debitura-web-external-api-contracts-v1-cases-timeline-related-case-dto.ts
 models/debitura-web-external-api-contracts-v1-chats-chat-dto.ts
+models/debitura-web-external-api-contracts-v1-chats-chat-role-dto.ts
 models/debitura-web-external-api-contracts-v1-chats-send-chat-request.ts
 models/debitura-web-external-api-contracts-v1-divisions-create-division-request-dto.ts
 models/debitura-web-external-api-contracts-v1-divisions-division-country-dto.ts
@@ -75,6 +76,7 @@ models/debitura-web-external-api-contracts-v1-leads-lead-quote-detail-dto.ts
 models/debitura-web-external-api-contracts-v1-leads-lead-quote-dto.ts
 models/debitura-web-external-api-contracts-v1-leads-lead-quote-list-dto.ts
 models/debitura-web-external-api-contracts-v1-leads-lead-quote-pricing-dto.ts
+models/debitura-web-external-api-contracts-v1-page-data.ts
 models/debitura-web-external-api-contracts-v1-payments-payment-dto.ts
 models/debitura-web-external-api-contracts-v1-payments-payment-related-invoice-dto.ts
 models/debitura-web-external-api-contracts-v1-tasks-task-action-dto.ts

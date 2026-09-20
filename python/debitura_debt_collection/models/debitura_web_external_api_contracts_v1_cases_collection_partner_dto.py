@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from debitura_debt_collection.models.debitura_domain_model_collection_partner_logics_collection_partners_survey_cadence_mode import DebituraDomainModelCollectionPartnerLogicsCollectionPartnersSurveyCadenceMode
+from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_survey_cadence_mode_dto import DebituraWebExternalApiContractsV1CasesSurveyCadenceModeDto
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -32,7 +32,7 @@ class DebituraWebExternalApiContractsV1CasesCollectionPartnerDto(BaseModel):
     office_email: Optional[StrictStr] = Field(default=None, alias="officeEmail")
     office_phone: Optional[StrictStr] = Field(default=None, alias="officePhone")
     public_site: Optional[StrictStr] = Field(default=None, alias="publicSite")
-    survey_cadence_mode: Optional[DebituraDomainModelCollectionPartnerLogicsCollectionPartnersSurveyCadenceMode] = Field(default=None, alias="surveyCadenceMode")
+    survey_cadence_mode: Optional[DebituraWebExternalApiContractsV1CasesSurveyCadenceModeDto] = Field(default=None, alias="surveyCadenceMode")
     __properties: ClassVar[List[str]] = ["name", "officeEmail", "officePhone", "publicSite", "surveyCadenceMode"]
 
     model_config = ConfigDict(

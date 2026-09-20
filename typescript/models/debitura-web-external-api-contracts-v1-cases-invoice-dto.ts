@@ -15,13 +15,13 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { DebituraDomainServicesCaseValidationCaseValidationLeanDto } from './debitura-domain-services-case-validation-case-validation-lean-dto';
-// May contain unused imports in some cases
-// @ts-ignore
 import type { DebituraWebExternalApiContractsV1CasesAssignedUserDto } from './debitura-web-external-api-contracts-v1-cases-assigned-user-dto';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { DebituraWebExternalApiContractsV1CasesBankAccountDto } from './debitura-web-external-api-contracts-v1-cases-bank-account-dto';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { DebituraWebExternalApiContractsV1CasesCaseValidationLeanDto } from './debitura-web-external-api-contracts-v1-cases-case-validation-lean-dto';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { DebituraWebExternalApiContractsV1CasesCollectionPartnerDto } from './debitura-web-external-api-contracts-v1-cases-collection-partner-dto';
@@ -251,10 +251,10 @@ export interface DebituraWebExternalApiContractsV1CasesInvoiceDto {
     'disputeStatus'?: string | null;
     /**
      * 
-     * @type {DebituraDomainServicesCaseValidationCaseValidationLeanDto}
+     * @type {DebituraWebExternalApiContractsV1CasesCaseValidationLeanDto}
      * @memberof DebituraWebExternalApiContractsV1CasesInvoiceDto
      */
-    'validation'?: DebituraDomainServicesCaseValidationCaseValidationLeanDto;
+    'validation'?: DebituraWebExternalApiContractsV1CasesCaseValidationLeanDto;
     /**
      * 
      * @type {DebituraWebExternalApiContractsV1CasesAssignedUserDto}

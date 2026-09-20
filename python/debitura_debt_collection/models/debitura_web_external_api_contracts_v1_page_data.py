@@ -18,20 +18,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
-from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_invoice_dto import DebituraWebExternalApiContractsV1CasesInvoiceDto
-from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_page_data import DebituraWebExternalApiContractsV1PageData
 from typing import Optional, Set
 from typing_extensions import Self
 
-class DebituraWebExternalApiContractsV1CasesInvoiceListDto(BaseModel):
+class DebituraWebExternalApiContractsV1PageData(BaseModel):
     """
-    DebituraWebExternalApiContractsV1CasesInvoiceListDto
+    Stable v1 pagination metadata shared by public list responses.
     """ # noqa: E501
-    page: DebituraWebExternalApiContractsV1PageData
-    cases: Optional[List[DebituraWebExternalApiContractsV1CasesInvoiceDto]] = None
-    __properties: ClassVar[List[str]] = ["page", "cases"]
+    total_results: Optional[StrictInt] = Field(default=None, alias="totalResults")
+    page_size: Optional[StrictInt] = Field(default=None, alias="pageSize")
+    current_page: Optional[StrictInt] = Field(default=None, alias="currentPage")
+    response_count: Optional[StrictInt] = Field(default=None, alias="responseCount")
+    total_pages: Optional[StrictInt] = Field(default=None, alias="totalPages")
+    __properties: ClassVar[List[str]] = ["totalResults", "pageSize", "currentPage", "responseCount", "totalPages"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -51,7 +52,7 @@ class DebituraWebExternalApiContractsV1CasesInvoiceListDto(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of DebituraWebExternalApiContractsV1CasesInvoiceListDto from a JSON string"""
+        """Create an instance of DebituraWebExternalApiContractsV1PageData from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -63,8 +64,10 @@ class DebituraWebExternalApiContractsV1CasesInvoiceListDto(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "total_pages",
         ])
 
         _dict = self.model_dump(
@@ -72,26 +75,11 @@ class DebituraWebExternalApiContractsV1CasesInvoiceListDto(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of page
-        if self.page:
-            _dict['page'] = self.page.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in cases (list)
-        _items = []
-        if self.cases:
-            for _item in self.cases:
-                if _item:
-                    _items.append(_item.to_dict())
-            _dict['cases'] = _items
-        # set to None if cases (nullable) is None
-        # and model_fields_set contains the field
-        if self.cases is None and "cases" in self.model_fields_set:
-            _dict['cases'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of DebituraWebExternalApiContractsV1CasesInvoiceListDto from a dict"""
+        """Create an instance of DebituraWebExternalApiContractsV1PageData from a dict"""
         if obj is None:
             return None
 
@@ -99,8 +87,11 @@ class DebituraWebExternalApiContractsV1CasesInvoiceListDto(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "page": DebituraWebExternalApiContractsV1PageData.from_dict(obj["page"]) if obj.get("page") is not None else None,
-            "cases": [DebituraWebExternalApiContractsV1CasesInvoiceDto.from_dict(_item) for _item in obj["cases"]] if obj.get("cases") is not None else None
+            "totalResults": obj.get("totalResults"),
+            "pageSize": obj.get("pageSize"),
+            "currentPage": obj.get("currentPage"),
+            "responseCount": obj.get("responseCount"),
+            "totalPages": obj.get("totalPages")
         })
         return _obj
 

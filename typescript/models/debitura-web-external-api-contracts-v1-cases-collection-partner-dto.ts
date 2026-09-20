@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { DebituraDomainModelCollectionPartnerLogicsCollectionPartnersSurveyCadenceMode } from './debitura-domain-model-collection-partner-logics-collection-partners-survey-cadence-mode';
+import type { DebituraWebExternalApiContractsV1CasesSurveyCadenceModeDto } from './debitura-web-external-api-contracts-v1-cases-survey-cadence-mode-dto';
 
 /**
  * V1 Collection Partner DTO for external partner APIs
@@ -49,10 +49,10 @@ export interface DebituraWebExternalApiContractsV1CasesCollectionPartnerDto {
     'publicSite'?: string | null;
     /**
      * 
-     * @type {DebituraDomainModelCollectionPartnerLogicsCollectionPartnersSurveyCadenceMode}
+     * @type {DebituraWebExternalApiContractsV1CasesSurveyCadenceModeDto}
      * @memberof DebituraWebExternalApiContractsV1CasesCollectionPartnerDto
      */
-    'surveyCadenceMode'?: DebituraDomainModelCollectionPartnerLogicsCollectionPartnersSurveyCadenceMode;
+    'surveyCadenceMode'?: DebituraWebExternalApiContractsV1CasesSurveyCadenceModeDto;
 }
 
 

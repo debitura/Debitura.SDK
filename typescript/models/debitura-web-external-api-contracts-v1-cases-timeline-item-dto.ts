@@ -16,6 +16,9 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import type { DebituraWebExternalApiContractsV1CasesTimelineActorDto } from './debitura-web-external-api-contracts-v1-cases-timeline-actor-dto';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { DebituraWebExternalApiContractsV1CasesTimelineRelatedCaseDto } from './debitura-web-external-api-contracts-v1-cases-timeline-related-case-dto';
 
 /**
  * 
@@ -47,6 +50,12 @@ export interface DebituraWebExternalApiContractsV1CasesTimelineItemDto {
      * @memberof DebituraWebExternalApiContractsV1CasesTimelineItemDto
      */
     'description': string | null;
+    /**
+     * Related cases that the authenticated timeline viewer may open. Merge timeline entries use these safe references instead of exposing persisted case identifiers in text.
+     * @type {Array<DebituraWebExternalApiContractsV1CasesTimelineRelatedCaseDto>}
+     * @memberof DebituraWebExternalApiContractsV1CasesTimelineItemDto
+     */
+    'relatedCases'?: Array<DebituraWebExternalApiContractsV1CasesTimelineRelatedCaseDto> | null;
     /**
      * 
      * @type {DebituraWebExternalApiContractsV1CasesTimelineActorDto}

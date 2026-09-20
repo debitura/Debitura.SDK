@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **office_email** | **str** |  | [optional] 
 **office_phone** | **str** |  | [optional] 
 **public_site** | **str** |  | [optional] 
-**survey_cadence_mode** | [**DebituraDomainModelCollectionPartnerLogicsCollectionPartnersSurveyCadenceMode**](DebituraDomainModelCollectionPartnerLogicsCollectionPartnersSurveyCadenceMode.md) |  | [optional] 
+**survey_cadence_mode** | [**DebituraWebExternalApiContractsV1CasesSurveyCadenceModeDto**](DebituraWebExternalApiContractsV1CasesSurveyCadenceModeDto.md) |  | [optional] 
 
 ## Example
 
