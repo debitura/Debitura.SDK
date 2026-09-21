@@ -206,9 +206,4 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
-test/test_debitura_web_external_api_contracts_v1_cases_case_validation_lean_dto.py
-test/test_debitura_web_external_api_contracts_v1_cases_survey_cadence_mode_dto.py
-test/test_debitura_web_external_api_contracts_v1_cases_timeline_related_case_dto.py
-test/test_debitura_web_external_api_contracts_v1_chats_chat_role_dto.py
-test/test_debitura_web_external_api_contracts_v1_page_data.py
 tox.ini
