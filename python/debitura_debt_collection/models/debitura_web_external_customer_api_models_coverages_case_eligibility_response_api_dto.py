@@ -18,8 +18,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from debitura_debt_collection.models.debitura_web_external_customer_api_models_coverages_jurisdiction_info_api_dto import DebituraWebExternalCustomerAPIModelsCoveragesJurisdictionInfoApiDTO
 from debitura_debt_collection.models.debitura_web_external_customer_api_models_coverages_partner_info_api_dto import DebituraWebExternalCustomerAPIModelsCoveragesPartnerInfoApiDTO
 from debitura_debt_collection.models.debitura_web_external_customer_api_models_coverages_power_of_attorney_status_api_dto import DebituraWebExternalCustomerAPIModelsCoveragesPowerOfAttorneyStatusApiDTO
@@ -34,8 +34,12 @@ class DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityResponseApiDTO
     jurisdiction: Optional[DebituraWebExternalCustomerAPIModelsCoveragesJurisdictionInfoApiDTO] = None
     partner: Optional[DebituraWebExternalCustomerAPIModelsCoveragesPartnerInfoApiDTO] = None
     power_of_attorney_status: Optional[DebituraWebExternalCustomerAPIModelsCoveragesPowerOfAttorneyStatusApiDTO] = Field(default=None, alias="powerOfAttorneyStatus")
-    error_message: Optional[StrictStr] = Field(default=None, description="Error message if IsEligible = false", alias="errorMessage")
-    __properties: ClassVar[List[str]] = ["isEligible", "jurisdiction", "partner", "powerOfAttorneyStatus", "errorMessage"]
+    error_message: Optional[StrictStr] = Field(default=None, description="Error message if IsEligible = false. Branch on Debitura.Web.ExternalCustomerAPI.Models.Coverages.CaseEligibilityResponseApiDTO.IneligibilityReasonCode rather than on this text, which may be reworded.", alias="errorMessage")
+    ineligibility_reason_code: Optional[StrictStr] = Field(default=None, description="Stable machine-readable reason, present whenever Debitura.Web.ExternalCustomerAPI.Models.Coverages.CaseEligibilityResponseApiDTO.ErrorMessage is. One of: NoGeographicCoverage, AmountBelowMinimum, AmountAboveMaximum, DebtorTypeNotCovered, NotCoveredByPartnerRules, ExcludedForClient, EligibilityUndetermined.  Only NoGeographicCoverage means we have no partner in the jurisdiction. AmountBelowMinimum means the geography IS covered and only the claim amount fell short. EligibilityUndetermined is a transient failure on our side, not a statement about coverage.", alias="ineligibilityReasonCode")
+    applicable_minimum_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The lowest claim amount accepted for this jurisdiction and debtor type, in the currency of the request. Present on ELIGIBLE responses too, so the floor can be shown without a second call. Null when no partner covering this case declares a minimum.", alias="applicableMinimumAmount")
+    applicable_minimum_currency_code: Optional[StrictStr] = Field(default=None, description="ISO code that Debitura.Web.ExternalCustomerAPI.Models.Coverages.CaseEligibilityResponseApiDTO.ApplicableMinimumAmount is expressed in.", alias="applicableMinimumCurrencyCode")
+    amount_check_unavailable: Optional[StrictBool] = Field(default=None, description="True when a currency conversion needed to evaluate the claim amount was unavailable, so the amount-based part of this answer was NOT actually checked It can be true on an eligible answer: a partner matched only because amount conditions failed open while rates were down. Treat such an answer as provisional and retry rather than relying on the floor having been applied.", alias="amountCheckUnavailable")
+    __properties: ClassVar[List[str]] = ["isEligible", "jurisdiction", "partner", "powerOfAttorneyStatus", "errorMessage", "ineligibilityReasonCode", "applicableMinimumAmount", "applicableMinimumCurrencyCode", "amountCheckUnavailable"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -90,6 +94,21 @@ class DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityResponseApiDTO
         if self.error_message is None and "error_message" in self.model_fields_set:
             _dict['errorMessage'] = None
 
+        # set to None if ineligibility_reason_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.ineligibility_reason_code is None and "ineligibility_reason_code" in self.model_fields_set:
+            _dict['ineligibilityReasonCode'] = None
+
+        # set to None if applicable_minimum_amount (nullable) is None
+        # and model_fields_set contains the field
+        if self.applicable_minimum_amount is None and "applicable_minimum_amount" in self.model_fields_set:
+            _dict['applicableMinimumAmount'] = None
+
+        # set to None if applicable_minimum_currency_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.applicable_minimum_currency_code is None and "applicable_minimum_currency_code" in self.model_fields_set:
+            _dict['applicableMinimumCurrencyCode'] = None
+
         return _dict
 
     @classmethod
@@ -106,7 +125,11 @@ class DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityResponseApiDTO
             "jurisdiction": DebituraWebExternalCustomerAPIModelsCoveragesJurisdictionInfoApiDTO.from_dict(obj["jurisdiction"]) if obj.get("jurisdiction") is not None else None,
             "partner": DebituraWebExternalCustomerAPIModelsCoveragesPartnerInfoApiDTO.from_dict(obj["partner"]) if obj.get("partner") is not None else None,
             "powerOfAttorneyStatus": DebituraWebExternalCustomerAPIModelsCoveragesPowerOfAttorneyStatusApiDTO.from_dict(obj["powerOfAttorneyStatus"]) if obj.get("powerOfAttorneyStatus") is not None else None,
-            "errorMessage": obj.get("errorMessage")
+            "errorMessage": obj.get("errorMessage"),
+            "ineligibilityReasonCode": obj.get("ineligibilityReasonCode"),
+            "applicableMinimumAmount": obj.get("applicableMinimumAmount"),
+            "applicableMinimumCurrencyCode": obj.get("applicableMinimumCurrencyCode"),
+            "amountCheckUnavailable": obj.get("amountCheckUnavailable")
         })
         return _obj
 

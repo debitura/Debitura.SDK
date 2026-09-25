@@ -42,11 +42,35 @@ export interface DebituraWebExternalApiContractsV1CasesPreviewResultDto {
      */
     'isEligible'?: boolean;
     /**
-     * Explanation of why the case is not eligible (only present when IsEligible = false). Common reasons: \"We don\'t have an exclusive pre-legal partner in the provided jurisdiction.\"
+     * Explanation of why the case is not eligible (only present when IsEligible = false). Branch on Debitura.Web.ExternalApi.Contracts.V1.Cases.PreviewResultDto.IneligibilityReasonCode rather than on this text, which may be reworded.
      * @type {string}
      * @memberof DebituraWebExternalApiContractsV1CasesPreviewResultDto
      */
     'ineligibilityReason'?: string | null;
+    /**
+     * Stable machine-readable reason, present whenever Debitura.Web.ExternalApi.Contracts.V1.Cases.PreviewResultDto.IneligibilityReason is One of: NoGeographicCoverage, AmountBelowMinimum, AmountAboveMaximum, DebtorTypeNotCovered, NotCoveredByPartnerRules, ExcludedForClient, EligibilityUndetermined.  Only NoGeographicCoverage means we have no partner in the jurisdiction. AmountBelowMinimum means the geography IS covered and only the claim amount fell short. EligibilityUndetermined is a transient failure on our side, not a statement about coverage — retry rather than telling the client their address is wrong.
+     * @type {string}
+     * @memberof DebituraWebExternalApiContractsV1CasesPreviewResultDto
+     */
+    'ineligibilityReasonCode'?: string | null;
+    /**
+     * The lowest claim amount accepted for this jurisdiction and debtor type, in the currency of the request. Present on ELIGIBLE responses too, so the floor can be shown without a second call. Null when no partner covering this case declares a minimum.
+     * @type {number}
+     * @memberof DebituraWebExternalApiContractsV1CasesPreviewResultDto
+     */
+    'applicableMinimumAmount'?: number | null;
+    /**
+     * ISO code that Debitura.Web.ExternalApi.Contracts.V1.Cases.PreviewResultDto.ApplicableMinimumAmount is expressed in.
+     * @type {string}
+     * @memberof DebituraWebExternalApiContractsV1CasesPreviewResultDto
+     */
+    'applicableMinimumCurrencyCode'?: string | null;
+    /**
+     * True when a currency conversion needed to evaluate the claim amount was unavailable, so the amount-based part of this answer was NOT actually checked It can be true on an eligible answer: a partner matched only because amount conditions failed open while rates were down. Treat such an answer as provisional and retry rather than relying on the floor having been applied.
+     * @type {boolean}
+     * @memberof DebituraWebExternalApiContractsV1CasesPreviewResultDto
+     */
+    'amountCheckUnavailable'?: boolean;
     /**
      * 
      * @type {DebituraWebExternalApiContractsV1CasesPartnerAssignmentDto}

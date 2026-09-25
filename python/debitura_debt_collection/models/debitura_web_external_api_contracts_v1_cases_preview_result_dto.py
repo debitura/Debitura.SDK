@@ -18,8 +18,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_jurisdiction_dto import DebituraWebExternalApiContractsV1CasesJurisdictionDto
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_partner_assignment_dto import DebituraWebExternalApiContractsV1CasesPartnerAssignmentDto
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_pricing_preview_dto import DebituraWebExternalApiContractsV1CasesPricingPreviewDto
@@ -33,7 +33,11 @@ class DebituraWebExternalApiContractsV1CasesPreviewResultDto(BaseModel):
     Detailed preview result for a case submission.
     """ # noqa: E501
     is_eligible: Optional[StrictBool] = Field(default=None, description="Whether the case is eligible for collection (i.e., a collection partner is available). If false, check IneligibilityReason for details.", alias="isEligible")
-    ineligibility_reason: Optional[StrictStr] = Field(default=None, description="Explanation of why the case is not eligible (only present when IsEligible = false). Common reasons: \"We don't have an exclusive pre-legal partner in the provided jurisdiction.\"", alias="ineligibilityReason")
+    ineligibility_reason: Optional[StrictStr] = Field(default=None, description="Explanation of why the case is not eligible (only present when IsEligible = false). Branch on Debitura.Web.ExternalApi.Contracts.V1.Cases.PreviewResultDto.IneligibilityReasonCode rather than on this text, which may be reworded.", alias="ineligibilityReason")
+    ineligibility_reason_code: Optional[StrictStr] = Field(default=None, description="Stable machine-readable reason, present whenever Debitura.Web.ExternalApi.Contracts.V1.Cases.PreviewResultDto.IneligibilityReason is One of: NoGeographicCoverage, AmountBelowMinimum, AmountAboveMaximum, DebtorTypeNotCovered, NotCoveredByPartnerRules, ExcludedForClient, EligibilityUndetermined.  Only NoGeographicCoverage means we have no partner in the jurisdiction. AmountBelowMinimum means the geography IS covered and only the claim amount fell short. EligibilityUndetermined is a transient failure on our side, not a statement about coverage — retry rather than telling the client their address is wrong.", alias="ineligibilityReasonCode")
+    applicable_minimum_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The lowest claim amount accepted for this jurisdiction and debtor type, in the currency of the request. Present on ELIGIBLE responses too, so the floor can be shown without a second call. Null when no partner covering this case declares a minimum.", alias="applicableMinimumAmount")
+    applicable_minimum_currency_code: Optional[StrictStr] = Field(default=None, description="ISO code that Debitura.Web.ExternalApi.Contracts.V1.Cases.PreviewResultDto.ApplicableMinimumAmount is expressed in.", alias="applicableMinimumCurrencyCode")
+    amount_check_unavailable: Optional[StrictBool] = Field(default=None, description="True when a currency conversion needed to evaluate the claim amount was unavailable, so the amount-based part of this answer was NOT actually checked It can be true on an eligible answer: a partner matched only because amount conditions failed open while rates were down. Treat such an answer as provisional and retry rather than relying on the floor having been applied.", alias="amountCheckUnavailable")
     partner_assignment: Optional[DebituraWebExternalApiContractsV1CasesPartnerAssignmentDto] = Field(default=None, alias="partnerAssignment")
     required_actions: Optional[List[DebituraWebExternalApiContractsV1CasesRequiredActionDto]] = Field(default=None, description="List of actions required before the case can be submitted (e.g., sign contracts). Empty if no actions are required. Each action includes a solution URL to complete the requirement.", alias="requiredActions")
     jurisdiction: Optional[DebituraWebExternalApiContractsV1CasesJurisdictionDto] = None
@@ -41,7 +45,7 @@ class DebituraWebExternalApiContractsV1CasesPreviewResultDto(BaseModel):
     requires_kyc_verification: Optional[StrictBool] = Field(default=None, description="Whether the resolved collection partner requires KYC verification before cases can be submitted. When true, the creditor must complete KYC verification before case creation will succeed.", alias="requiresKycVerification")
     has_kyc_on_file: Optional[StrictBool] = Field(default=None, description="Whether the creditor already has KYC verification on file with Debitura. When RequiresKycVerification is true and HasKycOnFile is false, a MissingKycVerification required action will be present in the RequiredActions list.", alias="hasKycOnFile")
     signing_handoff: Optional[DebituraWebExternalApiContractsV1CasesSigningHandoffDto] = Field(default=None, alias="signingHandoff")
-    __properties: ClassVar[List[str]] = ["isEligible", "ineligibilityReason", "partnerAssignment", "requiredActions", "jurisdiction", "pricingPreview", "requiresKycVerification", "hasKycOnFile", "signingHandoff"]
+    __properties: ClassVar[List[str]] = ["isEligible", "ineligibilityReason", "ineligibilityReasonCode", "applicableMinimumAmount", "applicableMinimumCurrencyCode", "amountCheckUnavailable", "partnerAssignment", "requiredActions", "jurisdiction", "pricingPreview", "requiresKycVerification", "hasKycOnFile", "signingHandoff"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -106,6 +110,21 @@ class DebituraWebExternalApiContractsV1CasesPreviewResultDto(BaseModel):
         if self.ineligibility_reason is None and "ineligibility_reason" in self.model_fields_set:
             _dict['ineligibilityReason'] = None
 
+        # set to None if ineligibility_reason_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.ineligibility_reason_code is None and "ineligibility_reason_code" in self.model_fields_set:
+            _dict['ineligibilityReasonCode'] = None
+
+        # set to None if applicable_minimum_amount (nullable) is None
+        # and model_fields_set contains the field
+        if self.applicable_minimum_amount is None and "applicable_minimum_amount" in self.model_fields_set:
+            _dict['applicableMinimumAmount'] = None
+
+        # set to None if applicable_minimum_currency_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.applicable_minimum_currency_code is None and "applicable_minimum_currency_code" in self.model_fields_set:
+            _dict['applicableMinimumCurrencyCode'] = None
+
         # set to None if required_actions (nullable) is None
         # and model_fields_set contains the field
         if self.required_actions is None and "required_actions" in self.model_fields_set:
@@ -125,6 +144,10 @@ class DebituraWebExternalApiContractsV1CasesPreviewResultDto(BaseModel):
         _obj = cls.model_validate({
             "isEligible": obj.get("isEligible"),
             "ineligibilityReason": obj.get("ineligibilityReason"),
+            "ineligibilityReasonCode": obj.get("ineligibilityReasonCode"),
+            "applicableMinimumAmount": obj.get("applicableMinimumAmount"),
+            "applicableMinimumCurrencyCode": obj.get("applicableMinimumCurrencyCode"),
+            "amountCheckUnavailable": obj.get("amountCheckUnavailable"),
             "partnerAssignment": DebituraWebExternalApiContractsV1CasesPartnerAssignmentDto.from_dict(obj["partnerAssignment"]) if obj.get("partnerAssignment") is not None else None,
             "requiredActions": [DebituraWebExternalApiContractsV1CasesRequiredActionDto.from_dict(_item) for _item in obj["requiredActions"]] if obj.get("requiredActions") is not None else None,
             "jurisdiction": DebituraWebExternalApiContractsV1CasesJurisdictionDto.from_dict(obj["jurisdiction"]) if obj.get("jurisdiction") is not None else None,

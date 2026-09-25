@@ -10,7 +10,11 @@ Name | Type | Description | Notes
 **jurisdiction** | [**DebituraWebExternalCustomerAPIModelsCoveragesJurisdictionInfoApiDTO**](DebituraWebExternalCustomerAPIModelsCoveragesJurisdictionInfoApiDTO.md) |  | [optional] 
 **partner** | [**DebituraWebExternalCustomerAPIModelsCoveragesPartnerInfoApiDTO**](DebituraWebExternalCustomerAPIModelsCoveragesPartnerInfoApiDTO.md) |  | [optional] 
 **power_of_attorney_status** | [**DebituraWebExternalCustomerAPIModelsCoveragesPowerOfAttorneyStatusApiDTO**](DebituraWebExternalCustomerAPIModelsCoveragesPowerOfAttorneyStatusApiDTO.md) |  | [optional] 
-**error_message** | **str** | Error message if IsEligible &#x3D; false | [optional] 
+**error_message** | **str** | Error message if IsEligible &#x3D; false. Branch on Debitura.Web.ExternalCustomerAPI.Models.Coverages.CaseEligibilityResponseApiDTO.IneligibilityReasonCode rather than on this text, which may be reworded. | [optional] 
+**ineligibility_reason_code** | **str** | Stable machine-readable reason, present whenever Debitura.Web.ExternalCustomerAPI.Models.Coverages.CaseEligibilityResponseApiDTO.ErrorMessage is. One of: NoGeographicCoverage, AmountBelowMinimum, AmountAboveMaximum, DebtorTypeNotCovered, NotCoveredByPartnerRules, ExcludedForClient, EligibilityUndetermined.  Only NoGeographicCoverage means we have no partner in the jurisdiction. AmountBelowMinimum means the geography IS covered and only the claim amount fell short. EligibilityUndetermined is a transient failure on our side, not a statement about coverage. | [optional] 
+**applicable_minimum_amount** | **float** | The lowest claim amount accepted for this jurisdiction and debtor type, in the currency of the request. Present on ELIGIBLE responses too, so the floor can be shown without a second call. Null when no partner covering this case declares a minimum. | [optional] 
+**applicable_minimum_currency_code** | **str** | ISO code that Debitura.Web.ExternalCustomerAPI.Models.Coverages.CaseEligibilityResponseApiDTO.ApplicableMinimumAmount is expressed in. | [optional] 
+**amount_check_unavailable** | **bool** | True when a currency conversion needed to evaluate the claim amount was unavailable, so the amount-based part of this answer was NOT actually checked It can be true on an eligible answer: a partner matched only because amount conditions failed open while rates were down. Treat such an answer as provisional and retry rather than relying on the floor having been applied. | [optional] 
 
 ## Example
 
