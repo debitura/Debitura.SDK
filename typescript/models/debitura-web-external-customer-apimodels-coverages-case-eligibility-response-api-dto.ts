@@ -54,10 +54,34 @@ export interface DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityRes
      */
     'powerOfAttorneyStatus'?: DebituraWebExternalCustomerAPIModelsCoveragesPowerOfAttorneyStatusApiDTO;
     /**
-     * Error message if IsEligible = false
+     * Error message if IsEligible = false. Branch on Debitura.Web.ExternalCustomerAPI.Models.Coverages.CaseEligibilityResponseApiDTO.IneligibilityReasonCode rather than on this text, which may be reworded.
      * @type {string}
      * @memberof DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityResponseApiDTO
      */
     'errorMessage'?: string | null;
+    /**
+     * Stable machine-readable reason, present whenever Debitura.Web.ExternalCustomerAPI.Models.Coverages.CaseEligibilityResponseApiDTO.ErrorMessage is. One of: NoGeographicCoverage, AmountBelowMinimum, AmountAboveMaximum, DebtorTypeNotCovered, NotCoveredByPartnerRules, ExcludedForClient, EligibilityUndetermined.  Only NoGeographicCoverage means we have no partner in the jurisdiction. AmountBelowMinimum means the geography IS covered and only the claim amount fell short. EligibilityUndetermined is a transient failure on our side, not a statement about coverage.
+     * @type {string}
+     * @memberof DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityResponseApiDTO
+     */
+    'ineligibilityReasonCode'?: string | null;
+    /**
+     * The lowest claim amount accepted for this jurisdiction and debtor type, in the currency of the request. Present on ELIGIBLE responses too, so the floor can be shown without a second call. Null when no partner covering this case declares a minimum.
+     * @type {number}
+     * @memberof DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityResponseApiDTO
+     */
+    'applicableMinimumAmount'?: number | null;
+    /**
+     * ISO code that Debitura.Web.ExternalCustomerAPI.Models.Coverages.CaseEligibilityResponseApiDTO.ApplicableMinimumAmount is expressed in.
+     * @type {string}
+     * @memberof DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityResponseApiDTO
+     */
+    'applicableMinimumCurrencyCode'?: string | null;
+    /**
+     * True when a currency conversion needed to evaluate the claim amount was unavailable, so the amount-based part of this answer was NOT actually checked It can be true on an eligible answer: a partner matched only because amount conditions failed open while rates were down. Treat such an answer as provisional and retry rather than relying on the floor having been applied.
+     * @type {boolean}
+     * @memberof DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityResponseApiDTO
+     */
+    'amountCheckUnavailable'?: boolean;
 }
 
