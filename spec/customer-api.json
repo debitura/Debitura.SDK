@@ -5277,13 +5277,24 @@
           },
           "applicableMinimumAmount": {
             "type": "number",
-            "description": "The lowest claim amount accepted for this jurisdiction and debtor type, in the currency of the\nrequest. Present on ELIGIBLE responses too, so the floor can be shown without a second call.\nNull when no partner covering this case declares a minimum.",
+            "description": "What this claim would have to reach to be accepted, in the currency of the request; never below\nthe platform minimum of 100 USD. Only present when no partner was matched. Withheld when the\nclient's own routing exclusions mean the number would not be reachable for them, and when the\nrequest currency cannot be priced. Null when no partner covering this case declares a minimum.",
             "format": "double",
             "nullable": true
           },
           "applicableMinimumCurrencyCode": {
             "type": "string",
             "description": "ISO code that Debitura.Web.ExternalApi.Contracts.V1.Cases.PreviewResultDto.ApplicableMinimumAmount is expressed in.",
+            "nullable": true
+          },
+          "marketMinimumAmount": {
+            "type": "number",
+            "description": "The smallest claim the marketplace takes for this jurisdiction and debtor type, in the currency of\nthe request: the lowest partner floor, never below the platform minimum of 100 USD. A statement\nabout the market, not about this claim: it is returned whether or not a partner was selected, and\ndoes not depend on the claim amount or on the caller. It is not the admission rules applied when a\ncase is created. Null when no partner covers the market or the amount cannot be priced.",
+            "format": "double",
+            "nullable": true
+          },
+          "marketMinimumCurrencyCode": {
+            "type": "string",
+            "description": "ISO code that Debitura.Web.ExternalApi.Contracts.V1.Cases.PreviewResultDto.MarketMinimumAmount is expressed in.",
             "nullable": true
           },
           "amountCheckUnavailable": {
@@ -6928,13 +6939,24 @@
           },
           "applicableMinimumAmount": {
             "type": "number",
-            "description": "The lowest claim amount accepted for this jurisdiction and debtor type, in the currency of the\nrequest. Present on ELIGIBLE responses too, so the floor can be shown without a second call.\nNull when no partner covering this case declares a minimum.",
+            "description": "What this claim would have to reach to be accepted, in the currency of the request; never below\nthe platform minimum of 100 USD. Only present when no partner was matched. Withheld when the\nclient's own routing exclusions mean the number would not be reachable for them, and when the\nrequest currency cannot be priced. Null when no partner covering this case declares a minimum.",
             "format": "double",
             "nullable": true
           },
           "applicableMinimumCurrencyCode": {
             "type": "string",
             "description": "ISO code that Debitura.Web.ExternalCustomerAPI.Models.Coverages.CaseEligibilityResponseApiDTO.ApplicableMinimumAmount is expressed in.",
+            "nullable": true
+          },
+          "marketMinimumAmount": {
+            "type": "number",
+            "description": "The smallest claim the marketplace takes for this jurisdiction and debtor type, in the currency of\nthe request: the lowest partner floor, never below the platform minimum of 100 USD. A statement\nabout the market, not about this claim: it is returned whether or not a partner was selected, and\ndoes not depend on the claim amount or on the caller. It is not the admission rules applied when a\ncase is created. Null when no partner covers the market or the amount cannot be priced.",
+            "format": "double",
+            "nullable": true
+          },
+          "marketMinimumCurrencyCode": {
+            "type": "string",
+            "description": "ISO code that Debitura.Web.ExternalCustomerAPI.Models.Coverages.CaseEligibilityResponseApiDTO.MarketMinimumAmount is expressed in.",
             "nullable": true
           },
           "amountCheckUnavailable": {
