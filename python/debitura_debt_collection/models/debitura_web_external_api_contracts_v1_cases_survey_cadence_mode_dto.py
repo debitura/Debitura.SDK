@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class DebituraWebExternalApiContractsV1CasesSurveyCadenceModeDto(int, Enum):
     """
-    Stable v1 survey-generation cadence values. Serialized as their numeric values.
+    Deprecated: kept as a number and never removed, but not extended. Survey-generation cadence: 0 = Standard (rolling monthly survey), 1 = DecisionPointOnly (no rolling surveys).
     """
 
     """

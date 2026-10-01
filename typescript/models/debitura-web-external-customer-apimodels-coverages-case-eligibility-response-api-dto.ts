@@ -66,7 +66,7 @@ export interface DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityRes
      */
     'ineligibilityReasonCode'?: string | null;
     /**
-     * The lowest claim amount accepted for this jurisdiction and debtor type, in the currency of the request. Present on ELIGIBLE responses too, so the floor can be shown without a second call. Null when no partner covering this case declares a minimum.
+     * What this claim would have to reach to be accepted, in the currency of the request; never below the platform minimum of 100 USD. Only present when no partner was matched. Withheld when the client\'s own routing exclusions mean the number would not be reachable for them, and when the request currency cannot be priced. Null when no partner covering this case declares a minimum.
      * @type {number}
      * @memberof DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityResponseApiDTO
      */
@@ -77,6 +77,18 @@ export interface DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityRes
      * @memberof DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityResponseApiDTO
      */
     'applicableMinimumCurrencyCode'?: string | null;
+    /**
+     * The smallest claim the marketplace takes for this jurisdiction and debtor type, in the currency of the request: the lowest partner floor, never below the platform minimum of 100 USD. A statement about the market, not about this claim: it is returned whether or not a partner was selected, and does not depend on the claim amount or on the caller. It is not the admission rules applied when a case is created. Null when no partner covers the market or the amount cannot be priced.
+     * @type {number}
+     * @memberof DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityResponseApiDTO
+     */
+    'marketMinimumAmount'?: number | null;
+    /**
+     * ISO code that Debitura.Web.ExternalCustomerAPI.Models.Coverages.CaseEligibilityResponseApiDTO.MarketMinimumAmount is expressed in.
+     * @type {string}
+     * @memberof DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityResponseApiDTO
+     */
+    'marketMinimumCurrencyCode'?: string | null;
     /**
      * True when a currency conversion needed to evaluate the claim amount was unavailable, so the amount-based part of this answer was NOT actually checked It can be true on an eligible answer: a partner matched only because amount conditions failed open while rates were down. Treat such an answer as provisional and retry rather than relying on the floor having been applied.
      * @type {boolean}

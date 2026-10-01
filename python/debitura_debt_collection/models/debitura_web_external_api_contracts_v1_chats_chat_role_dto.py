@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class DebituraWebExternalApiContractsV1ChatsChatRoleDto(int, Enum):
     """
-    Stable v1 sender-role values. Serialized as their numeric values.
+    Deprecated: kept as a number and never removed, but not extended — read `roleLabel` instead. Sender role: 0 = Partner, 1 = Creditor, 2 = ManagedByPartner.
     """
 
     """

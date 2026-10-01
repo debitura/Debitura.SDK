@@ -34,7 +34,7 @@ class DebituraWebExternalApiContractsV1ChatsChatDto(BaseModel):
     date_created: Optional[datetime] = Field(default=None, alias="dateCreated")
     date_updated: Optional[datetime] = Field(default=None, alias="dateUpdated")
     role: Optional[DebituraWebExternalApiContractsV1ChatsChatRoleDto] = None
-    role_label: Optional[StrictStr] = Field(default=None, description="Human-readable label for the role (e.g., \"Partner\", \"Creditor\", \"Managed by partner\"). Companion to Debitura.Web.ExternalApi.Contracts.V1.Chats.ChatDto.Role — always present when Role is set.", alias="roleLabel")
+    role_label: Optional[StrictStr] = Field(default=None, description="The sender role, readable. Always one of \"Partner\", \"Creditor\" or \"Managed by partner\" — these values are stable.", alias="roleLabel")
     message: Optional[StrictStr] = None
     is_seen: Optional[StrictBool] = Field(default=None, alias="isSeen")
     user: Optional[DebituraWebExternalApiContractsV1UsersUserRelationDto] = None

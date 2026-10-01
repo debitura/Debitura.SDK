@@ -743,7 +743,7 @@ Name | Type | Description  | Notes
 
 Upload a file to a case
 
-Uploads a file and associates it with a case.  File requirements: - Maximum file size: 25MB - Allowed file types: PDF (.pdf), Excel (.xls, .xlsx), CSV (.csv), Text (.TXT), Images (.jpg, .jpeg, .png, .gif)  The file will be stored securely and associated with the specified case.  Document types: - OriginalInvoice (default) - The original invoice document - DebtorDocuments - Documents provided by the debtor - CreditorDocuments - Documents provided by the creditor - PartnerDocuments - Documents provided by collection partners - DemandLetter - Formal demand letter - Miscellaneous - Other supporting documents
+Uploads a file and associates it with a case.  File requirements: - Maximum file size: 25MB - Allowed file types: PDF (.pdf), Excel (.xls, .xlsx), CSV (.csv), Text (.TXT), Images (.jpg, .jpeg, .png, .gif)  The file will be stored securely and associated with the specified case.  Document type (optional, case-insensitive). Omit it when you do not know it; the file is then stored as not specified. - OriginalInvoice - Invoice or credit note - AccountStatement - Statement of account - Contract - Contract or agreement - TermsAndConditions - Terms and conditions - ProofOfDelivery - Order or proof of delivery - DemandLetter - Reminder or demand letter - Correspondence - Correspondence with the debtor - PaymentProof - Proof of payment - CourtDocument - Court or legal document - IdentityDocument - Identity document - Miscellaneous - Other  Still accepted for existing integrations: DebtorDocuments, CreditorDocuments, PartnerDocuments. Any other value is rejected with 400 and error InvalidDocumentType.
 
 ### Example
 

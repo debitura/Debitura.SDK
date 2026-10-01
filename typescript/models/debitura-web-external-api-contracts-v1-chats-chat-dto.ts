@@ -48,10 +48,11 @@ export interface DebituraWebExternalApiContractsV1ChatsChatDto {
      * 
      * @type {DebituraWebExternalApiContractsV1ChatsChatRoleDto}
      * @memberof DebituraWebExternalApiContractsV1ChatsChatDto
+     * @deprecated
      */
     'role'?: DebituraWebExternalApiContractsV1ChatsChatRoleDto;
     /**
-     * Human-readable label for the role (e.g., \"Partner\", \"Creditor\", \"Managed by partner\"). Companion to Debitura.Web.ExternalApi.Contracts.V1.Chats.ChatDto.Role — always present when Role is set.
+     * The sender role, readable. Always one of \"Partner\", \"Creditor\" or \"Managed by partner\" — these values are stable.
      * @type {string}
      * @memberof DebituraWebExternalApiContractsV1ChatsChatDto
      */
