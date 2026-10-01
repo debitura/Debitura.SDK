@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **date_created** | **datetime** |  | [optional] 
 **date_updated** | **datetime** |  | [optional] 
 **role** | [**DebituraWebExternalApiContractsV1ChatsChatRoleDto**](DebituraWebExternalApiContractsV1ChatsChatRoleDto.md) |  | [optional] 
-**role_label** | **str** | Human-readable label for the role (e.g., \&quot;Partner\&quot;, \&quot;Creditor\&quot;, \&quot;Managed by partner\&quot;). Companion to Debitura.Web.ExternalApi.Contracts.V1.Chats.ChatDto.Role — always present when Role is set. | [optional] 
+**role_label** | **str** | The sender role, readable. Always one of \&quot;Partner\&quot;, \&quot;Creditor\&quot; or \&quot;Managed by partner\&quot; — these values are stable. | [optional] 
 **message** | **str** |  | [optional] 
 **is_seen** | **bool** |  | [optional] 
 **user** | [**DebituraWebExternalApiContractsV1UsersUserRelationDto**](DebituraWebExternalApiContractsV1UsersUserRelationDto.md) |  | [optional] 

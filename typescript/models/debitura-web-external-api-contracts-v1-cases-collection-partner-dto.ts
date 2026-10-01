@@ -51,6 +51,7 @@ export interface DebituraWebExternalApiContractsV1CasesCollectionPartnerDto {
      * 
      * @type {DebituraWebExternalApiContractsV1CasesSurveyCadenceModeDto}
      * @memberof DebituraWebExternalApiContractsV1CasesCollectionPartnerDto
+     * @deprecated
      */
     'surveyCadenceMode'?: DebituraWebExternalApiContractsV1CasesSurveyCadenceModeDto;
 }
