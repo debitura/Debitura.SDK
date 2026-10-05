@@ -61,7 +61,7 @@ class WebhookEventsApi:
     ) -> List[DebituraWebExternalCustomerAPIModelsWebhooksDtosWebhookEventDto]:
         """List webhook events dispatched for a case.
 
-        Returns all webhook events dispatched for the given case, scoped to your webhook subscriptions. Results are ordered newest-first.  **Use cases:** - Verify that a specific event (e.g. `case.updated`) fired after a state transition. - Inspect the exact payload delivered on each attempt. - Find the event ID to replay via `POST /webhooks/events/{id}/replay`.  **Filtering:** - `caseId` (required): restricts to events for this case. - `since` (optional): only returns events created at or after this ISO 8601 timestamp.  **Note:** Only events for your subscriptions are returned — events from other creditors' subscriptions are never exposed.
+        Returns all webhook events dispatched for the given case, scoped to your webhook subscriptions. Results are ordered newest-first.  **Use cases:** - Verify that a specific event (e.g. `case.updated`) fired after a state transition. - Inspect the exact payload delivered on each attempt. - Find the event ID to replay via `POST /webhooks/events/{id}/replay`.  **Filtering:** - `caseId` (required): restricts to events for this case. - `since` (optional): only returns events created at or after this ISO 8601 timestamp.  **Note:** Only events for your subscriptions are returned — events from other creditors' subscriptions are never exposed.  **Retention:** event payloads are kept for 28 days. After that the event is still listed, with an empty `payload`, and can no longer be replayed.
 
         :param case_id:
         :type case_id: str
@@ -133,7 +133,7 @@ class WebhookEventsApi:
     ) -> ApiResponse[List[DebituraWebExternalCustomerAPIModelsWebhooksDtosWebhookEventDto]]:
         """List webhook events dispatched for a case.
 
-        Returns all webhook events dispatched for the given case, scoped to your webhook subscriptions. Results are ordered newest-first.  **Use cases:** - Verify that a specific event (e.g. `case.updated`) fired after a state transition. - Inspect the exact payload delivered on each attempt. - Find the event ID to replay via `POST /webhooks/events/{id}/replay`.  **Filtering:** - `caseId` (required): restricts to events for this case. - `since` (optional): only returns events created at or after this ISO 8601 timestamp.  **Note:** Only events for your subscriptions are returned — events from other creditors' subscriptions are never exposed.
+        Returns all webhook events dispatched for the given case, scoped to your webhook subscriptions. Results are ordered newest-first.  **Use cases:** - Verify that a specific event (e.g. `case.updated`) fired after a state transition. - Inspect the exact payload delivered on each attempt. - Find the event ID to replay via `POST /webhooks/events/{id}/replay`.  **Filtering:** - `caseId` (required): restricts to events for this case. - `since` (optional): only returns events created at or after this ISO 8601 timestamp.  **Note:** Only events for your subscriptions are returned — events from other creditors' subscriptions are never exposed.  **Retention:** event payloads are kept for 28 days. After that the event is still listed, with an empty `payload`, and can no longer be replayed.
 
         :param case_id:
         :type case_id: str
@@ -205,7 +205,7 @@ class WebhookEventsApi:
     ) -> RESTResponseType:
         """List webhook events dispatched for a case.
 
-        Returns all webhook events dispatched for the given case, scoped to your webhook subscriptions. Results are ordered newest-first.  **Use cases:** - Verify that a specific event (e.g. `case.updated`) fired after a state transition. - Inspect the exact payload delivered on each attempt. - Find the event ID to replay via `POST /webhooks/events/{id}/replay`.  **Filtering:** - `caseId` (required): restricts to events for this case. - `since` (optional): only returns events created at or after this ISO 8601 timestamp.  **Note:** Only events for your subscriptions are returned — events from other creditors' subscriptions are never exposed.
+        Returns all webhook events dispatched for the given case, scoped to your webhook subscriptions. Results are ordered newest-first.  **Use cases:** - Verify that a specific event (e.g. `case.updated`) fired after a state transition. - Inspect the exact payload delivered on each attempt. - Find the event ID to replay via `POST /webhooks/events/{id}/replay`.  **Filtering:** - `caseId` (required): restricts to events for this case. - `since` (optional): only returns events created at or after this ISO 8601 timestamp.  **Note:** Only events for your subscriptions are returned — events from other creditors' subscriptions are never exposed.  **Retention:** event payloads are kept for 28 days. After that the event is still listed, with an empty `payload`, and can no longer be replayed.
 
         :param case_id:
         :type case_id: str
@@ -352,7 +352,7 @@ class WebhookEventsApi:
     ) -> DebituraWebExternalCustomerAPIModelsWebhooksDtosReplayEventResultDto:
         """Replay a specific webhook event.
 
-        Re-enqueues the exact payload from a previously recorded event to its original subscription.  The event is re-queued as a fresh delivery attempt (attempt 1) using the original payload unchanged. Delivery follows the normal retry schedule if the endpoint is unavailable.  **Replay signal:** Replayed deliveries include the header `X-Debitura-Replay: true` so your endpoint can distinguish a replay from a live event and implement idempotency correctly.  **When to use:** - Your endpoint was temporarily unavailable and you want to re-deliver a specific event. - You want to test idempotency of your event handler. - Part of CI-loop ASSERT: confirm an event was dispatched, then replay to a different receiver.  **Tenant isolation:** Only events belonging to your own subscriptions can be replayed.
+        Re-enqueues the exact payload from a previously recorded event to its original subscription.  The event is re-queued as a fresh delivery attempt (attempt 1) using the original payload unchanged. Delivery follows the normal retry schedule if the endpoint is unavailable.  **Replay signal:** Replayed deliveries include the header `X-Debitura-Replay: true` so your endpoint can distinguish a replay from a live event and implement idempotency correctly.  **When to use:** - Your endpoint was temporarily unavailable and you want to re-deliver a specific event. - You want to test idempotency of your event handler. - Part of CI-loop ASSERT: confirm an event was dispatched, then replay to a different receiver.  **Tenant isolation:** Only events belonging to your own subscriptions can be replayed.  **Retention:** events older than 28 days have had their payload cleared and return `410 Gone`.
 
         :param id: (required)
         :type id: str
@@ -389,6 +389,7 @@ class WebhookEventsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DebituraWebExternalCustomerAPIModelsWebhooksDtosReplayEventResultDto",
             '404': None,
+            '410': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -420,7 +421,7 @@ class WebhookEventsApi:
     ) -> ApiResponse[DebituraWebExternalCustomerAPIModelsWebhooksDtosReplayEventResultDto]:
         """Replay a specific webhook event.
 
-        Re-enqueues the exact payload from a previously recorded event to its original subscription.  The event is re-queued as a fresh delivery attempt (attempt 1) using the original payload unchanged. Delivery follows the normal retry schedule if the endpoint is unavailable.  **Replay signal:** Replayed deliveries include the header `X-Debitura-Replay: true` so your endpoint can distinguish a replay from a live event and implement idempotency correctly.  **When to use:** - Your endpoint was temporarily unavailable and you want to re-deliver a specific event. - You want to test idempotency of your event handler. - Part of CI-loop ASSERT: confirm an event was dispatched, then replay to a different receiver.  **Tenant isolation:** Only events belonging to your own subscriptions can be replayed.
+        Re-enqueues the exact payload from a previously recorded event to its original subscription.  The event is re-queued as a fresh delivery attempt (attempt 1) using the original payload unchanged. Delivery follows the normal retry schedule if the endpoint is unavailable.  **Replay signal:** Replayed deliveries include the header `X-Debitura-Replay: true` so your endpoint can distinguish a replay from a live event and implement idempotency correctly.  **When to use:** - Your endpoint was temporarily unavailable and you want to re-deliver a specific event. - You want to test idempotency of your event handler. - Part of CI-loop ASSERT: confirm an event was dispatched, then replay to a different receiver.  **Tenant isolation:** Only events belonging to your own subscriptions can be replayed.  **Retention:** events older than 28 days have had their payload cleared and return `410 Gone`.
 
         :param id: (required)
         :type id: str
@@ -457,6 +458,7 @@ class WebhookEventsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DebituraWebExternalCustomerAPIModelsWebhooksDtosReplayEventResultDto",
             '404': None,
+            '410': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -488,7 +490,7 @@ class WebhookEventsApi:
     ) -> RESTResponseType:
         """Replay a specific webhook event.
 
-        Re-enqueues the exact payload from a previously recorded event to its original subscription.  The event is re-queued as a fresh delivery attempt (attempt 1) using the original payload unchanged. Delivery follows the normal retry schedule if the endpoint is unavailable.  **Replay signal:** Replayed deliveries include the header `X-Debitura-Replay: true` so your endpoint can distinguish a replay from a live event and implement idempotency correctly.  **When to use:** - Your endpoint was temporarily unavailable and you want to re-deliver a specific event. - You want to test idempotency of your event handler. - Part of CI-loop ASSERT: confirm an event was dispatched, then replay to a different receiver.  **Tenant isolation:** Only events belonging to your own subscriptions can be replayed.
+        Re-enqueues the exact payload from a previously recorded event to its original subscription.  The event is re-queued as a fresh delivery attempt (attempt 1) using the original payload unchanged. Delivery follows the normal retry schedule if the endpoint is unavailable.  **Replay signal:** Replayed deliveries include the header `X-Debitura-Replay: true` so your endpoint can distinguish a replay from a live event and implement idempotency correctly.  **When to use:** - Your endpoint was temporarily unavailable and you want to re-deliver a specific event. - You want to test idempotency of your event handler. - Part of CI-loop ASSERT: confirm an event was dispatched, then replay to a different receiver.  **Tenant isolation:** Only events belonging to your own subscriptions can be replayed.  **Retention:** events older than 28 days have had their payload cleared and return `410 Gone`.
 
         :param id: (required)
         :type id: str
@@ -525,6 +527,7 @@ class WebhookEventsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DebituraWebExternalCustomerAPIModelsWebhooksDtosReplayEventResultDto",
             '404': None,
+            '410': None,
         }
         response_data = self.api_client.call_api(
             *_param,

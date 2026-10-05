@@ -3542,7 +3542,7 @@
           "WebhookEvents"
         ],
         "summary": "List webhook events dispatched for a case.",
-        "description": "Returns all webhook events dispatched for the given case, scoped to your webhook subscriptions.\nResults are ordered newest-first.\n\n**Use cases:**\n- Verify that a specific event (e.g. `case.updated`) fired after a state transition.\n- Inspect the exact payload delivered on each attempt.\n- Find the event ID to replay via `POST /webhooks/events/{id}/replay`.\n\n**Filtering:**\n- `caseId` (required): restricts to events for this case.\n- `since` (optional): only returns events created at or after this ISO 8601 timestamp.\n\n**Note:** Only events for your subscriptions are returned — events from other creditors' subscriptions are never exposed.",
+        "description": "Returns all webhook events dispatched for the given case, scoped to your webhook subscriptions.\nResults are ordered newest-first.\n\n**Use cases:**\n- Verify that a specific event (e.g. `case.updated`) fired after a state transition.\n- Inspect the exact payload delivered on each attempt.\n- Find the event ID to replay via `POST /webhooks/events/{id}/replay`.\n\n**Filtering:**\n- `caseId` (required): restricts to events for this case.\n- `since` (optional): only returns events created at or after this ISO 8601 timestamp.\n\n**Note:** Only events for your subscriptions are returned — events from other creditors' subscriptions are never exposed.\n\n**Retention:** event payloads are kept for 28 days. After that the event is still listed, with an empty `payload`, and can no longer be replayed.",
         "parameters": [
           {
             "name": "caseId",
@@ -3603,7 +3603,7 @@
           "WebhookEvents"
         ],
         "summary": "Replay a specific webhook event.",
-        "description": "Re-enqueues the exact payload from a previously recorded event to its original subscription.\n\nThe event is re-queued as a fresh delivery attempt (attempt 1) using the original payload unchanged.\nDelivery follows the normal retry schedule if the endpoint is unavailable.\n\n**Replay signal:** Replayed deliveries include the header `X-Debitura-Replay: true` so your endpoint can distinguish a replay from a live event and implement idempotency correctly.\n\n**When to use:**\n- Your endpoint was temporarily unavailable and you want to re-deliver a specific event.\n- You want to test idempotency of your event handler.\n- Part of CI-loop ASSERT: confirm an event was dispatched, then replay to a different receiver.\n\n**Tenant isolation:** Only events belonging to your own subscriptions can be replayed.",
+        "description": "Re-enqueues the exact payload from a previously recorded event to its original subscription.\n\nThe event is re-queued as a fresh delivery attempt (attempt 1) using the original payload unchanged.\nDelivery follows the normal retry schedule if the endpoint is unavailable.\n\n**Replay signal:** Replayed deliveries include the header `X-Debitura-Replay: true` so your endpoint can distinguish a replay from a live event and implement idempotency correctly.\n\n**When to use:**\n- Your endpoint was temporarily unavailable and you want to re-deliver a specific event.\n- You want to test idempotency of your event handler.\n- Part of CI-loop ASSERT: confirm an event was dispatched, then replay to a different receiver.\n\n**Tenant isolation:** Only events belonging to your own subscriptions can be replayed.\n\n**Retention:** events older than 28 days have had their payload cleared and return `410 Gone`.",
         "parameters": [
           {
             "name": "id",
@@ -3638,6 +3638,9 @@
           },
           "404": {
             "description": "Event not found or not owned by this creditor"
+          },
+          "410": {
+            "description": "Event is older than 28 days; its payload is no longer available"
           }
         }
       }
