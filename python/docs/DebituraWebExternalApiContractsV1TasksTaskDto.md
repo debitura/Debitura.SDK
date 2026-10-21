@@ -1,6 +1,6 @@
 # DebituraWebExternalApiContractsV1TasksTaskDto
 
-A creditor-facing action item (\"task\") — something the platform needs the client to do before a case can proceed (e.g. reply to a chat, sign a contract, assign a bank account).              Every task carries a Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.SolutionUrl — an absolute link identical to the one used inside the Creditor app — so a human can resolve any task in one click, even task types that are not yet directly API-actionable. Tasks that ARE directly API-actionable additionally carry a non-null Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.Action pointing at the exact API call that resolves them.
+A creditor-facing action item (\"task\") — something the platform needs the client to do before a case can proceed (e.g. reply to a chat, sign a contract, assign a bank account).              Every task carries a SolutionUrl — an absolute link identical to the one used inside the Creditor app — so a human can resolve any task in one click, even task types that are not yet directly API-actionable. Tasks that ARE directly API-actionable additionally carry a non-null Action pointing at the exact API call that resolves them.
 
 ## Properties
 
@@ -8,17 +8,17 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** | The task&#39;s unique ID. | [optional] 
 **type** | **str** | Stable string code for the task type (e.g. &#x60;\&quot;ReplyToChat\&quot;&#x60;). This is the public, additive-safe contract — it does NOT track the internal integer enum used in storage. | [optional] 
-**type_label** | **str** | Human-readable label for Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.Type (e.g. \&quot;Reply to chat\&quot;). | [optional] 
+**type_label** | **str** | Human-readable label for Type (e.g. \&quot;Reply to chat\&quot;). | [optional] 
 **title** | **str** | Short task title, as shown in the Creditor app. | [optional] 
 **description** | **str** | Optional longer description of what the task requires. | [optional] 
 **status** | **str** | Either &#x60;\&quot;Open\&quot;&#x60; or &#x60;\&quot;Solved\&quot;&#x60;. | [optional] 
 **case_id** | **str** | The case (collection case / invoice) this task belongs to, when applicable. Null for account-level tasks not tied to a single case (e.g. SignContract, AssignBankAccount). | [optional] 
-**case_reference** | **str** | Your reference for Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.CaseId, if any. | [optional] 
+**case_reference** | **str** | Your reference for CaseId, if any. | [optional] 
 **lead_id** | **str** | The lead this task belongs to, if any. Populated for lead-scoped tasks, and for the quote-review tasks (&#x60;IncumbentLegalQuotePending&#x60;, &#x60;ReviewQuotes&#x60;) — which are attached to a case but decided on the lead, so those carry both &#x60;caseId&#x60; and &#x60;leadId&#x60;, and their &#x60;solutionUrl&#x60; points at the lead. Null for every other task type. On the rare quote-review row with no lead recorded, &#x60;leadId&#x60; is null and &#x60;solutionUrl&#x60; falls back to the case page — the two never disagree. | [optional] 
 **deadline** | **datetime** | When this task is due, if a deadline is set. | [optional] 
 **date_created** | **datetime** | When the task was created. | [optional] 
 **date_solved** | **datetime** | When the task was resolved, if it has been. | [optional] 
-**solution_url** | **str** | Absolute URL — identical to the one the Creditor app itself links to — where a human can resolve this task. Always present, regardless of whether Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.Action is populated. | [optional] 
+**solution_url** | **str** | Absolute URL — identical to the one the Creditor app itself links to — where a human can resolve this task. Always present, regardless of whether Action is populated. | [optional] 
 **action** | [**DebituraWebExternalApiContractsV1TasksTaskActionDto**](DebituraWebExternalApiContractsV1TasksTaskActionDto.md) |  | [optional] 
 
 ## Example

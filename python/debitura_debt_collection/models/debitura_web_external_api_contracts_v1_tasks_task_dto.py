@@ -27,21 +27,21 @@ from typing_extensions import Self
 
 class DebituraWebExternalApiContractsV1TasksTaskDto(BaseModel):
     """
-    A creditor-facing action item (\"task\") — something the platform needs the client to do before a case can proceed (e.g. reply to a chat, sign a contract, assign a bank account).              Every task carries a Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.SolutionUrl — an absolute link identical to the one used inside the Creditor app — so a human can resolve any task in one click, even task types that are not yet directly API-actionable. Tasks that ARE directly API-actionable additionally carry a non-null Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.Action pointing at the exact API call that resolves them.
+    A creditor-facing action item (\"task\") — something the platform needs the client to do before a case can proceed (e.g. reply to a chat, sign a contract, assign a bank account).              Every task carries a SolutionUrl — an absolute link identical to the one used inside the Creditor app — so a human can resolve any task in one click, even task types that are not yet directly API-actionable. Tasks that ARE directly API-actionable additionally carry a non-null Action pointing at the exact API call that resolves them.
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="The task's unique ID.")
     type: Optional[StrictStr] = Field(default=None, description="Stable string code for the task type (e.g. `\"ReplyToChat\"`). This is the public, additive-safe contract — it does NOT track the internal integer enum used in storage.")
-    type_label: Optional[StrictStr] = Field(default=None, description="Human-readable label for Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.Type (e.g. \"Reply to chat\").", alias="typeLabel")
+    type_label: Optional[StrictStr] = Field(default=None, description="Human-readable label for Type (e.g. \"Reply to chat\").", alias="typeLabel")
     title: Optional[StrictStr] = Field(default=None, description="Short task title, as shown in the Creditor app.")
     description: Optional[StrictStr] = Field(default=None, description="Optional longer description of what the task requires.")
     status: Optional[StrictStr] = Field(default=None, description="Either `\"Open\"` or `\"Solved\"`.")
     case_id: Optional[StrictStr] = Field(default=None, description="The case (collection case / invoice) this task belongs to, when applicable. Null for account-level tasks not tied to a single case (e.g. SignContract, AssignBankAccount).", alias="caseId")
-    case_reference: Optional[StrictStr] = Field(default=None, description="Your reference for Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.CaseId, if any.", alias="caseReference")
+    case_reference: Optional[StrictStr] = Field(default=None, description="Your reference for CaseId, if any.", alias="caseReference")
     lead_id: Optional[StrictStr] = Field(default=None, description="The lead this task belongs to, if any. Populated for lead-scoped tasks, and for the quote-review tasks (`IncumbentLegalQuotePending`, `ReviewQuotes`) — which are attached to a case but decided on the lead, so those carry both `caseId` and `leadId`, and their `solutionUrl` points at the lead. Null for every other task type. On the rare quote-review row with no lead recorded, `leadId` is null and `solutionUrl` falls back to the case page — the two never disagree.", alias="leadId")
     deadline: Optional[datetime] = Field(default=None, description="When this task is due, if a deadline is set.")
     date_created: Optional[datetime] = Field(default=None, description="When the task was created.", alias="dateCreated")
     date_solved: Optional[datetime] = Field(default=None, description="When the task was resolved, if it has been.", alias="dateSolved")
-    solution_url: Optional[StrictStr] = Field(default=None, description="Absolute URL — identical to the one the Creditor app itself links to — where a human can resolve this task. Always present, regardless of whether Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.Action is populated.", alias="solutionUrl")
+    solution_url: Optional[StrictStr] = Field(default=None, description="Absolute URL — identical to the one the Creditor app itself links to — where a human can resolve this task. Always present, regardless of whether Action is populated.", alias="solutionUrl")
     action: Optional[DebituraWebExternalApiContractsV1TasksTaskActionDto] = None
     __properties: ClassVar[List[str]] = ["id", "type", "typeLabel", "title", "description", "status", "caseId", "caseReference", "leadId", "deadline", "dateCreated", "dateSolved", "solutionUrl", "action"]
 

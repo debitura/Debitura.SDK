@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** | The type of business error (e.g., \&quot;MissingDebtCollectionContract\&quot;, \&quot;MissingPowerOfAttorney\&quot;, \&quot;NoPartnerAvailable\&quot;). | [optional] 
 **message** | **str** | A human-readable description of the error. | [optional] 
-**solution_url** | **str** | A URL where the user can resolve this &lt;i&gt;specific&lt;/i&gt; error (e.g., sign a contract).               Partners who want a &lt;b&gt;single URL&lt;/b&gt; that walks the user through every pending signing in one chain — instead of forwarding one URL per &#x60;BusinessErrorApiDTO&#x60; — should use Debitura.Web.ExternalApi.Contracts.V1.Cases.BusinessErrorResponseApiDTO.SigningHandoff&#39;s &#x60;CombinedSigningUrl&#x60;. The two are complementary: &#x60;SolutionUrl&#x60; is granular per-error; &#x60;CombinedSigningUrl&#x60; is the chain-walking alternative for signing-related errors. | [optional] 
+**solution_url** | **str** | A URL where the user can resolve this &lt;i&gt;specific&lt;/i&gt; error (e.g., sign a contract).               Partners who want a &lt;b&gt;single URL&lt;/b&gt; that walks the user through every pending signing in one chain — instead of forwarding one URL per &#x60;BusinessErrorApiDTO&#x60; — should use SigningHandoff&#39;s &#x60;CombinedSigningUrl&#x60;. The two are complementary: &#x60;SolutionUrl&#x60; is granular per-error; &#x60;CombinedSigningUrl&#x60; is the chain-walking alternative for signing-related errors. | [optional] 
 
 ## Example
 

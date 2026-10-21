@@ -105,19 +105,6 @@ export interface DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionC
      */
     'claimLines'?: Array<DebituraWebExternalApiContractsV1CasesRequestsClaimLineDto> | null;
     /**
-     * This skips the \'Pending verification\' for Debitura and puts case straight to partner
-     * @type {boolean}
-     * @memberof DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestApiViewModel
-     */
-    'skipDebituraVerification'?: boolean;
-    /**
-     * Deprecated — this field is accepted for backwards compatibility but is ignored server-side. Creation emails are always suppressed; the hourly CasesStarted digest is the single notification channel for all entry points.
-     * @type {boolean}
-     * @memberof DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestApiViewModel
-     * @deprecated
-     */
-    'skipCreationEmails'?: boolean;
-    /**
      * When true, cases with unsigned contracts (SDCA/POA) are accepted in \'PendingContractSigning\' status instead of being rejected with 422. The case transitions automatically once contracts are signed. Default: false (unsigned contracts return 422).
      * @type {boolean}
      * @memberof DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestApiViewModel
@@ -135,12 +122,6 @@ export interface DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionC
      * @memberof DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestApiViewModel
      */
     'tag'?: string | null;
-    /**
-     * Optional: Specify a collection partner ID to handle this case. When provided, this partner will be used regardless of lead agent matching rules. The partner must be active and have coverage for the debtor\'s jurisdiction.
-     * @type {string}
-     * @memberof DebituraWebExternalApiContractsV1CasesRequestsCreateCollectionCaseRequestApiViewModel
-     */
-    'collectionPartnerId'?: string | null;
     /**
      * Optional: Email address of the creditor team member to assign as the case owner. When provided, email notifications for this case will be sent only to this user instead of all team members. Must correspond to an active member of your team.
      * @type {string}

@@ -1,6 +1,6 @@
 # DebituraWebExternalApiContractsV1CasesInvoiceAllocationOutstandingDto
 
-Additive external-API read model. Per-bucket outstanding on the debt ledger, produced by the payment allocation engine (bucket total minus Σ active stored allocations — never re-derived from a model). Mirrors the internal `Debitura.Domain.Model.Receiveables.InvoiceEconomics.EconomicalAllocationOutstanding` shape.
+Outstanding amount per bucket on the case: each bucket's total minus the payments allocated to it.
 
 ## Properties
 

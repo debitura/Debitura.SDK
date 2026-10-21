@@ -28,7 +28,7 @@ class DebituraDomainModelWebhooksDtosCreateWebhookRequest(BaseModel):
     """
     DebituraDomainModelWebhooksDtosCreateWebhookRequest
     """ # noqa: E501
-    url: Annotated[str, Field(min_length=0, strict=True, max_length=1024)]
+    url: Annotated[str, Field(min_length=0, strict=True, max_length=800)]
     events: Annotated[List[StrictStr], Field(min_length=1)]
     is_test_mode: Optional[StrictBool] = Field(default=None, alias="isTestMode")
     __properties: ClassVar[List[str]] = ["url", "events", "isTestMode"]

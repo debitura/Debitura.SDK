@@ -29,7 +29,7 @@ class DebituraWebExternalApiContractsV1CasesBusinessErrorApiDTO(BaseModel):
     """ # noqa: E501
     type: Optional[StrictStr] = Field(default=None, description="The type of business error (e.g., \"MissingDebtCollectionContract\", \"MissingPowerOfAttorney\", \"NoPartnerAvailable\").")
     message: Optional[StrictStr] = Field(default=None, description="A human-readable description of the error.")
-    solution_url: Optional[StrictStr] = Field(default=None, description="A URL where the user can resolve this <i>specific</i> error (e.g., sign a contract).               Partners who want a <b>single URL</b> that walks the user through every pending signing in one chain — instead of forwarding one URL per `BusinessErrorApiDTO` — should use Debitura.Web.ExternalApi.Contracts.V1.Cases.BusinessErrorResponseApiDTO.SigningHandoff's `CombinedSigningUrl`. The two are complementary: `SolutionUrl` is granular per-error; `CombinedSigningUrl` is the chain-walking alternative for signing-related errors.", alias="solutionUrl")
+    solution_url: Optional[StrictStr] = Field(default=None, description="A URL where the user can resolve this <i>specific</i> error (e.g., sign a contract).               Partners who want a <b>single URL</b> that walks the user through every pending signing in one chain — instead of forwarding one URL per `BusinessErrorApiDTO` — should use SigningHandoff's `CombinedSigningUrl`. The two are complementary: `SolutionUrl` is granular per-error; `CombinedSigningUrl` is the chain-walking alternative for signing-related errors.", alias="solutionUrl")
     __properties: ClassVar[List[str]] = ["type", "message", "solutionUrl"]
 
     model_config = ConfigDict(
