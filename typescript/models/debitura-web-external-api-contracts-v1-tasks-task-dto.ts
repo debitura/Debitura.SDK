@@ -18,7 +18,7 @@
 import type { DebituraWebExternalApiContractsV1TasksTaskActionDto } from './debitura-web-external-api-contracts-v1-tasks-task-action-dto';
 
 /**
- * A creditor-facing action item (\"task\") — something the platform needs the client to do before a case can proceed (e.g. reply to a chat, sign a contract, assign a bank account).              Every task carries a Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.SolutionUrl — an absolute link identical to the one used inside the Creditor app — so a human can resolve any task in one click, even task types that are not yet directly API-actionable. Tasks that ARE directly API-actionable additionally carry a non-null Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.Action pointing at the exact API call that resolves them.
+ * A creditor-facing action item (\"task\") — something the platform needs the client to do before a case can proceed (e.g. reply to a chat, sign a contract, assign a bank account).              Every task carries a SolutionUrl — an absolute link identical to the one used inside the Creditor app — so a human can resolve any task in one click, even task types that are not yet directly API-actionable. Tasks that ARE directly API-actionable additionally carry a non-null Action pointing at the exact API call that resolves them.
  * @export
  * @interface DebituraWebExternalApiContractsV1TasksTaskDto
  */
@@ -36,7 +36,7 @@ export interface DebituraWebExternalApiContractsV1TasksTaskDto {
      */
     'type'?: string | null;
     /**
-     * Human-readable label for Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.Type (e.g. \"Reply to chat\").
+     * Human-readable label for Type (e.g. \"Reply to chat\").
      * @type {string}
      * @memberof DebituraWebExternalApiContractsV1TasksTaskDto
      */
@@ -66,7 +66,7 @@ export interface DebituraWebExternalApiContractsV1TasksTaskDto {
      */
     'caseId'?: string | null;
     /**
-     * Your reference for Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.CaseId, if any.
+     * Your reference for CaseId, if any.
      * @type {string}
      * @memberof DebituraWebExternalApiContractsV1TasksTaskDto
      */
@@ -96,7 +96,7 @@ export interface DebituraWebExternalApiContractsV1TasksTaskDto {
      */
     'dateSolved'?: string | null;
     /**
-     * Absolute URL — identical to the one the Creditor app itself links to — where a human can resolve this task. Always present, regardless of whether Debitura.Web.ExternalApi.Contracts.V1.Tasks.TaskDto.Action is populated.
+     * Absolute URL — identical to the one the Creditor app itself links to — where a human can resolve this task. Always present, regardless of whether Action is populated.
      * @type {string}
      * @memberof DebituraWebExternalApiContractsV1TasksTaskDto
      */

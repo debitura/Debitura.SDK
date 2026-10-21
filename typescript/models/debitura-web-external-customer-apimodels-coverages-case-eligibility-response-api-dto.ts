@@ -54,13 +54,13 @@ export interface DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityRes
      */
     'powerOfAttorneyStatus'?: DebituraWebExternalCustomerAPIModelsCoveragesPowerOfAttorneyStatusApiDTO;
     /**
-     * Error message if IsEligible = false. Branch on Debitura.Web.ExternalCustomerAPI.Models.Coverages.CaseEligibilityResponseApiDTO.IneligibilityReasonCode rather than on this text, which may be reworded.
+     * Error message if IsEligible = false. Branch on IneligibilityReasonCode rather than on this text, which may be reworded.
      * @type {string}
      * @memberof DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityResponseApiDTO
      */
     'errorMessage'?: string | null;
     /**
-     * Stable machine-readable reason, present whenever Debitura.Web.ExternalCustomerAPI.Models.Coverages.CaseEligibilityResponseApiDTO.ErrorMessage is. One of: NoGeographicCoverage, AmountBelowMinimum, AmountAboveMaximum, DebtorTypeNotCovered, NotCoveredByPartnerRules, ExcludedForClient, EligibilityUndetermined.  Only NoGeographicCoverage means we have no partner in the jurisdiction. AmountBelowMinimum means the geography IS covered and only the claim amount fell short. EligibilityUndetermined is a transient failure on our side, not a statement about coverage.
+     * Stable machine-readable reason, present whenever ErrorMessage is. One of: NoGeographicCoverage, AmountBelowMinimum, AmountAboveMaximum, DebtorTypeNotCovered, NotCoveredByPartnerRules, ExcludedForClient, EligibilityUndetermined.  Only NoGeographicCoverage means we have no partner in the jurisdiction. AmountBelowMinimum means the geography IS covered and only the claim amount fell short. EligibilityUndetermined is a transient failure on our side, not a statement about coverage.
      * @type {string}
      * @memberof DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityResponseApiDTO
      */
@@ -72,7 +72,7 @@ export interface DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityRes
      */
     'applicableMinimumAmount'?: number | null;
     /**
-     * ISO code that Debitura.Web.ExternalCustomerAPI.Models.Coverages.CaseEligibilityResponseApiDTO.ApplicableMinimumAmount is expressed in.
+     * ISO code that ApplicableMinimumAmount is expressed in.
      * @type {string}
      * @memberof DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityResponseApiDTO
      */
@@ -84,7 +84,7 @@ export interface DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityRes
      */
     'marketMinimumAmount'?: number | null;
     /**
-     * ISO code that Debitura.Web.ExternalCustomerAPI.Models.Coverages.CaseEligibilityResponseApiDTO.MarketMinimumAmount is expressed in.
+     * ISO code that MarketMinimumAmount is expressed in.
      * @type {string}
      * @memberof DebituraWebExternalCustomerAPIModelsCoveragesCaseEligibilityResponseApiDTO
      */

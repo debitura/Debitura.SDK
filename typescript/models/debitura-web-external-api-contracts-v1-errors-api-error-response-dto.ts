@@ -18,7 +18,7 @@
 import type { DebituraWebExternalApiContractsV1CasesBusinessErrorApiDTO } from './debitura-web-external-api-contracts-v1-cases-business-error-api-dto';
 
 /**
- * Generic structured error response for API endpoints.              Dual-write design: existing fields (Debitura.Web.ExternalApi.Contracts.V1.Errors.ApiErrorResponseDto.Error / Debitura.Web.ExternalApi.Contracts.V1.Errors.ApiErrorResponseDto.Message etc.) are preserved for backward compatibility alongside the canonical Debitura.Web.ExternalApi.Contracts.V1.Errors.ApiErrorResponseDto.BusinessErrors array, allowing consumers to migrate at their own pace.
+ * Generic structured error response for API endpoints.              The BusinessErrors array is the preferred format. The older fields (Error, Message etc.) are kept for backward compatibility.
  * @export
  * @interface DebituraWebExternalApiContractsV1ErrorsApiErrorResponseDto
  */

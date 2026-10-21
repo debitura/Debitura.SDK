@@ -33,7 +33,7 @@ export interface DebituraWebExternalApiContractsV1CasesRequiredActionDto {
      */
     'message'?: string | null;
     /**
-     * URL where the user can complete this <i>specific</i> action (e.g., contract signing page). The URL is context-aware: referral partner tokens get referral onboarding URLs, regular API keys get standard creditor app URLs.               Partners who want a <b>single URL</b> that walks the user through every pending action in one chain — instead of forwarding one URL per `RequiredActionDto` — should use Debitura.Web.ExternalApi.Contracts.V1.Cases.PreviewResultDto.SigningHandoff\'s `CombinedSigningUrl`. The two are complementary: `SolutionUrl` is granular per-action; `CombinedSigningUrl` is the chain-walking alternative for signing-related actions.
+     * URL where the user can complete this <i>specific</i> action (e.g., contract signing page). The URL is context-aware: referral partner tokens get referral onboarding URLs, regular API keys get standard creditor app URLs.               Partners who want a <b>single URL</b> that walks the user through every pending action in one chain — instead of forwarding one URL per `RequiredActionDto` — should use SigningHandoff\'s `CombinedSigningUrl`. The two are complementary: `SolutionUrl` is granular per-action; `CombinedSigningUrl` is the chain-walking alternative for signing-related actions.
      * @type {string}
      * @memberof DebituraWebExternalApiContractsV1CasesRequiredActionDto
      */

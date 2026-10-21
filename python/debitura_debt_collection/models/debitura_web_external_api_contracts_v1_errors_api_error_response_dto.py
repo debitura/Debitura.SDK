@@ -26,7 +26,7 @@ from typing_extensions import Self
 
 class DebituraWebExternalApiContractsV1ErrorsApiErrorResponseDto(BaseModel):
     """
-    Generic structured error response for API endpoints.              Dual-write design: existing fields (Debitura.Web.ExternalApi.Contracts.V1.Errors.ApiErrorResponseDto.Error / Debitura.Web.ExternalApi.Contracts.V1.Errors.ApiErrorResponseDto.Message etc.) are preserved for backward compatibility alongside the canonical Debitura.Web.ExternalApi.Contracts.V1.Errors.ApiErrorResponseDto.BusinessErrors array, allowing consumers to migrate at their own pace.
+    Generic structured error response for API endpoints.              The BusinessErrors array is the preferred format. The older fields (Error, Message etc.) are kept for backward compatibility.
     """ # noqa: E501
     error: Optional[StrictStr] = Field(default=None, description="Short human-readable error label (legacy field — preserved for backward compatibility).")
     message: Optional[StrictStr] = Field(default=None, description="Human-readable error description (legacy field — preserved for backward compatibility).")

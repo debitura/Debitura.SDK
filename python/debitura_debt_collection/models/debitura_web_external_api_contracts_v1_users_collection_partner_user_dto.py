@@ -25,7 +25,7 @@ from typing_extensions import Self
 
 class DebituraWebExternalApiContractsV1UsersCollectionPartnerUserDto(BaseModel):
     """
-    A user belonging to the authenticated collection partner's team. Use the Debitura.Web.ExternalApi.Contracts.V1.Users.CollectionPartnerUserDto.Id as the `assignedUserId` when starting a case via POST /cases/{id}/start.
+    A user belonging to the authenticated collection partner's team. Use the Id as the `assignedUserId` when starting a case via POST /cases/{id}/start.
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="The user's unique ID. Use this as `assignedUserId` in POST /cases/{id}/start.")
     name: Optional[StrictStr] = Field(default=None, description="The user's full name.")

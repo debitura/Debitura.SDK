@@ -42,13 +42,13 @@ export interface DebituraWebExternalApiContractsV1CasesPreviewResultDto {
      */
     'isEligible'?: boolean;
     /**
-     * Explanation of why the case is not eligible (only present when IsEligible = false). Branch on Debitura.Web.ExternalApi.Contracts.V1.Cases.PreviewResultDto.IneligibilityReasonCode rather than on this text, which may be reworded.
+     * Explanation of why the case is not eligible (only present when IsEligible = false). Branch on IneligibilityReasonCode rather than on this text, which may be reworded.
      * @type {string}
      * @memberof DebituraWebExternalApiContractsV1CasesPreviewResultDto
      */
     'ineligibilityReason'?: string | null;
     /**
-     * Stable machine-readable reason, present whenever Debitura.Web.ExternalApi.Contracts.V1.Cases.PreviewResultDto.IneligibilityReason is One of: NoGeographicCoverage, AmountBelowMinimum, AmountAboveMaximum, DebtorTypeNotCovered, NotCoveredByPartnerRules, ExcludedForClient, EligibilityUndetermined.  Only NoGeographicCoverage means we have no partner in the jurisdiction. AmountBelowMinimum means the geography IS covered and only the claim amount fell short. EligibilityUndetermined is a transient failure on our side, not a statement about coverage — retry rather than telling the client their address is wrong.
+     * Stable machine-readable reason, present whenever IneligibilityReason is One of: NoGeographicCoverage, AmountBelowMinimum, AmountAboveMaximum, DebtorTypeNotCovered, NotCoveredByPartnerRules, ExcludedForClient, EligibilityUndetermined.  Only NoGeographicCoverage means we have no partner in the jurisdiction. AmountBelowMinimum means the geography IS covered and only the claim amount fell short. EligibilityUndetermined is a transient failure on our side, not a statement about coverage — retry rather than telling the client their address is wrong.
      * @type {string}
      * @memberof DebituraWebExternalApiContractsV1CasesPreviewResultDto
      */
@@ -60,7 +60,7 @@ export interface DebituraWebExternalApiContractsV1CasesPreviewResultDto {
      */
     'applicableMinimumAmount'?: number | null;
     /**
-     * ISO code that Debitura.Web.ExternalApi.Contracts.V1.Cases.PreviewResultDto.ApplicableMinimumAmount is expressed in.
+     * ISO code that ApplicableMinimumAmount is expressed in.
      * @type {string}
      * @memberof DebituraWebExternalApiContractsV1CasesPreviewResultDto
      */
@@ -72,7 +72,7 @@ export interface DebituraWebExternalApiContractsV1CasesPreviewResultDto {
      */
     'marketMinimumAmount'?: number | null;
     /**
-     * ISO code that Debitura.Web.ExternalApi.Contracts.V1.Cases.PreviewResultDto.MarketMinimumAmount is expressed in.
+     * ISO code that MarketMinimumAmount is expressed in.
      * @type {string}
      * @memberof DebituraWebExternalApiContractsV1CasesPreviewResultDto
      */

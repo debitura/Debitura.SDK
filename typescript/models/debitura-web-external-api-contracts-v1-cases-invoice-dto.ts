@@ -171,7 +171,7 @@ export interface DebituraWebExternalApiContractsV1CasesInvoiceDto {
      */
     'closeCode'?: string | null;
     /**
-     * The current phase of the case\'s engagement: \"Pre-legal\", \"Legal\", or \"Enforcement\". A different axis from Debitura.Web.ExternalApi.Contracts.V1.Cases.InvoiceDto.Lifecycle/Debitura.Web.ExternalApi.Contracts.V1.Cases.InvoiceDto.CloseCode — an Active case can be in any of the three phases.              Null means \"no active engagement\" (e.g. lead / quoting / pre-contract-signing / unassigned, or a data-consistency gap) — this is a distinct third state, NOT a synonym for Pre-legal. Most cases legitimately read Pre-legal; phase only leaves Pre-legal on legal/enforcement quote flows.              Not guaranteed to be monotonic: an admin correction can move phase backwards (e.g. Legal back to Pre-legal).              Persists after case closure — reflects the case\'s last-known engagement phase, not the current Lifecycle. Note: this is a different field from a lead quote\'s own offered phase (the phase a partner\'s quote proposes to work the case at, if this case ever went through a quote flow) — this field is the case-level phase of its actual engagement, not a quote\'s terms.
+     * The current phase of the case\'s engagement: \"Pre-legal\", \"Legal\", or \"Enforcement\". A different axis from Lifecycle/CloseCode — an Active case can be in any of the three phases.              Null means \"no active engagement\" (e.g. lead / quoting / pre-contract-signing / unassigned, or a data-consistency gap) — this is a distinct third state, NOT a synonym for Pre-legal. Most cases legitimately read Pre-legal; phase only leaves Pre-legal on legal/enforcement quote flows.              Not guaranteed to be monotonic: an admin correction can move phase backwards (e.g. Legal back to Pre-legal).              Persists after case closure — reflects the case\'s last-known engagement phase, not the current Lifecycle. Note: this is a different field from a lead quote\'s own offered phase (the phase a partner\'s quote proposes to work the case at, if this case ever went through a quote flow) — this field is the case-level phase of its actual engagement, not a quote\'s terms.
      * @type {string}
      * @memberof DebituraWebExternalApiContractsV1CasesInvoiceDto
      */
@@ -244,7 +244,7 @@ export interface DebituraWebExternalApiContractsV1CasesInvoiceDto {
      */
     'exclusivePeriodEndDate'?: string | null;
     /**
-     * Whether the claim is disputed by the debtor. Returns the description of Debitura.Domain.Model.Receiveables.Invoices.Enums.ClaimDisputeStatus: \"Yes, the claim is disputed\", \"No, the claim is not disputed\", or \"Don\'t Know\". Null when the dispute status has not been set on the case.
+     * Whether the claim is disputed by the debtor. One of: \"Yes, the claim is disputed\", \"No, the claim is not disputed\", or \"Don\'t Know\". Null when the dispute status has not been set on the case.
      * @type {string}
      * @memberof DebituraWebExternalApiContractsV1CasesInvoiceDto
      */

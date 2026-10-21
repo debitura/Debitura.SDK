@@ -28,7 +28,7 @@ class DebituraDomainModelWebhooksDtosUpdateWebhookRequest(BaseModel):
     """
     DebituraDomainModelWebhooksDtosUpdateWebhookRequest
     """ # noqa: E501
-    url: Optional[Annotated[str, Field(min_length=0, strict=True, max_length=1024)]] = None
+    url: Optional[Annotated[str, Field(min_length=0, strict=True, max_length=800)]] = None
     events: Optional[List[StrictStr]] = None
     is_active: Optional[StrictBool] = Field(default=None, alias="isActive")
     regenerate_secret: Optional[StrictBool] = Field(default=None, alias="regenerateSecret")
