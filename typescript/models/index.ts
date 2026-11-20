@@ -4,6 +4,7 @@ export * from './debitura-domain-model-webhooks-dtos-update-webhook-request';
 export * from './debitura-domain-model-webhooks-dtos-webhook-dto';
 export * from './debitura-domain-services-case-validation-case-validation-item-dto';
 export * from './debitura-domain-services-case-validation-case-validation-status-dto';
+export * from './debitura-web-external-api-contracts-v1-cases-admission-minimum-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-advance-test-case-response';
 export * from './debitura-web-external-api-contracts-v1-cases-assigned-user-dto';
 export * from './debitura-web-external-api-contracts-v1-cases-bank-account-dto';

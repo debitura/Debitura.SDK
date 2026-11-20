@@ -23,6 +23,7 @@ models/debitura-domain-model-webhooks-dtos-update-webhook-request.ts
 models/debitura-domain-model-webhooks-dtos-webhook-dto.ts
 models/debitura-domain-services-case-validation-case-validation-item-dto.ts
 models/debitura-domain-services-case-validation-case-validation-status-dto.ts
+models/debitura-web-external-api-contracts-v1-cases-admission-minimum-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-advance-test-case-response.ts
 models/debitura-web-external-api-contracts-v1-cases-assigned-user-dto.ts
 models/debitura-web-external-api-contracts-v1-cases-bank-account-dto.ts
