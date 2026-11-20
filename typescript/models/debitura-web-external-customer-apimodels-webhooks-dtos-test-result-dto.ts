@@ -55,6 +55,6 @@ export interface DebituraWebExternalCustomerAPIModelsWebhooksDtosTestResultDto {
      * @type {any}
      * @memberof DebituraWebExternalCustomerAPIModelsWebhooksDtosTestResultDto
      */
-    'testPayload'?: any | null;
+    'testPayload'?: any;
 }
 

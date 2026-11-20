@@ -20,6 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_admission_minimum_dto import DebituraWebExternalApiContractsV1CasesAdmissionMinimumDto
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_jurisdiction_dto import DebituraWebExternalApiContractsV1CasesJurisdictionDto
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_partner_assignment_dto import DebituraWebExternalApiContractsV1CasesPartnerAssignmentDto
 from debitura_debt_collection.models.debitura_web_external_api_contracts_v1_cases_pricing_preview_dto import DebituraWebExternalApiContractsV1CasesPricingPreviewDto
@@ -32,14 +33,15 @@ class DebituraWebExternalApiContractsV1CasesPreviewResultDto(BaseModel):
     """
     Detailed preview result for a case submission.
     """ # noqa: E501
-    is_eligible: Optional[StrictBool] = Field(default=None, description="Whether the case is eligible for collection (i.e., a collection partner is available). If false, check IneligibilityReason for details.", alias="isEligible")
+    is_eligible: Optional[StrictBool] = Field(default=None, description="Whether a collection partner is available and submit's monetary admission checks pass. If false, check IneligibilityReason for details.", alias="isEligible")
     ineligibility_reason: Optional[StrictStr] = Field(default=None, description="Explanation of why the case is not eligible (only present when IsEligible = false). Branch on IneligibilityReasonCode rather than on this text, which may be reworded.", alias="ineligibilityReason")
     ineligibility_reason_code: Optional[StrictStr] = Field(default=None, description="Stable machine-readable reason, present whenever IneligibilityReason is One of: NoGeographicCoverage, AmountBelowMinimum, AmountAboveMaximum, DebtorTypeNotCovered, NotCoveredByPartnerRules, ExcludedForClient, EligibilityUndetermined.  Only NoGeographicCoverage means we have no partner in the jurisdiction. AmountBelowMinimum means the geography IS covered and only the claim amount fell short. EligibilityUndetermined is a transient failure on our side, not a statement about coverage — retry rather than telling the client their address is wrong.", alias="ineligibilityReasonCode")
+    admission_minimum: Optional[DebituraWebExternalApiContractsV1CasesAdmissionMinimumDto] = Field(default=None, alias="admissionMinimum")
     applicable_minimum_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="What this claim would have to reach to be accepted, in the currency of the request; never below the platform minimum of 100 USD. Only present when no partner was matched. Withheld when the client's own routing exclusions mean the number would not be reachable for them, and when the request currency cannot be priced. Null when no partner covering this case declares a minimum.", alias="applicableMinimumAmount")
     applicable_minimum_currency_code: Optional[StrictStr] = Field(default=None, description="ISO code that ApplicableMinimumAmount is expressed in.", alias="applicableMinimumCurrencyCode")
     market_minimum_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The smallest claim the marketplace takes for this jurisdiction and debtor type, in the currency of the request: the lowest partner floor, never below the platform minimum of 100 USD. A statement about the market, not about this claim: it is returned whether or not a partner was selected, and does not depend on the claim amount or on the caller. It is not the admission rules applied when a case is created. Null when no partner covers the market or the amount cannot be priced.", alias="marketMinimumAmount")
     market_minimum_currency_code: Optional[StrictStr] = Field(default=None, description="ISO code that MarketMinimumAmount is expressed in.", alias="marketMinimumCurrencyCode")
-    amount_check_unavailable: Optional[StrictBool] = Field(default=None, description="True when a currency conversion needed to evaluate the claim amount was unavailable, so the amount-based part of this answer was NOT actually checked It can be true on an eligible answer: a partner matched only because amount conditions failed open while rates were down. Treat such an answer as provisional and retry rather than relying on the floor having been applied.", alias="amountCheckUnavailable")
+    amount_check_unavailable: Optional[StrictBool] = Field(default=None, description="True when a currency conversion needed to evaluate the claim amount was unavailable, so the amount-based part of matching or monetary admission was NOT actually checked. It can be true on an eligible answer: a partner matched only because amount conditions failed open while rates were down. Treat such an answer as provisional and retry rather than relying on the floor having been applied.", alias="amountCheckUnavailable")
     partner_assignment: Optional[DebituraWebExternalApiContractsV1CasesPartnerAssignmentDto] = Field(default=None, alias="partnerAssignment")
     required_actions: Optional[List[DebituraWebExternalApiContractsV1CasesRequiredActionDto]] = Field(default=None, description="List of actions required before the case can be submitted (e.g., sign contracts). Empty if no actions are required. Each action includes a solution URL to complete the requirement.", alias="requiredActions")
     jurisdiction: Optional[DebituraWebExternalApiContractsV1CasesJurisdictionDto] = None
@@ -47,7 +49,7 @@ class DebituraWebExternalApiContractsV1CasesPreviewResultDto(BaseModel):
     requires_kyc_verification: Optional[StrictBool] = Field(default=None, description="Whether the resolved collection partner requires KYC verification before cases can be submitted. When true, the creditor must complete KYC verification before case creation will succeed.", alias="requiresKycVerification")
     has_kyc_on_file: Optional[StrictBool] = Field(default=None, description="Whether the creditor already has KYC verification on file with Debitura. When RequiresKycVerification is true and HasKycOnFile is false, a MissingKycVerification required action will be present in the RequiredActions list.", alias="hasKycOnFile")
     signing_handoff: Optional[DebituraWebExternalApiContractsV1CasesSigningHandoffDto] = Field(default=None, alias="signingHandoff")
-    __properties: ClassVar[List[str]] = ["isEligible", "ineligibilityReason", "ineligibilityReasonCode", "applicableMinimumAmount", "applicableMinimumCurrencyCode", "marketMinimumAmount", "marketMinimumCurrencyCode", "amountCheckUnavailable", "partnerAssignment", "requiredActions", "jurisdiction", "pricingPreview", "requiresKycVerification", "hasKycOnFile", "signingHandoff"]
+    __properties: ClassVar[List[str]] = ["isEligible", "ineligibilityReason", "ineligibilityReasonCode", "admissionMinimum", "applicableMinimumAmount", "applicableMinimumCurrencyCode", "marketMinimumAmount", "marketMinimumCurrencyCode", "amountCheckUnavailable", "partnerAssignment", "requiredActions", "jurisdiction", "pricingPreview", "requiresKycVerification", "hasKycOnFile", "signingHandoff"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -88,6 +90,9 @@ class DebituraWebExternalApiContractsV1CasesPreviewResultDto(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of admission_minimum
+        if self.admission_minimum:
+            _dict['admissionMinimum'] = self.admission_minimum.to_dict()
         # override the default output from pydantic by calling `to_dict()` of partner_assignment
         if self.partner_assignment:
             _dict['partnerAssignment'] = self.partner_assignment.to_dict()
@@ -157,6 +162,7 @@ class DebituraWebExternalApiContractsV1CasesPreviewResultDto(BaseModel):
             "isEligible": obj.get("isEligible"),
             "ineligibilityReason": obj.get("ineligibilityReason"),
             "ineligibilityReasonCode": obj.get("ineligibilityReasonCode"),
+            "admissionMinimum": DebituraWebExternalApiContractsV1CasesAdmissionMinimumDto.from_dict(obj["admissionMinimum"]) if obj.get("admissionMinimum") is not None else None,
             "applicableMinimumAmount": obj.get("applicableMinimumAmount"),
             "applicableMinimumCurrencyCode": obj.get("applicableMinimumCurrencyCode"),
             "marketMinimumAmount": obj.get("marketMinimumAmount"),

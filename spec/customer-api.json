@@ -148,7 +148,7 @@
           "Cases"
         ],
         "summary": "List collection cases",
-        "description": "Returns a paginated list of collection cases for your account.\n\n**Pagination:**\n- page (default: 1) - Page number, starting from 1\n- pageSize (default: 10, max: 100) - Number of results per page\n\n**Filters:**\n- statuses - Filter by case lifecycle status (comma-separated list)\n  Valid values: PendingContractSigning, PendingVerificationInternal, PendingVerification,\n  NeedsAdditionalDetails, Leads, LeadsQuoteGiven, Active, Paused, Closed, Merged\n  (case-insensitive; both name and description forms accepted)\n- divisionIds - Filter by creditor division IDs (comma-separated GUIDs, for multi-division creditors)\n- debtorIds - Filter by specific debtor IDs (comma-separated GUIDs)\n- ids - Filter by specific case IDs (comma-separated GUIDs)\n\n**Sorting:**\n- sort - Sort field and direction (format: 'field:direction')\n  Valid sort fields: DateCreated, DateUpdated, DateFinished, DateCollectionStarted,\n  DueDate, Date, GrossAmount, Remainder, InterestFees, CollectionFees, ReminderFees,\n  Lifecycle, CloseCode\n  Examples: 'DateCreated:desc', 'DueDate:asc', 'GrossAmount:desc'\n  Unknown fields are silently ignored.\n\n**Response:**\n- Returns InvoiceListApiDTO with page metadata and cases array\n- Page metadata includes: totalResults, currentPage, skipped, pageSize",
+        "description": "Returns a paginated list of collection cases for your account.\n\n**Pagination:**\n- page (default: 1) - Page number, starting from 1\n- pageSize (default: 10, max: 100) - Number of results per page\n\n**Filters:**\n- statuses - Filter by case lifecycle status (comma-separated list)\n  Valid values: PendingContractSigning, PendingVerificationInternal, PendingVerification,\n  NeedsAdditionalDetails, Leads, LeadsQuoteGiven, Active, Paused, Closed, Merged\n  (case-insensitive; both name and description forms accepted)\n- divisionIds - Filter by creditor division IDs (comma-separated GUIDs, for multi-division creditors)\n- debtorIds - Filter by specific debtor IDs (comma-separated GUIDs)\n- ids - Filter by specific case IDs (comma-separated GUIDs)\n\n**Sorting:**\n- sort - Sort field and direction (format: 'field:direction')\n  Valid sort fields: DateCreated, DateUpdated, DateFinished, DateCollectionStarted,\n  DueDate, Date, GrossAmount, Remainder, InterestFees, CollectionFees, ReminderFees,\n  Lifecycle, CloseCode, ClaimType, Reference, CreditorReference, CollectionPartnerReference,\n  Type, Classification, Debtor, Creditor, Country, ExclusivityEndDate, ActiveCollectionPeriodEndDate,\n  PaymentTotalSum, CurrentPhase, CollectionPartner, Jurisdiction,\n  ManagedByPartner, CreditorDivision, AssignedCollectorUser, AssignedCreditorUser,\n  AssignedManagingPartnerUser, ReferralPartner\n  Examples: 'DateCreated:desc', 'DueDate:asc', 'GrossAmount:desc'\n  Unknown fields return HTTP 400. Equal values are ordered by case ID in the last requested direction.\n\n**Response:**\n- Returns InvoiceListApiDTO with page metadata and cases array\n- Page metadata includes: totalResults, currentPage, skipped, pageSize",
         "parameters": [
           {
             "name": "Page",
@@ -270,7 +270,7 @@
           "Cases"
         ],
         "summary": "Preview case eligibility and requirements",
-        "description": "Preview what would happen if you submitted a case, without actually creating it.\n\n**What This Endpoint Returns:**\n- IsEligible - Whether the case can be submitted (partner available)\n- PartnerAssignment - Which collection partner would handle the case\n- RequiredActions - What contracts/documents need to be signed before submission\n  - Standard Debt Collection Agreement (SDCA)\n  - Power of Attorney (PoA) for the assigned partner\n- PricingPreview - Estimated success fee with age-based surcharges\n- Jurisdiction - Geographic details\n\n**Use This To:**\n1. Check if a jurisdiction is supported before submitting\n2. Determine which documents need signing before case creation\n3. Get signing URLs to guide users through required actions\n4. Estimate pricing including age surcharges\n\n**Required Fields:**\n- AmountToRecover - Total principal amount\n- CurrencyCode - ISO 4217 currency code (e.g., 'DKK', 'EUR', 'USD')\n- Debtor.Type - 'Company' or 'Private'\n- Debtor.CountryAlpha2 - ISO 3166-1 alpha-2 country code\n- Debtor.StateAlpha2 - Required for US cases only (e.g., 'CA', 'NY')\n\n**Optional Fields (Multi-Invoice Age Pricing):**\n- AmountToRecoverOver12Months - Portion over 12 months overdue\n- AmountToRecoverOver24Months - Portion over 24 months overdue\n(Both must be provided together if used)\n- AmountToRecoverOver6Months - Portion over 6 months overdue (optional, improves pricing tier accuracy at the 180-day threshold; requires Over12/Over24)\n\n**Optional Fields (Claim Lines — recommended for multi-invoice claims):**\nInstead of totalling the claim and computing the buckets yourself, send the unpaid invoices:\n\n```\n\"claimLines\": [\n  { \"dueDate\": \"2024-01-15\", \"amount\": 423.42, \"reference\": \"INV-1001\" },\n  { \"dueDate\": \"2025-05-02\", \"amount\": 700.87, \"reference\": \"INV-1042\" }\n]\n```\n\n- `amount` is the **outstanding balance** on that invoice, already net of payments and credit notes.\n- We derive `amountToRecover` and all three age buckets from the lines and price on them, so send\n  `claimLines` **instead of** `amountToRecover`, the `amountToRecoverOver6/12/24Months` fields, and\n  `dueDate`. Combining any of those with `claimLines` is a 400.\n- Use `claimLines` whenever the debtor has already part-paid: it is the only way to express an honest\n  age profile on a part-paid claim.\n- Maximum 1000 lines. Per-line errors are returned keyed by index, e.g. `ClaimLines[2].DueDate`.\n- The same ledger produces the same quote here and on POST /cases.\n\n**Solution URLs Are Context-Aware:**\n- Bearer token (referral partner) → referral onboarding URLs\n- XApiKey (creditor) → standard creditor app URLs\n\n**Important Notes:**\n- This endpoint does NOT create a case - it only previews what would happen\n- The preview uses the same eligibility logic as POST /cases\n- If multiple partners match (system limitation), the first match is returned\n- All required actions must be completed before calling POST /cases\n\n**Example Workflow:**\n```\n1. POST /cases/preview → Check eligibility and get signing URLs\n2. User completes required actions (signs SDCA, signs PoA)\n3. POST /cases → Create the actual case\n```",
+        "description": "Preview what would happen if you submitted a case, without actually creating it.\n\n**What This Endpoint Returns:**\n- IsEligible - Whether the case can be submitted (partner available)\n- PartnerAssignment - Which collection partner would handle the case\n- RequiredActions - What contracts/documents need to be signed before submission\n  - Standard Debt Collection Agreement (SDCA)\n  - Power of Attorney (PoA) for the assigned partner\n- PricingPreview - Estimated success fee with age-based surcharges\n- Jurisdiction - Geographic details\n\n**Use This To:**\n1. Check if a jurisdiction is supported before submitting\n2. Determine which documents need signing before case creation\n3. Get signing URLs to guide users through required actions\n4. Estimate pricing including age surcharges\n\n**Required Fields:**\n- AmountToRecover - Total principal amount\n- CurrencyCode - ISO 4217 currency code (e.g., 'DKK', 'EUR', 'USD')\n- Debtor.Type - 'Company' or 'Private'\n- Debtor.CountryAlpha2 - ISO 3166-1 alpha-2 country code\n- Debtor.StateAlpha2 - Required for US cases only (e.g., 'CA', 'NY')\n\n**Optional Fields (Multi-Invoice Age Pricing):**\n- AmountToRecoverOver12Months - Portion over 12 months overdue\n- AmountToRecoverOver24Months - Portion over 24 months overdue\n(Both must be provided together if used)\n- AmountToRecoverOver6Months - Portion over 6 months overdue (optional, improves pricing tier accuracy at the 180-day threshold; requires Over12/Over24)\n\n**Optional Fields (Claim Lines — recommended for multi-invoice claims):**\nInstead of totalling the claim and computing the buckets yourself, send the unpaid invoices:\n\n```\n\"claimLines\": [\n  { \"dueDate\": \"2024-01-15\", \"amount\": 423.42, \"reference\": \"INV-1001\" },\n  { \"dueDate\": \"2025-05-02\", \"amount\": 700.87, \"reference\": \"INV-1042\" }\n]\n```\n\n- `amount` is the **outstanding balance** on that invoice, already net of payments and credit notes.\n- We derive `amountToRecover` and all three age buckets from the lines and price on them, so send\n  `claimLines` **instead of** `amountToRecover`, the `amountToRecoverOver6/12/24Months` fields, and\n  `dueDate`. Combining any of those with `claimLines` is a 400.\n- Use `claimLines` whenever the debtor has already part-paid: it is the only way to express an honest\n  age profile on a part-paid claim.\n- Maximum 1000 lines. Per-line errors are returned keyed by index, e.g. `ClaimLines[2].DueDate`.\n- The same ledger produces the same quote here and on POST /cases.\n\n**Solution URLs Are Context-Aware:**\n- Bearer token (referral partner) → referral onboarding URLs\n- XApiKey (creditor) → standard creditor app URLs\n\n**Important Notes:**\n- This endpoint does NOT create a case - it only previews what would happen\n- A matched preview applies the same monetary admission rules as POST /cases; create revalidates all rules\n- Monetary refusals return AmountBelowMinimum and admissionMinimum (rule, USD amount, request-currency amount and currency code)\n- amountCheckUnavailable means monetary eligibility is provisional because a required conversion was unavailable\n- Unmatched cases remain ineligible at every amount; this API does not offer network/custom-quote submission\n- If multiple partners match (system limitation), the first match is returned\n- All required actions must be completed before calling POST /cases\n\n**Example Workflow:**\n```\n1. POST /cases/preview → Check eligibility and get signing URLs\n2. User completes required actions (signs SDCA, signs PoA)\n3. POST /cases → Create the actual case\n```",
         "requestBody": {
           "content": {
             "application/json-patch+json": {
@@ -3651,7 +3651,7 @@
           "Webhooks"
         ],
         "summary": "Create a new webhook subscription.",
-        "description": "Creates a new webhook subscription for receiving real-time event notifications.\n\n**Available Events:**\n- `case.created` - New collection case created\n- `case.updated` - Case lifecycle changed (e.g., Active → Paused). Does not cover engagement phase\n  changes (Pre-legal/Legal/Enforcement) — poll `GET /cases/{id}` or `GET /cases/{id}/timeline` for\n  the current phase; there is no phase-change event today.\n- `case.closed` - Case closed\n- `payment.created` - Payment registered on case\n- `payment.deleted` - Payment reversed (deleted) on case\n- `chat.created` - Chat message created on case\n\n**Validation Rules:**\n- URL must be HTTPS\n- events array must contain only valid event types\n- URL must be publicly reachable\n- Private IP addresses are blocked (SSRF protection)\n\n**Returns:**\n- Webhook subscription details\n- Secret key for HMAC-SHA256 signature verification (shown only once)\n\n**IMPORTANT**: Save the secret immediately - it cannot be retrieved later.\n\n**Webhook Payload Structure:**\nEvery webhook delivery will contain these headers:\n- X-Debitura-Signature: HMAC-SHA256 signature (format: t={timestamp},v1={signature})\n- X-Debitura-Timestamp: Unix timestamp of the event\n- X-Debitura-Event: Event type (e.g., 'case.created')\n\n**Signature Verification (HMAC-SHA256):**\n1. Extract timestamp (t) and signature (v1) from X-Debitura-Signature header\n2. Construct signed payload: {timestamp}.{json_body}\n3. Compute HMAC-SHA256 using your webhook secret (Base64 decoded)\n4. Compare computed signature with v1 value (use constant-time comparison)\n5. Verify timestamp is within 5 minutes to prevent replay attacks\n\n**Example Payload:**\n```json\n{\n  \"id\": \"evt_abc123\",\n  \"event\": \"case.created\",\n  \"timestamp\": \"2024-01-15T10:30:00Z\",\n  \"data\": {\n    \"caseId\": \"guid-here\",\n    \"reference\": \"Q8OAXF3W\",\n    \"creditorReference\": \"INV-001\",\n    \"status\": \"Active\",\n    \"amount\": 1000.00,\n    \"currency\": \"EUR\",\n    \"debtorName\": \"Debtor Company Ltd\"\n  }\n}\n```",
+        "description": "Creates a new webhook subscription for receiving real-time event notifications.\n\n**Available Events:**\n- `case.created` - New collection case created\n- `case.updated` - Case lifecycle changed (e.g., Active → Paused). Does not cover engagement phase\n  changes (Pre-legal/Legal/Enforcement) — poll `GET /cases/{id}` or `GET /cases/{id}/timeline` for\n  the current phase; there is no phase-change event today.\n- `case.closed` - Case closed\n- `payment.created` - Payment registered on case\n- `payment.deleted` - Payment reversed (deleted) on case\n- `chat.created` - Chat message created on case\n\n**Validation Rules:**\n- URL must be HTTPS\n- events array must contain only valid event types\n- URL must be publicly reachable\n- Private IP addresses are blocked (SSRF protection)\n\n**Returns:**\n- Webhook subscription details\n- Secret key for HMAC-SHA256 signature verification (shown only once)\n\n**IMPORTANT**: Save the secret immediately - it cannot be retrieved later.\n\n**Webhook Payload Structure:**\nEvery webhook delivery will contain these headers:\n- X-Debitura-Signature: HMAC-SHA256 signature (format: t={timestamp},v1={signature})\n- X-Debitura-Timestamp: Unix timestamp of the event\n- X-Debitura-Event: Event type (e.g., 'case.created')\n\n**Signature Verification (HMAC-SHA256):**\n1. Extract timestamp (t) and signature (v1) from X-Debitura-Signature header\n2. Construct signed payload: {timestamp}.{json_body}\n3. Compute HMAC-SHA256 using your webhook secret (Base64 decoded)\n4. Compare computed signature with v1 value (use constant-time comparison)\n5. Verify timestamp is within 5 minutes to prevent replay attacks\n\n**Example Payload:**\n```json\n{\n  \"id\": \"bfa8af05-4bd1-4fd5-8f80-a6357f99dc59\",\n  \"specVersion\": \"1.0\",\n  \"event\": \"case.created\",\n  \"timestamp\": \"2024-01-15T10:30:00Z\",\n  \"data\": {\n    \"caseId\": \"72d427c1-c38c-48db-b369-6f4a2e9cad3f\",\n    \"reference\": \"Q8OAXF3W\",\n    \"lifecycle\": \"Pending Verification Internal\"\n  },\n  \"links\": {\n    \"self\": \"https://customer-api.debitura.com/Cases/72d427c1-c38c-48db-b369-6f4a2e9cad3f\"\n  }\n}\n```",
         "requestBody": {
           "content": {
             "application/json-patch+json": {
@@ -4490,6 +4490,33 @@
         },
         "additionalProperties": false
       },
+      "Debitura.Web.ExternalApi.Contracts.V1.Cases.AdmissionMinimumDto": {
+        "type": "object",
+        "properties": {
+          "rule": {
+            "type": "string",
+            "description": "PlatformMinimum (configured client/partner/platform floor) or UnitedStatesMinimum.",
+            "nullable": true
+          },
+          "amountUsd": {
+            "type": "number",
+            "description": "The minimum principal in USD.",
+            "format": "double"
+          },
+          "amount": {
+            "type": "number",
+            "description": "The minimum principal in the request currency, rounded upward to two decimals.",
+            "format": "double"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "ISO currency code of Amount.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Safe, additive metadata for a monetary admission refusal. Recheck preview after changing the claim."
+      },
       "Debitura.Web.ExternalApi.Contracts.V1.Cases.AdvanceTestCaseResponse": {
         "type": "object",
         "properties": {
@@ -5020,7 +5047,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "Outstanding amount per bucket on the case: each bucket's total minus the payments allocated to it."
+        "description": "What is still open on the case in each part of the claim: principal, interest, reminder fees and\ncollection fees. Each part is its total on the case minus the payments allocated to it, never below 0.\nEvery payment is split across the parts in proportion to what is open in each just before it; a\npayment that clears the whole balance clears every part, and any excess counts as principal. Before\nany payment, principal equals grossAmount. Filled only on the Customer API's single-case reads\n(GET /cases/{id}, by creditor reference, by case reference); always null elsewhere. Also null when\na payment on the case was recorded before this split was stored; such a case is normally filled\nfrom its next payment on."
       },
       "Debitura.Web.ExternalApi.Contracts.V1.Cases.InvoiceDto": {
         "type": "object",
@@ -5266,7 +5293,7 @@
         "properties": {
           "isEligible": {
             "type": "boolean",
-            "description": "Whether the case is eligible for collection (i.e., a collection partner is available).\nIf false, check IneligibilityReason for details."
+            "description": "Whether a collection partner is available and submit's monetary admission checks pass.\nIf false, check IneligibilityReason for details."
           },
           "ineligibilityReason": {
             "type": "string",
@@ -5277,6 +5304,9 @@
             "type": "string",
             "description": "Stable machine-readable reason, present whenever IneligibilityReason is\nOne of: NoGeographicCoverage, AmountBelowMinimum, AmountAboveMaximum,\nDebtorTypeNotCovered, NotCoveredByPartnerRules, ExcludedForClient, EligibilityUndetermined.\n\nOnly NoGeographicCoverage means we have no partner in the jurisdiction. AmountBelowMinimum\nmeans the geography IS covered and only the claim amount fell short. EligibilityUndetermined\nis a transient failure on our side, not a statement about coverage — retry rather than\ntelling the client their address is wrong.",
             "nullable": true
+          },
+          "admissionMinimum": {
+            "$ref": "#/components/schemas/Debitura.Web.ExternalApi.Contracts.V1.Cases.AdmissionMinimumDto"
           },
           "applicableMinimumAmount": {
             "type": "number",
@@ -5302,7 +5332,7 @@
           },
           "amountCheckUnavailable": {
             "type": "boolean",
-            "description": "True when a currency conversion needed to evaluate the claim amount was unavailable, so the\namount-based part of this answer was NOT actually checked It can be true on an\neligible answer: a partner matched only because amount conditions failed open while rates were\ndown. Treat such an answer as provisional and retry rather than relying on the floor having\nbeen applied."
+            "description": "True when a currency conversion needed to evaluate the claim amount was unavailable, so the\namount-based part of matching or monetary admission was NOT actually checked. It can be true on an\neligible answer: a partner matched only because amount conditions failed open while rates were\ndown. Treat such an answer as provisional and retry rather than relying on the floor having\nbeen applied."
           },
           "partnerAssignment": {
             "$ref": "#/components/schemas/Debitura.Web.ExternalApi.Contracts.V1.Cases.PartnerAssignmentDto"
@@ -7265,8 +7295,7 @@
             "nullable": true
           },
           "testPayload": {
-            "description": "The test event payload that was sent.",
-            "nullable": true
+            "description": "The test event payload that was sent."
           }
         },
         "additionalProperties": false,

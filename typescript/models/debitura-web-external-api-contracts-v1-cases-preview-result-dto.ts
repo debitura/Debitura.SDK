@@ -15,6 +15,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import type { DebituraWebExternalApiContractsV1CasesAdmissionMinimumDto } from './debitura-web-external-api-contracts-v1-cases-admission-minimum-dto';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { DebituraWebExternalApiContractsV1CasesJurisdictionDto } from './debitura-web-external-api-contracts-v1-cases-jurisdiction-dto';
 // May contain unused imports in some cases
 // @ts-ignore
@@ -36,7 +39,7 @@ import type { DebituraWebExternalApiContractsV1CasesSigningHandoffDto } from './
  */
 export interface DebituraWebExternalApiContractsV1CasesPreviewResultDto {
     /**
-     * Whether the case is eligible for collection (i.e., a collection partner is available). If false, check IneligibilityReason for details.
+     * Whether a collection partner is available and submit\'s monetary admission checks pass. If false, check IneligibilityReason for details.
      * @type {boolean}
      * @memberof DebituraWebExternalApiContractsV1CasesPreviewResultDto
      */
@@ -53,6 +56,12 @@ export interface DebituraWebExternalApiContractsV1CasesPreviewResultDto {
      * @memberof DebituraWebExternalApiContractsV1CasesPreviewResultDto
      */
     'ineligibilityReasonCode'?: string | null;
+    /**
+     * 
+     * @type {DebituraWebExternalApiContractsV1CasesAdmissionMinimumDto}
+     * @memberof DebituraWebExternalApiContractsV1CasesPreviewResultDto
+     */
+    'admissionMinimum'?: DebituraWebExternalApiContractsV1CasesAdmissionMinimumDto;
     /**
      * What this claim would have to reach to be accepted, in the currency of the request; never below the platform minimum of 100 USD. Only present when no partner was matched. Withheld when the client\'s own routing exclusions mean the number would not be reachable for them, and when the request currency cannot be priced. Null when no partner covering this case declares a minimum.
      * @type {number}
@@ -78,7 +87,7 @@ export interface DebituraWebExternalApiContractsV1CasesPreviewResultDto {
      */
     'marketMinimumCurrencyCode'?: string | null;
     /**
-     * True when a currency conversion needed to evaluate the claim amount was unavailable, so the amount-based part of this answer was NOT actually checked It can be true on an eligible answer: a partner matched only because amount conditions failed open while rates were down. Treat such an answer as provisional and retry rather than relying on the floor having been applied.
+     * True when a currency conversion needed to evaluate the claim amount was unavailable, so the amount-based part of matching or monetary admission was NOT actually checked. It can be true on an eligible answer: a partner matched only because amount conditions failed open while rates were down. Treat such an answer as provisional and retry rather than relying on the floor having been applied.
      * @type {boolean}
      * @memberof DebituraWebExternalApiContractsV1CasesPreviewResultDto
      */
